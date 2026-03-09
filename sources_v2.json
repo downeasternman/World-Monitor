@@ -1,0 +1,5359 @@
+{
+  "_meta": {
+    "version": "2.0.0",
+    "description": "World Headlines Dashboard — curated RSS source list v2.0. 500+ sources, 45+ countries. Tier describes editorial relationship to power, not quality. Bias notes are descriptive not judgmental. RSS URLs marked verified:false should be checked before use.",
+    "last_updated": "2026-03-08",
+    "tiers": {
+      "state": "Government-owned or directly state-controlled outlet. May reflect official narrative.",
+      "state-wire": "Government-funded wire service. Generally professional standards but state-funded.",
+      "independent": "Editorially independent from government. May carry owner, advertiser, or ideological bias.",
+      "exile": "Founded in or relocated to another country due to press freedom conditions in home country.",
+      "foreign-funded": "Funded by a foreign government. Editorially separated but funding relationship worth noting.",
+      "wire": "Professional wire service supplying copy to other outlets. Generally fact-focused.",
+      "community": "Non-profit, reader-funded, or community-owned outlet.",
+      "single-topic": "Outlet covering one specific issue domain across all geographies."
+    },
+    "bias_scale": "left | left-center | center | right-center | right | nationalist | state-narrative",
+    "rsf_index": "Reporters Without Borders Press Freedom Index rank for the outlet's home country. Lower is better. Updated annually.",
+    "cors_note": "Most RSS feeds require a CORS proxy for browser-side fetch. Recommended: your own Cloudflare Worker proxy. Fallback: allorigins.win"
+  },
+  "countries": {
+    "US": {
+      "_meta": {
+        "name": "United States",
+        "rsf_rank": 55,
+        "language_default": "en"
+      },
+      "national": [
+        {
+          "name": "Associated Press — Top News",
+          "rss": "https://feeds.apnews.com/rss/apf-topnews",
+          "tier": "wire",
+          "bias": "center",
+          "ownership": "Non-profit cooperative owned by member newspapers",
+          "note": "Gold standard wire service. Feeds most US local papers.",
+          "verified": true
+        },
+        {
+          "name": "Associated Press — Politics",
+          "rss": "https://feeds.apnews.com/rss/apf-politics",
+          "tier": "wire",
+          "bias": "center",
+          "verified": true
+        },
+        {
+          "name": "Reuters — Top News",
+          "rss": "https://feeds.reuters.com/reuters/topNews",
+          "tier": "wire",
+          "bias": "center",
+          "ownership": "Thomson Reuters Corporation",
+          "note": "London-headquartered, globally trusted wire service.",
+          "verified": true
+        },
+        {
+          "name": "NPR News",
+          "rss": "https://feeds.npr.org/1001/rss.xml",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Non-profit, partially federally funded via CPB",
+          "note": "Public radio. Federal funding is a small fraction of budget.",
+          "verified": true
+        },
+        {
+          "name": "PBS NewsHour",
+          "rss": "https://www.pbs.org/newshour/feeds/rss/headlines",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Non-profit public broadcasting",
+          "verified": true
+        },
+        {
+          "name": "New York Times",
+          "rss": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "New York Times Company (Sulzberger family controlled)",
+          "note": "Agenda-setting paper. Paywalled articles but headlines free.",
+          "verified": true
+        },
+        {
+          "name": "New York Times — World",
+          "rss": "https://rss.nytimes.com/services/xml/rss/nyt/World.xml",
+          "tier": "independent",
+          "bias": "left-center",
+          "verified": true
+        },
+        {
+          "name": "Washington Post",
+          "rss": "https://feeds.washingtonpost.com/rss/national",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Jeff Bezos (personal, not Amazon)",
+          "note": "Historically investigative. DC political focus.",
+          "verified": true
+        },
+        {
+          "name": "Washington Post — World",
+          "rss": "https://feeds.washingtonpost.com/rss/world",
+          "tier": "independent",
+          "bias": "left-center",
+          "verified": true
+        },
+        {
+          "name": "Wall Street Journal",
+          "rss": "https://feeds.a.dj.com/rss/RSSWorldNews.xml",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "News Corp (Rupert Murdoch)",
+          "note": "News pages center-right. Opinion pages strongly conservative.",
+          "verified": true
+        },
+        {
+          "name": "Wall Street Journal — US",
+          "rss": "https://feeds.a.dj.com/rss/RSSWSJD.xml",
+          "tier": "independent",
+          "bias": "right-center",
+          "verified": true
+        },
+        {
+          "name": "USA Today",
+          "rss": "https://rssfeeds.usatoday.com/usatoday-NewsTopStories",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Gannett",
+          "verified": true
+        },
+        {
+          "name": "The Hill",
+          "rss": "https://thehill.com/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Nexstar Media Group",
+          "note": "DC-focused political coverage. Tries to run both sides.",
+          "verified": true
+        },
+        {
+          "name": "Politico",
+          "rss": "https://www.politico.com/rss/politicopicks.xml",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Axel Springer (German media conglomerate)",
+          "note": "DC insider publication. Heavily sourced from government officials.",
+          "verified": true
+        },
+        {
+          "name": "Fox News",
+          "rss": "https://moxie.foxnews.com/google-publisher/latest.xml",
+          "tier": "independent",
+          "bias": "right",
+          "ownership": "Fox Corporation (Murdoch family)",
+          "note": "Dominant right-wing cable news. Opinion strongly shapes news framing.",
+          "verified": true
+        },
+        {
+          "name": "Fox News — Politics",
+          "rss": "https://moxie.foxnews.com/google-publisher/politics.xml",
+          "tier": "independent",
+          "bias": "right",
+          "verified": true
+        },
+        {
+          "name": "Breitbart News",
+          "rss": "http://feeds.feedburner.com/breitbart",
+          "tier": "independent",
+          "bias": "right",
+          "ownership": "Private (previously Breitbart, now investor-owned)",
+          "note": "Nationalist-populist. Significant influence on conservative base.",
+          "verified": true
+        },
+        {
+          "name": "HuffPost",
+          "rss": "https://www.huffpost.com/section/front-page/feed",
+          "tier": "independent",
+          "bias": "left",
+          "ownership": "BuzzFeed Inc.",
+          "verified": true
+        },
+        {
+          "name": "The Atlantic",
+          "rss": "https://www.theatlantic.com/feed/all/",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Emerson Collective (Laurene Powell Jobs)",
+          "note": "Long-form journalism and opinion. High editorial standards.",
+          "verified": true
+        },
+        {
+          "name": "Vox",
+          "rss": "https://www.vox.com/rss/index.xml",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Vox Media",
+          "note": "Explainer-focused journalism.",
+          "verified": true
+        },
+        {
+          "name": "Mother Jones",
+          "rss": "https://www.motherjones.com/feed/",
+          "tier": "community",
+          "bias": "left",
+          "ownership": "Non-profit Foundation for National Progress",
+          "note": "Investigative, progressive. Strong on money in politics.",
+          "verified": true
+        },
+        {
+          "name": "National Review",
+          "rss": "https://www.nationalreview.com/feed/",
+          "tier": "independent",
+          "bias": "right",
+          "ownership": "National Review Institute (non-profit)",
+          "note": "Flagship conservative magazine since 1955.",
+          "verified": true
+        },
+        {
+          "name": "The Nation",
+          "rss": "https://www.thenation.com/feed/?post_type=article",
+          "tier": "independent",
+          "bias": "left",
+          "ownership": "Non-profit The Nation Company",
+          "note": "Oldest continuously published weekly magazine in US. Progressive.",
+          "verified": true
+        },
+        {
+          "name": "The Intercept",
+          "rss": "https://theintercept.com/feed/?rss",
+          "tier": "independent",
+          "bias": "left",
+          "ownership": "Non-profit First Look Media",
+          "note": "Investigative. Strong on national security and surveillance.",
+          "verified": true
+        },
+        {
+          "name": "ProPublica",
+          "rss": "https://feeds.propublica.org/propublica/main",
+          "tier": "community",
+          "bias": "left-center",
+          "ownership": "Non-profit",
+          "note": "Pulitzer-winning investigative journalism. One of the best in the US.",
+          "verified": true
+        },
+        {
+          "name": "The American Conservative",
+          "rss": "https://www.theamericanconservative.com/feed/",
+          "tier": "independent",
+          "bias": "right",
+          "ownership": "Non-profit American Ideas Institute",
+          "note": "Paleoconservative. Anti-interventionist foreign policy. Distinct from mainstream right.",
+          "verified": true
+        },
+        {
+          "name": "Jacobin",
+          "rss": "https://jacobin.com/feed/",
+          "tier": "independent",
+          "bias": "left",
+          "ownership": "Jacobin Foundation",
+          "note": "Democratic socialist. Strong labor and economics coverage.",
+          "verified": true
+        },
+        {
+          "name": "Reason Magazine",
+          "rss": "https://reason.com/feed/",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "Reason Foundation (libertarian non-profit)",
+          "note": "Libertarian. Skeptical of both parties. Civil liberties focus.",
+          "verified": true
+        },
+        {
+          "name": "Democracy Now!",
+          "rss": "https://www.democracynow.org/democracynow.rss",
+          "tier": "community",
+          "bias": "left",
+          "ownership": "Non-profit listener-supported",
+          "note": "Pacifica Radio originated. Strong international and labor coverage.",
+          "verified": true
+        },
+        {
+          "name": "Axios",
+          "rss": "https://api.axios.com/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Cox Enterprises",
+          "note": "Smart brevity format. Strong on tech, DC, and business. Cox acquisition 2022.",
+          "verified": true
+        },
+        {
+          "name": "Univision Noticias",
+          "rss": "https://www.univision.com/noticias/rss",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Televisa Univision",
+          "note": "Largest Spanish-language US TV network. Essential for Hispanic community news.",
+          "verified": false
+        },
+        {
+          "name": "Telemundo Noticias",
+          "rss": "https://www.telemundo.com/noticias/rss",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "NBCUniversal",
+          "note": "Second largest Spanish-language network. Strong immigration and Latin America coverage.",
+          "verified": false
+        },
+        {
+          "name": "MinnPost",
+          "rss": "https://www.minnpost.com/feed/",
+          "tier": "community",
+          "bias": "left-center",
+          "ownership": "Non-profit",
+          "note": "Minnesota non-profit journalism. Model for statewide accountability reporting.",
+          "verified": true
+        },
+        {
+          "name": "VTDigger",
+          "rss": "https://vtdigger.org/feed/",
+          "tier": "community",
+          "bias": "center",
+          "ownership": "Non-profit",
+          "note": "Vermont statewide non-profit. One of the best state-level accountability operations.",
+          "verified": true
+        },
+        {
+          "name": "Mississippi Free Press",
+          "rss": "https://www.mississippifreepress.org/feed/",
+          "tier": "community",
+          "bias": "left-center",
+          "ownership": "Non-profit",
+          "note": "Civil rights focused Mississippi journalism. Essential for Deep South accountability.",
+          "verified": true
+        }
+      ],
+      "regions": {
+        "northeast": [
+          {
+            "name": "Boston Globe",
+            "rss": "http://feeds.boston.com/boston/topheadlines",
+            "state": "MA",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "John Henry",
+            "verified": true
+          },
+          {
+            "name": "Boston Herald",
+            "rss": "https://www.bostonherald.com/feed/",
+            "state": "MA",
+            "tier": "independent",
+            "bias": "right-center",
+            "verified": true
+          },
+          {
+            "name": "Philadelphia Inquirer",
+            "rss": "https://www.inquirer.com/arcio/rss/",
+            "state": "PA",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "Inquirer Media (non-profit)",
+            "verified": false
+          },
+          {
+            "name": "Pittsburgh Post-Gazette",
+            "rss": "https://www.post-gazette.com/rss/feed",
+            "state": "PA",
+            "tier": "independent",
+            "bias": "right-center",
+            "note": "Historically liberal, shifted right under Block family in recent years.",
+            "verified": false
+          },
+          {
+            "name": "Baltimore Sun",
+            "rss": "https://www.baltimoresun.com/arcio/rss/",
+            "state": "MD",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "Tribune Publishing / Alden Global Capital",
+            "verified": false
+          },
+          {
+            "name": "Hartford Courant",
+            "rss": "https://www.courant.com/arcio/rss/",
+            "state": "CT",
+            "tier": "independent",
+            "bias": "left-center",
+            "note": "Oldest continuously published US newspaper (1764).",
+            "verified": false
+          },
+          {
+            "name": "Providence Journal",
+            "rss": "https://www.providencejournal.com/arcio/rss/",
+            "state": "RI",
+            "tier": "independent",
+            "bias": "center",
+            "verified": false
+          },
+          {
+            "name": "Portland Press Herald",
+            "rss": "https://www.pressherald.com/feed/",
+            "state": "ME",
+            "tier": "independent",
+            "bias": "center",
+            "ownership": "MaineToday Media",
+            "verified": true
+          },
+          {
+            "name": "Burlington Free Press",
+            "rss": "https://www.burlingtonfreepress.com/arcio/rss/",
+            "state": "VT",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "Gannett",
+            "verified": false
+          },
+          {
+            "name": "Manchester Union Leader",
+            "rss": "https://www.unionleader.com/search/?f=rss&t=article&c=news&l=50&s=start_time&sd=desc",
+            "state": "NH",
+            "tier": "independent",
+            "bias": "right",
+            "note": "Influential in New Hampshire primary politics.",
+            "verified": false
+          }
+        ],
+        "south": [
+          {
+            "name": "Atlanta Journal-Constitution",
+            "rss": "https://www.ajc.com/arcio/rss/",
+            "state": "GA",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "Cox Enterprises",
+            "verified": false
+          },
+          {
+            "name": "Miami Herald",
+            "rss": "https://www.miamiherald.com/arcio/rss/",
+            "state": "FL",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "McClatchy",
+            "note": "Best Cuba and Latin America coverage of any US regional paper.",
+            "verified": false
+          },
+          {
+            "name": "Tampa Bay Times",
+            "rss": "https://www.tampabay.com/arcio/rss/",
+            "state": "FL",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "Poynter Institute (non-profit)",
+            "note": "Owned by journalism school. Consistently well-funded investigative work.",
+            "verified": false
+          },
+          {
+            "name": "Orlando Sentinel",
+            "rss": "https://www.orlandosentinel.com/arcio/rss/",
+            "state": "FL",
+            "tier": "independent",
+            "bias": "center",
+            "ownership": "Alden Global Capital",
+            "verified": false
+          },
+          {
+            "name": "Houston Chronicle",
+            "rss": "https://www.houstonchronicle.com/arcio/rss/",
+            "state": "TX",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "Hearst",
+            "verified": false
+          },
+          {
+            "name": "Dallas Morning News",
+            "rss": "https://www.dallasnews.com/arcio/rss/",
+            "state": "TX",
+            "tier": "independent",
+            "bias": "center",
+            "ownership": "A.H. Belo Corporation",
+            "verified": false
+          },
+          {
+            "name": "Texas Tribune",
+            "rss": "https://www.texastribune.org/feed/",
+            "state": "TX",
+            "tier": "community",
+            "bias": "center",
+            "ownership": "Non-profit",
+            "note": "Texas-only coverage. Strong investigative and data journalism.",
+            "verified": true
+          },
+          {
+            "name": "Austin American-Statesman",
+            "rss": "https://www.statesman.com/arcio/rss/",
+            "state": "TX",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "Gannett",
+            "verified": false
+          },
+          {
+            "name": "New Orleans Times-Picayune",
+            "rss": "https://www.nola.com/arcio/rss/",
+            "state": "LA",
+            "tier": "independent",
+            "bias": "center",
+            "ownership": "Advance Local",
+            "verified": false
+          },
+          {
+            "name": "Nashville Tennessean",
+            "rss": "https://www.tennessean.com/arcio/rss/",
+            "state": "TN",
+            "tier": "independent",
+            "bias": "center",
+            "ownership": "Gannett",
+            "verified": false
+          },
+          {
+            "name": "Charlotte Observer",
+            "rss": "https://www.charlotteobserver.com/arcio/rss/",
+            "state": "NC",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "McClatchy",
+            "verified": false
+          },
+          {
+            "name": "Raleigh News & Observer",
+            "rss": "https://www.newsobserver.com/arcio/rss/",
+            "state": "NC",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "McClatchy",
+            "verified": false
+          },
+          {
+            "name": "Richmond Times-Dispatch",
+            "rss": "https://richmond.com/arcio/rss/",
+            "state": "VA",
+            "tier": "independent",
+            "bias": "right-center",
+            "ownership": "Berkshire Hathaway Media",
+            "verified": false
+          },
+          {
+            "name": "Arkansas Democrat-Gazette",
+            "rss": "https://www.arkansasonline.com/feeds/",
+            "state": "AR",
+            "tier": "independent",
+            "bias": "right-center",
+            "note": "Last major US metro daily to print a daily paper.",
+            "verified": false
+          },
+          {
+            "name": "Birmingham News / AL.com",
+            "rss": "https://www.al.com/arcio/rss/",
+            "state": "AL",
+            "tier": "independent",
+            "bias": "center",
+            "ownership": "Advance Local",
+            "verified": false
+          },
+          {
+            "name": "Mississippi Clarion Ledger",
+            "rss": "https://www.clarionledger.com/arcio/rss/",
+            "state": "MS",
+            "tier": "independent",
+            "bias": "center",
+            "ownership": "Gannett",
+            "verified": false
+          }
+        ],
+        "midwest": [
+          {
+            "name": "Chicago Tribune",
+            "rss": "https://www.chicagotribune.com/arcio/rss/",
+            "state": "IL",
+            "tier": "independent",
+            "bias": "right-center",
+            "ownership": "Alden Global Capital",
+            "note": "Historic paper hollowed out by hedge fund ownership cuts.",
+            "verified": false
+          },
+          {
+            "name": "Chicago Sun-Times",
+            "rss": "https://chicago.suntimes.com/rss/index.xml",
+            "state": "IL",
+            "tier": "community",
+            "bias": "left-center",
+            "ownership": "Chicago Public Media (non-profit)",
+            "note": "Recently acquired by non-profit. Working class focus.",
+            "verified": true
+          },
+          {
+            "name": "Block Club Chicago",
+            "rss": "https://blockclubchicago.org/feed/",
+            "state": "IL",
+            "tier": "community",
+            "bias": "center",
+            "ownership": "Non-profit",
+            "note": "Neighborhood-level Chicago coverage. Strong local accountability.",
+            "verified": true
+          },
+          {
+            "name": "Detroit Free Press",
+            "rss": "https://www.freep.com/arcio/rss/",
+            "state": "MI",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "Gannett",
+            "verified": false
+          },
+          {
+            "name": "Cleveland Plain Dealer / Cleveland.com",
+            "rss": "https://www.cleveland.com/arcio/rss/",
+            "state": "OH",
+            "tier": "independent",
+            "bias": "center",
+            "ownership": "Advance Local",
+            "verified": false
+          },
+          {
+            "name": "Columbus Dispatch",
+            "rss": "https://www.dispatch.com/arcio/rss/",
+            "state": "OH",
+            "tier": "independent",
+            "bias": "right-center",
+            "ownership": "Gannett",
+            "verified": false
+          },
+          {
+            "name": "Indianapolis Star",
+            "rss": "https://www.indystar.com/arcio/rss/",
+            "state": "IN",
+            "tier": "independent",
+            "bias": "center",
+            "ownership": "Gannett",
+            "verified": false
+          },
+          {
+            "name": "Minneapolis Star Tribune",
+            "rss": "https://www.startribune.com/feeds/",
+            "state": "MN",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "Glen Taylor",
+            "verified": false
+          },
+          {
+            "name": "Kansas City Star",
+            "rss": "https://www.kansascity.com/arcio/rss/",
+            "state": "MO",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "McClatchy",
+            "verified": false
+          },
+          {
+            "name": "St. Louis Post-Dispatch",
+            "rss": "https://www.stltoday.com/arcio/rss/",
+            "state": "MO",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "Lee Enterprises",
+            "verified": false
+          },
+          {
+            "name": "Milwaukee Journal Sentinel",
+            "rss": "https://www.jsonline.com/arcio/rss/",
+            "state": "WI",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "Gannett",
+            "verified": false
+          },
+          {
+            "name": "Omaha World-Herald",
+            "rss": "https://omaha.com/feed/",
+            "state": "NE",
+            "tier": "independent",
+            "bias": "right-center",
+            "ownership": "Berkshire Hathaway Media",
+            "verified": false
+          },
+          {
+            "name": "Des Moines Register",
+            "rss": "https://www.desmoinesregister.com/arcio/rss/",
+            "state": "IA",
+            "tier": "independent",
+            "bias": "center",
+            "ownership": "Gannett",
+            "note": "Key primary state paper. Political coverage outsized for market size.",
+            "verified": false
+          }
+        ],
+        "west": [
+          {
+            "name": "Los Angeles Times",
+            "rss": "https://www.latimes.com/rss2.0.xml",
+            "state": "CA",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "Patrick Soon-Shiong",
+            "note": "Major national paper with strong West Coast and Pacific coverage.",
+            "verified": true
+          },
+          {
+            "name": "San Francisco Chronicle",
+            "rss": "https://www.sfchronicle.com/arcio/rss/",
+            "state": "CA",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "Hearst",
+            "verified": false
+          },
+          {
+            "name": "San Jose Mercury News",
+            "rss": "https://www.mercurynews.com/arcio/rss/",
+            "state": "CA",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "MediaNews Group / Alden Global Capital",
+            "verified": false
+          },
+          {
+            "name": "Sacramento Bee",
+            "rss": "https://www.sacbee.com/arcio/rss/",
+            "state": "CA",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "McClatchy",
+            "verified": false
+          },
+          {
+            "name": "San Diego Union-Tribune",
+            "rss": "https://www.sandiegouniontribune.com/arcio/rss/",
+            "state": "CA",
+            "tier": "independent",
+            "bias": "right-center",
+            "ownership": "MediaNews Group",
+            "verified": false
+          },
+          {
+            "name": "CalMatters",
+            "rss": "https://calmatters.org/feed/",
+            "state": "CA",
+            "tier": "community",
+            "bias": "center",
+            "ownership": "Non-profit",
+            "note": "California policy and politics. Strong accountability journalism.",
+            "verified": true
+          },
+          {
+            "name": "Seattle Times",
+            "rss": "https://www.seattletimes.com/arcio/rss/",
+            "state": "WA",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "Blethen family",
+            "note": "Independently owned. Strong Boeing and tech industry coverage.",
+            "verified": false
+          },
+          {
+            "name": "Oregonian / OregonLive",
+            "rss": "https://www.oregonlive.com/arcio/rss/",
+            "state": "OR",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "Advance Local",
+            "verified": false
+          },
+          {
+            "name": "Denver Post",
+            "rss": "https://www.denverpost.com/arcio/rss/",
+            "state": "CO",
+            "tier": "independent",
+            "bias": "center",
+            "ownership": "Alden Global Capital",
+            "note": "Reporters have publicly protested hedge fund ownership stripping newsroom.",
+            "verified": false
+          },
+          {
+            "name": "Colorado Sun",
+            "rss": "https://coloradosun.com/feed/",
+            "state": "CO",
+            "tier": "community",
+            "bias": "center",
+            "ownership": "Non-profit, employee-owned",
+            "note": "Founded by Denver Post refugees. Strong model for sustainable local news.",
+            "verified": true
+          },
+          {
+            "name": "Salt Lake Tribune",
+            "rss": "https://www.sltrib.com/feed/",
+            "state": "UT",
+            "tier": "community",
+            "bias": "center",
+            "ownership": "Non-profit",
+            "note": "First major US daily to convert to non-profit.",
+            "verified": true
+          },
+          {
+            "name": "Arizona Republic / AZCentral",
+            "rss": "https://www.azcentral.com/arcio/rss/",
+            "state": "AZ",
+            "tier": "independent",
+            "bias": "center",
+            "ownership": "Gannett",
+            "verified": false
+          },
+          {
+            "name": "Las Vegas Review-Journal",
+            "rss": "https://www.reviewjournal.com/feed/",
+            "state": "NV",
+            "tier": "independent",
+            "bias": "right",
+            "ownership": "Sheldon Adelson estate / Patrick Dumont",
+            "note": "Ownership has pushed editorial line rightward.",
+            "verified": true
+          },
+          {
+            "name": "Albuquerque Journal",
+            "rss": "https://www.abqjournal.com/feed/",
+            "state": "NM",
+            "tier": "independent",
+            "bias": "right-center",
+            "verified": false
+          },
+          {
+            "name": "Anchorage Daily News",
+            "rss": "https://www.adn.com/arcio/rss/",
+            "state": "AK",
+            "tier": "independent",
+            "bias": "center",
+            "ownership": "McClatchy",
+            "note": "Essential source for Alaska resource, indigenous, and Arctic coverage.",
+            "verified": false
+          },
+          {
+            "name": "Honolulu Star-Advertiser",
+            "rss": "https://www.staradvertiser.com/feed/",
+            "state": "HI",
+            "tier": "independent",
+            "bias": "center",
+            "ownership": "Oahu Publications",
+            "verified": false
+          }
+        ]
+      },
+      "metros": {
+        "new_york": [
+          {
+            "name": "New York Post",
+            "rss": "https://nypost.com/feed/",
+            "tier": "independent",
+            "bias": "right",
+            "ownership": "News Corp (Murdoch)",
+            "note": "Tabloid. Populist right. Major influence on local NYC discourse.",
+            "verified": true
+          },
+          {
+            "name": "New York Daily News",
+            "rss": "https://www.nydailynews.com/arcio/rss/",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "Tribune Publishing / Alden Global Capital",
+            "verified": false
+          },
+          {
+            "name": "New York Magazine",
+            "rss": "http://nymag.com/feeds/main.xml",
+            "tier": "independent",
+            "bias": "left",
+            "ownership": "New York Media",
+            "verified": true
+          },
+          {
+            "name": "Gothamist",
+            "rss": "https://gothamist.com/feed",
+            "tier": "community",
+            "bias": "left-center",
+            "ownership": "WNYC / New York Public Radio (non-profit)",
+            "verified": true
+          },
+          {
+            "name": "City & State NY",
+            "rss": "https://www.cityandstateny.com/feed",
+            "tier": "independent",
+            "bias": "center",
+            "note": "NY state and city politics focus.",
+            "verified": false
+          }
+        ],
+        "los_angeles": [
+          {
+            "name": "LA Daily News",
+            "rss": "https://www.dailynews.com/arcio/rss/",
+            "tier": "independent",
+            "bias": "right-center",
+            "ownership": "MediaNews Group / Alden Global Capital",
+            "verified": false
+          },
+          {
+            "name": "Knock LA",
+            "rss": "https://knock.la/feed/",
+            "tier": "community",
+            "bias": "left",
+            "ownership": "Non-profit",
+            "note": "Criminal justice and housing focus.",
+            "verified": false
+          },
+          {
+            "name": "LAist",
+            "rss": "https://laist.com/rss.xml",
+            "tier": "community",
+            "bias": "left-center",
+            "ownership": "KPCC / Public Media Group of Southern California (non-profit)",
+            "verified": true
+          }
+        ],
+        "chicago": [
+          {
+            "name": "Crain's Chicago Business",
+            "rss": "https://www.chicagobusiness.com/arcio/rss/",
+            "tier": "independent",
+            "bias": "right-center",
+            "note": "Business and real estate focus.",
+            "verified": false
+          },
+          {
+            "name": "Chicago Reader",
+            "rss": "https://chicagoreader.com/feed/",
+            "tier": "independent",
+            "bias": "left",
+            "note": "Alt-weekly. Arts, culture, investigative.",
+            "verified": true
+          }
+        ],
+        "washington_dc": [
+          {
+            "name": "DCist",
+            "rss": "https://dcist.com/feed/",
+            "tier": "community",
+            "bias": "left-center",
+            "ownership": "WAMU / American University (non-profit)",
+            "verified": true
+          },
+          {
+            "name": "Washington City Paper",
+            "rss": "https://www.washingtoncitypaper.com/rss.xml",
+            "tier": "independent",
+            "bias": "left-center",
+            "note": "Alt-weekly. Local accountability and arts.",
+            "verified": false
+          }
+        ],
+        "texas_border": [
+          {
+            "name": "El Paso Times",
+            "rss": "https://www.elpasotimes.com/arcio/rss/",
+            "tier": "independent",
+            "bias": "center",
+            "ownership": "Gannett",
+            "note": "Border coverage. Unique US-Mexico perspective.",
+            "verified": false
+          },
+          {
+            "name": "Laredo Morning Times",
+            "rss": "https://www.lmtonline.com/feed/",
+            "tier": "independent",
+            "bias": "center",
+            "note": "Border trade and immigration coverage.",
+            "verified": false
+          }
+        ],
+        "portland_metro": [
+          {
+            "name": "The Oregonian / OregonLive",
+            "rss": "https://www.oregonlive.com/arc/outbound/rss/",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "Advance Publications",
+            "note": "Oregon's largest paper. Strong Portland metro and statewide coverage.",
+            "verified": true
+          },
+          {
+            "name": "Willamette Week",
+            "rss": "https://www.wweek.com/feed/",
+            "tier": "independent",
+            "bias": "left",
+            "ownership": "Independent (Richard Meeker)",
+            "note": "Portland alt-weekly. Pulitzer-winning investigative journalism.",
+            "verified": true
+          },
+          {
+            "name": "Portland Mercury",
+            "rss": "https://www.portlandmercury.com/feed/",
+            "tier": "independent",
+            "bias": "left",
+            "ownership": "Independent",
+            "note": "Portland alt-weekly. Culture, arts, progressive politics.",
+            "verified": true
+          },
+          {
+            "name": "Portland Tribune / Pamplin Media",
+            "rss": "https://pamplinmedia.com/feed/",
+            "tier": "community",
+            "bias": "center",
+            "ownership": "Pamplin Communications (Robert Pamplin)",
+            "note": "Parent company of most Washington County community papers.",
+            "verified": false
+          },
+          {
+            "name": "Hillsboro News-Times",
+            "rss": "https://www.hillsboronewstimes.com/feed/",
+            "tier": "community",
+            "bias": "center",
+            "ownership": "Pamplin Media Group",
+            "note": "Primary newspaper serving Hillsboro and western Washington County, OR.",
+            "verified": true
+          },
+          {
+            "name": "Beaverton Valley Times",
+            "rss": "https://www.beavertonvalleytimes.com/feed/",
+            "tier": "community",
+            "bias": "center",
+            "ownership": "Pamplin Media Group",
+            "note": "Covers Beaverton, Aloha, and central Washington County, OR.",
+            "verified": true
+          },
+          {
+            "name": "Hillsboro Herald",
+            "rss": "https://hillsboroherald.com/feed/",
+            "tier": "community",
+            "bias": "center",
+            "ownership": "Independent citizen journalists",
+            "note": "Community-written local news for Hillsboro. Intel campus, local government, immigration.",
+            "verified": true
+          },
+          {
+            "name": "ValleyTimes.news (Washington County)",
+            "rss": "https://www.valleytimes.news/feed/",
+            "tier": "community",
+            "bias": "center",
+            "ownership": "Pamplin Media Group",
+            "note": "Covers Tigard, Tualatin, Sherwood, Newberg and south Washington County.",
+            "verified": true
+          },
+          {
+            "name": "KGW8 Portland",
+            "rss": "https://www.kgw.com/feeds/syndication/rss/news/",
+            "tier": "independent",
+            "bias": "center",
+            "ownership": "Tegna Inc.",
+            "note": "NBC affiliate. Largest local TV news in Portland metro. Washington County desk.",
+            "verified": false
+          },
+          {
+            "name": "KOIN6 Portland",
+            "rss": "https://www.koin.com/feed/",
+            "tier": "independent",
+            "bias": "center",
+            "ownership": "Nexstar Media Group",
+            "note": "CBS affiliate Portland. Washington County and statewide breaking news.",
+            "verified": false
+          },
+          {
+            "name": "Oregon Capital Chronicle",
+            "rss": "https://oregoncapitalchronicle.com/feed/",
+            "tier": "community",
+            "bias": "center",
+            "ownership": "States Newsroom (non-profit)",
+            "note": "Oregon state government accountability journalism. Non-profit.",
+            "verified": true
+          }
+        ],
+        "miami_metro": [
+          {
+            "name": "Miami New Times",
+            "rss": "https://www.miaminewtimes.com/rss.xml",
+            "tier": "independent",
+            "bias": "left",
+            "ownership": "Voice Media Group",
+            "note": "South Florida alt-weekly. Caribbean and Latin American diaspora coverage.",
+            "verified": false
+          },
+          {
+            "name": "El Nuevo Herald",
+            "rss": "https://www.elnuevoherald.com/latest-news/rss/article2.rss",
+            "tier": "independent",
+            "bias": "right-center",
+            "ownership": "McClatchy",
+            "note": "Spanish-language sister to Miami Herald. Essential for Cuban-American politics.",
+            "verified": false
+          }
+        ],
+        "phoenix_metro": [
+          {
+            "name": "Arizona Republic / AZCentral",
+            "rss": "https://www.azcentral.com/news/rss/",
+            "tier": "independent",
+            "bias": "center",
+            "ownership": "Gannett",
+            "verified": true
+          },
+          {
+            "name": "Phoenix New Times",
+            "rss": "https://www.phoenixnewtimes.com/rss.xml",
+            "tier": "independent",
+            "bias": "left",
+            "ownership": "Voice Media Group",
+            "verified": false
+          },
+          {
+            "name": "Arizona Mirror",
+            "rss": "https://www.azmirror.com/feed/",
+            "tier": "community",
+            "bias": "center",
+            "ownership": "States Newsroom (non-profit)",
+            "note": "Arizona state government accountability. Non-profit.",
+            "verified": true
+          }
+        ],
+        "denver_metro": [
+          {
+            "name": "Colorado Sun",
+            "rss": "https://coloradosun.com/feed/",
+            "tier": "community",
+            "bias": "center",
+            "ownership": "Non-profit (founded by Denver Post refugees)",
+            "note": "Reader-supported. Best model for surviving local news.",
+            "verified": true
+          },
+          {
+            "name": "Westword Denver",
+            "rss": "https://www.westword.com/rss.xml",
+            "tier": "independent",
+            "bias": "left",
+            "ownership": "Voice Media Group",
+            "note": "Denver alt-weekly. Cannabis, local politics, culture.",
+            "verified": false
+          }
+        ],
+        "seattle_metro": [
+          {
+            "name": "Seattle Times",
+            "rss": "https://www.seattletimes.com/feed/",
+            "tier": "independent",
+            "bias": "left-center",
+            "ownership": "Blethen family (independent)",
+            "note": "Independently owned. Strong Boeing, Amazon, and tech coverage.",
+            "verified": true
+          },
+          {
+            "name": "Seattle Met / PubliCola",
+            "rss": "https://publicola.com/feed/",
+            "tier": "community",
+            "bias": "left-center",
+            "ownership": "Independent",
+            "note": "Seattle city politics accountability. City hall, housing, homelessness.",
+            "verified": false
+          },
+          {
+            "name": "The Stranger",
+            "rss": "https://www.thestranger.com/seatac/Rss.xml",
+            "tier": "independent",
+            "bias": "left",
+            "ownership": "Index Newspapers",
+            "note": "Seattle alt-weekly. Culture, local politics, LGBTQ+ coverage.",
+            "verified": false
+          }
+        ]
+      }
+    },
+    "GB": {
+      "_meta": {
+        "name": "United Kingdom",
+        "rsf_rank": 24,
+        "language_default": "en"
+      },
+      "sources": [
+        {
+          "name": "BBC News",
+          "rss": "http://feeds.bbci.co.uk/news/rss.xml",
+          "tier": "state-wire",
+          "bias": "center",
+          "ownership": "BBC (UK public broadcaster)",
+          "note": "Publicly funded via license fee. Editorial independence protected by charter but periodically challenged by government.",
+          "verified": true
+        },
+        {
+          "name": "BBC News — World",
+          "rss": "http://feeds.bbci.co.uk/news/world/rss.xml",
+          "tier": "state-wire",
+          "bias": "center",
+          "verified": true
+        },
+        {
+          "name": "The Guardian",
+          "rss": "https://www.theguardian.com/world/rss",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Scott Trust (non-profit endowment)",
+          "note": "Non-profit structure insulates from commercial pressure. Progressive editorial line. Strong international coverage.",
+          "verified": true
+        },
+        {
+          "name": "The Times",
+          "rss": "https://www.thetimes.co.uk/rss/news/UK.xml",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "News Corp (Murdoch)",
+          "note": "Historically prestigious. Editorially distinct from Murdoch tabloids.",
+          "verified": false
+        },
+        {
+          "name": "The Daily Telegraph",
+          "rss": "https://www.telegraph.co.uk/news/rss.xml",
+          "tier": "independent",
+          "bias": "right",
+          "ownership": "RedBird IMI (Abu Dhabi-backed)",
+          "note": "Flagship right-wing broadsheet. Ownership change to UAE-backed fund raised editorial independence concerns.",
+          "verified": true
+        },
+        {
+          "name": "The Independent",
+          "rss": "https://www.independent.co.uk/rss",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "ESI Media (Saudi-backed via Evgeny Lebedev)",
+          "note": "Digital-only since 2016. Saudi ownership via Lebedev is a noted editorial concern.",
+          "verified": true
+        },
+        {
+          "name": "Daily Mail",
+          "rss": "https://www.dailymail.co.uk/articles.rss",
+          "tier": "independent",
+          "bias": "right",
+          "ownership": "Daily Mail and General Trust (Rothermere family)",
+          "note": "Largest UK newspaper by readership. Tabloid. Populist right. Significant political influence.",
+          "verified": true
+        },
+        {
+          "name": "The Mirror",
+          "rss": "https://www.mirror.co.uk/news/rss.xml",
+          "tier": "independent",
+          "bias": "left",
+          "ownership": "Reach plc",
+          "note": "Working-class tabloid. Historically Labour-aligned.",
+          "verified": true
+        },
+        {
+          "name": "Sky News",
+          "rss": "https://feeds.skynews.com/feeds/rss/home.xml",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Comcast",
+          "verified": true
+        },
+        {
+          "name": "The Economist",
+          "rss": "https://www.economist.com/latest/rss.xml",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "Economist Group (Agnelli family majority)",
+          "note": "Classically liberal (free-market). Globally influential. UK-based but world scope.",
+          "verified": true
+        },
+        {
+          "name": "Financial Times",
+          "rss": "https://www.ft.com/rss/home",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "Nikkei (Japanese media group)",
+          "note": "Global financial paper of record. Strong geopolitics coverage.",
+          "verified": true
+        },
+        {
+          "name": "The Spectator",
+          "rss": "https://www.spectator.co.uk/feed/",
+          "tier": "independent",
+          "bias": "right",
+          "ownership": "Sir Paul Marshall",
+          "note": "Oldest weekly magazine in English. Conservative.",
+          "verified": true
+        },
+        {
+          "name": "New Statesman",
+          "rss": "https://www.newstatesman.com/feed/",
+          "tier": "independent",
+          "bias": "left",
+          "ownership": "New Statesman Media Group",
+          "verified": true
+        }
+      ]
+    },
+    "FR": {
+      "_meta": {
+        "name": "France",
+        "rsf_rank": 21,
+        "language_default": "fr"
+      },
+      "sources": [
+        {
+          "name": "Le Monde",
+          "rss": "https://www.lemonde.fr/rss/une.xml",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Xavier Niel, Matthieu Pigasse, Société des Rédacteurs",
+          "note": "Newspaper of record. Staff hold significant ownership stake protecting editorial independence.",
+          "language": "fr",
+          "verified": true
+        },
+        {
+          "name": "Le Figaro",
+          "rss": "https://www.lefigaro.fr/rss/figaro_actualites.xml",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "Dassault Group (defense contractor)",
+          "note": "Defense contractor ownership is a noted concern for military/arms coverage.",
+          "language": "fr",
+          "verified": true
+        },
+        {
+          "name": "Libération",
+          "rss": "https://www.liberation.fr/arc/outboundfeeds/rss-all/",
+          "tier": "independent",
+          "bias": "left",
+          "language": "fr",
+          "verified": false
+        },
+        {
+          "name": "France 24 — English",
+          "rss": "https://www.france24.com/en/rss",
+          "tier": "state-wire",
+          "bias": "center",
+          "ownership": "French government-funded international broadcaster",
+          "note": "Funded by French state but editorially independent by charter. Strong Africa and Francophone world coverage.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "RFI — English",
+          "rss": "https://www.rfi.fr/en/rss",
+          "tier": "state-wire",
+          "bias": "center",
+          "ownership": "France Médias Monde (French state)",
+          "note": "Strong Africa coverage. French equivalent of BBC World Service.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Mediapart",
+          "rss": "https://www.mediapart.fr/articles/feed",
+          "tier": "community",
+          "bias": "left",
+          "ownership": "Non-profit, reader-funded",
+          "note": "Subscription investigative journalism. Broke multiple major French corruption stories.",
+          "language": "fr",
+          "verified": true
+        }
+      ]
+    },
+    "DE": {
+      "_meta": {
+        "name": "Germany",
+        "rsf_rank": 10,
+        "language_default": "de"
+      },
+      "sources": [
+        {
+          "name": "Der Spiegel",
+          "rss": "https://www.spiegel.de/international/index.rss",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Spiegel-Verlag (staff co-owned, 50% employee stake)",
+          "note": "Germany's most influential news magazine. Staff ownership protects editorial independence.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "DW (Deutsche Welle) — English",
+          "rss": "https://rss.dw.com/rdf/rss-en-all",
+          "tier": "state-wire",
+          "bias": "center",
+          "ownership": "German federal government funded",
+          "note": "German equivalent of BBC World Service. Strong Global South and Eastern Europe coverage.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Frankfurter Allgemeine Zeitung",
+          "rss": "https://www.faz.net/rss/aktuell/",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "FAZ GmbH (foundation structure)",
+          "language": "de",
+          "verified": true
+        },
+        {
+          "name": "Die Zeit",
+          "rss": "https://www.zeit.de/index",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Zeit-Verlag (Holtzbrinck / Bucerius ownership split)",
+          "language": "de",
+          "verified": true
+        },
+        {
+          "name": "Handelsblatt",
+          "rss": "https://www.handelsblatt.com/contentexport/feed/schlagzeilen",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "Dieter von Holtzbrinck Medien",
+          "note": "Germany's Financial Times equivalent. Essential for EU economic policy.",
+          "language": "de",
+          "verified": false
+        },
+        {
+          "name": "Bild",
+          "rss": "https://www.bild.de/rssfeeds/rss3-20745882,short=1,emergencyDisabled=0.bild.xml",
+          "tier": "independent",
+          "bias": "right",
+          "ownership": "Axel Springer",
+          "note": "Highest circulation paper in Germany. Populist tabloid.",
+          "language": "de",
+          "verified": false
+        },
+        {
+          "name": "Tagesschau",
+          "rss": "https://www.tagesschau.de/xml/rss2/",
+          "tier": "state-wire",
+          "bias": "center",
+          "ownership": "ARD (public broadcaster)",
+          "language": "de",
+          "verified": true
+        }
+      ]
+    },
+    "RU": {
+      "_meta": {
+        "name": "Russia",
+        "rsf_rank": 162,
+        "language_default": "ru",
+        "press_freedom_note": "Russia ranked near bottom of press freedom index. Independent media largely shut down or exiled since 2022. Use sources with this context in mind."
+      },
+      "sources": [
+        {
+          "name": "TASS",
+          "rss": "https://tass.com/rss/v2.xml",
+          "tier": "state",
+          "bias": "state-narrative",
+          "ownership": "Russian federal government",
+          "note": "Official state wire. Shows what the Kremlin wants communicated nationally and internationally.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "RIA Novosti",
+          "rss": "https://ria.ru/export/rss2/archive/index.xml",
+          "tier": "state",
+          "bias": "state-narrative",
+          "ownership": "Russia Today (Rossiya Segodnya), state-owned",
+          "language": "ru",
+          "verified": true
+        },
+        {
+          "name": "RT (Russia Today)",
+          "rss": "https://www.rt.com/rss/",
+          "tier": "state",
+          "bias": "state-narrative",
+          "ownership": "Rossiya Segodnya, state-owned",
+          "note": "Explicitly aimed at international audiences. Used as soft-power instrument. Blocked in EU since 2022.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Kommersant",
+          "rss": "https://www.kommersant.ru/RSS/news.xml",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Alisher Usmanov (oligarch, pro-Kremlin)",
+          "note": "Business-focused daily. Historically more independent than other Russian outlets but ownership is oligarch-aligned. Self-censorship pressure significant post-2022.",
+          "language": "ru",
+          "verified": true
+        },
+        {
+          "name": "Meduza",
+          "rss": "https://meduza.io/rss/all",
+          "tier": "exile",
+          "bias": "center",
+          "ownership": "Independent, reader-funded",
+          "note": "Relocated to Riga, Latvia in 2021. Designated 'undesirable organization' in Russia. Best independent Russian journalism available.",
+          "language": "ru",
+          "verified": true
+        },
+        {
+          "name": "Meduza — English",
+          "rss": "https://meduza.io/rss/en/all",
+          "tier": "exile",
+          "bias": "center",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "The Moscow Times",
+          "rss": "https://www.themoscowtimes.com/rss/news",
+          "tier": "exile",
+          "bias": "left-center",
+          "ownership": "Independent, Amsterdam-based",
+          "note": "Relocated to Netherlands. English-language coverage of Russia from outside.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Novaya Gazeta Europe",
+          "rss": "https://novayagazeta.eu/rss",
+          "tier": "exile",
+          "bias": "left-center",
+          "ownership": "Independent",
+          "note": "Successor to Novaya Gazeta, which was suspended in Russia in 2022. Several staff have been murdered. Riga-based.",
+          "language": "ru",
+          "verified": true
+        },
+        {
+          "name": "iStories (Important Stories)",
+          "rss": "https://istories.media/feed/",
+          "tier": "exile",
+          "bias": "center",
+          "note": "Investigative journalism. Riga-based. Covers corruption and war crimes.",
+          "language": "ru",
+          "verified": false
+        }
+      ]
+    },
+    "CN": {
+      "_meta": {
+        "name": "China",
+        "rsf_rank": 172,
+        "language_default": "zh",
+        "press_freedom_note": "China ranked near bottom of press freedom. All domestic media operates under CCP oversight. Independent journalism inside China is not possible. Foreign journalist access severely restricted."
+      },
+      "sources": [
+        {
+          "name": "Xinhua — English",
+          "rss": "http://www.xinhuanet.com/english/rss/chinalatestnews.xml",
+          "tier": "state",
+          "bias": "state-narrative",
+          "ownership": "Chinese Communist Party / State Council",
+          "note": "Official party wire service. Benchmark for what the CCP wants communicated to international audiences.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "People's Daily — English",
+          "rss": "http://en.people.cn/rss/90777.xml",
+          "tier": "state",
+          "bias": "state-narrative",
+          "ownership": "Central Committee of the Chinese Communist Party",
+          "note": "Official party newspaper. Headline selection and framing directly reflects party priorities.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Global Times",
+          "rss": "https://www.globaltimes.cn/rss/outbrain.xml",
+          "tier": "state",
+          "bias": "nationalist",
+          "ownership": "People's Daily Group (CCP)",
+          "note": "More aggressive nationalist tone than official Xinhua. Often used as trial balloon for hawkish positions. English edition aimed at foreign audiences.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "CGTN — English",
+          "rss": "https://www.cgtn.com/subscribe/rss/section/world.do",
+          "tier": "state",
+          "bias": "state-narrative",
+          "ownership": "China Media Group (state)",
+          "note": "China's international TV broadcaster. English-language global outreach arm.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "China Daily",
+          "rss": "https://www.chinadaily.com.cn/rss/world_rss.xml",
+          "tier": "state",
+          "bias": "state-narrative",
+          "ownership": "State Council Information Office",
+          "note": "English-language soft power paper distributed internationally.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Sixth Tone",
+          "rss": "https://www.sixthtone.com/feed",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Shanghai United Media Group (state-affiliated)",
+          "note": "More nuanced domestic coverage than party outlets. Not fully independent but covers stories others won't. Best available window into domestic Chinese social issues.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "South China Morning Post",
+          "rss": "https://www.scmp.com/rss/91/feed",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Alibaba Group (Jack Ma)",
+          "note": "Hong Kong-based. Historically credible. Alibaba acquisition in 2015 raised concerns. Broader range than mainland outlets but ownership creates CCP-adjacent pressure.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "RTHK (Radio Television Hong Kong)",
+          "rss": "https://news.rthk.hk/rthk/en/rss/enews.xml",
+          "tier": "state-wire",
+          "bias": "center",
+          "ownership": "Hong Kong SAR Government",
+          "note": "Historically editorially independent. Autonomy significantly curtailed since 2021 National Security Law.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Radio Free Asia — China",
+          "rss": "https://www.rfa.org/english/news/china/rss2.xml",
+          "tier": "foreign-funded",
+          "bias": "center",
+          "ownership": "US Agency for Global Media (US government-funded)",
+          "note": "US-funded. Covers stories suppressed inside China including Xinjiang and Tibet. Funding source means US government editorial pressure is a legitimate concern.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Caixin Global",
+          "rss": "https://www.caixinglobal.com/rss/english.xml",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Caixin Media (private)",
+          "note": "Financial investigative journalism. The most credibly independent domestic outlet. Has published stories embarrassing to the state. Partially paywalled.",
+          "language": "en",
+          "verified": false
+        }
+      ]
+    },
+    "TW": {
+      "_meta": {
+        "name": "Taiwan",
+        "rsf_rank": 27,
+        "language_default": "zh",
+        "note": "Taiwan listed as a separate entry from China. This reflects its de facto independent government and press freedom. Sources here provide essential contrast to mainland Chinese state media."
+      },
+      "sources": [
+        {
+          "name": "CNA (Central News Agency)",
+          "rss": "https://feeds.feedburner.com/cna-taiwan",
+          "tier": "state-wire",
+          "bias": "center",
+          "ownership": "Taiwan government-funded wire service",
+          "note": "Government-funded but professional editorial standards. Reuters-style wire output.",
+          "language": "en",
+          "verified": false
+        },
+        {
+          "name": "Taipei Times",
+          "rss": "https://www.taipeitimes.com/xml/index.rss",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Liberty Times Group",
+          "note": "English-language. Pro-Taiwan identity. Most accessible for non-Chinese readers.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Taiwan News",
+          "rss": "https://www.taiwannews.com.tw/en/rss",
+          "tier": "independent",
+          "bias": "center",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Want Want China Times",
+          "rss": "https://www.chinatimes.com/rss/",
+          "tier": "independent",
+          "bias": "right",
+          "ownership": "Want Want Holdings (Tsai Eng-meng — major mainland China business interests)",
+          "note": "Pro-unification. Owner has extensive mainland business. Provides important contrast to independence-leaning Taiwan press.",
+          "language": "zh",
+          "verified": false
+        },
+        {
+          "name": "CommonWealth Magazine",
+          "rss": "https://www.cw.com.tw/rss/rss.action",
+          "tier": "independent",
+          "bias": "center",
+          "note": "Business and policy focus. High quality investigative work.",
+          "language": "zh",
+          "verified": false
+        }
+      ]
+    },
+    "IR": {
+      "_meta": {
+        "name": "Iran",
+        "rsf_rank": 176,
+        "language_default": "fa",
+        "press_freedom_note": "One of world's most restrictive press environments. Dozens of journalists imprisoned. All licensed media operates under state oversight."
+      },
+      "sources": [
+        {
+          "name": "IRNA — English",
+          "rss": "https://en.irna.ir/rss",
+          "tier": "state",
+          "bias": "state-narrative",
+          "ownership": "Iranian government",
+          "note": "Official state wire. Shows Islamic Republic's official positions.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Press TV",
+          "rss": "https://www.presstv.ir/rss.xml",
+          "tier": "state",
+          "bias": "state-narrative",
+          "ownership": "Islamic Republic of Iran Broadcasting",
+          "note": "Iran's English-language international broadcaster. Sanctioned in US and EU.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Tehran Times",
+          "rss": "https://www.tehrantimes.com/rss.xml",
+          "tier": "state",
+          "bias": "state-narrative",
+          "ownership": "State-aligned, Islamic Republic Publishing House",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Mehr News Agency",
+          "rss": "https://en.mehrnews.com/rss",
+          "tier": "state",
+          "bias": "state-narrative",
+          "ownership": "Islamic Ideology Dissemination Organization",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Iran International",
+          "rss": "https://www.iranintl.com/en/rss.xml",
+          "tier": "exile",
+          "bias": "center",
+          "ownership": "Private (London-based, Saudi-connected funding reported)",
+          "note": "Credible breaking news on Iran. London-based. Funding connections to Saudi interests are a legitimate concern given Iran-Saudi rivalry. Staff have faced assassination threats from IRGC.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Radio Farda",
+          "rss": "https://www.radiofarda.com/api/zrqomytpiq",
+          "tier": "foreign-funded",
+          "bias": "center",
+          "ownership": "US Agency for Global Media (US government)",
+          "note": "US-funded Persian service. Covers stories suppressed in Iran. US government funding is a noted bias concern.",
+          "language": "fa",
+          "verified": false
+        },
+        {
+          "name": "IranWire",
+          "rss": "https://iranwire.com/feed/",
+          "tier": "exile",
+          "bias": "center",
+          "ownership": "Non-profit, independent",
+          "note": "Citizen journalism and investigations. Founded by former Newsweek Iran journalist.",
+          "language": "en",
+          "verified": true
+        }
+      ]
+    },
+    "UA": {
+      "_meta": {
+        "name": "Ukraine",
+        "rsf_rank": 61,
+        "language_default": "uk"
+      },
+      "sources": [
+        {
+          "name": "Kyiv Independent",
+          "rss": "https://kyivindependent.com/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Independent, reader-funded",
+          "note": "Founded in 2021 by journalists who left Kyiv Post after editorial interference. Became essential war coverage source post-2022.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Ukrainska Pravda",
+          "rss": "https://www.pravda.com.ua/rss/",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Independent",
+          "note": "Ukraine's most read news site. Editor Georgiy Gongadze was murdered in 2000. The paper survived and remained independent.",
+          "language": "uk",
+          "verified": true
+        },
+        {
+          "name": "Ukrainska Pravda — English",
+          "rss": "https://www.pravda.com.ua/eng/rss/",
+          "tier": "independent",
+          "bias": "center",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Ukrinform",
+          "rss": "https://www.ukrinform.net/rss/block-lastnews",
+          "tier": "state-wire",
+          "bias": "center",
+          "ownership": "Ukrainian state wire service",
+          "language": "en",
+          "verified": true
+        }
+      ]
+    },
+    "IL": {
+      "_meta": {
+        "name": "Israel",
+        "rsf_rank": 101,
+        "language_default": "he"
+      },
+      "sources": [
+        {
+          "name": "Haaretz — English",
+          "rss": "https://www.haaretz.com/srv/haaretz-en-rss.xml",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Schocken family",
+          "note": "Israel's newspaper of record. Left-leaning. Critical of settlement policy. Most globally cited Israeli paper.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Jerusalem Post",
+          "rss": "https://www.jpost.com/Rss/RssFeedsHeadlines.aspx",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "Mirkaei Tikshoret group",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Times of Israel",
+          "rss": "https://www.timesofisrael.com/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Ynet",
+          "rss": "https://www.ynetnews.com/Integration/StoryRss2.aspx",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "Yedioth Ahronoth Group",
+          "note": "Largest circulation Hebrew news site.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Mondoweiss",
+          "rss": "https://mondoweiss.net/feed/",
+          "tier": "independent",
+          "bias": "left",
+          "ownership": "Non-profit",
+          "note": "Pro-Palestinian perspective. Essential for understanding left-wing Jewish and pro-Palestinian narrative on the conflict.",
+          "language": "en",
+          "verified": true
+        }
+      ]
+    },
+    "PS": {
+      "_meta": {
+        "name": "Palestine / Gaza / West Bank",
+        "rsf_rank": 157,
+        "language_default": "ar"
+      },
+      "sources": [
+        {
+          "name": "Ma'an News Agency",
+          "rss": "https://www.maannews.com/Handler.ashx?f=rss&ItemType=3&CatID=3",
+          "tier": "independent",
+          "bias": "center",
+          "note": "Independent Palestinian news agency. West Bank based.",
+          "language": "en",
+          "verified": false
+        },
+        {
+          "name": "The Electronic Intifada",
+          "rss": "https://electronicintifada.net/rss.xml",
+          "tier": "community",
+          "bias": "left",
+          "ownership": "Non-profit",
+          "note": "Pro-Palestinian advocacy journalism. Chicago-based. Essential for Palestinian civil society perspective.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Wafa — Palestinian News Agency",
+          "rss": "https://english.wafa.ps/rss.aspx",
+          "tier": "state",
+          "bias": "state-narrative",
+          "ownership": "Palestinian Authority",
+          "language": "en",
+          "verified": false
+        }
+      ]
+    },
+    "JP": {
+      "_meta": {
+        "name": "Japan",
+        "rsf_rank": 70,
+        "language_default": "ja"
+      },
+      "sources": [
+        {
+          "name": "NHK World",
+          "rss": "https://www3.nhk.or.jp/rss/news/cat0.xml",
+          "tier": "state-wire",
+          "bias": "center",
+          "ownership": "NHK (Japan public broadcaster)",
+          "note": "Japan's public broadcaster. Internationally respected. Government-funded.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Japan Times",
+          "rss": "https://www.japantimes.co.jp/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Nikkei Inc.",
+          "note": "Primary English-language Japanese newspaper.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Nikkei Asia",
+          "rss": "https://asia.nikkei.com/rss/feed/nar",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "Nikkei Inc.",
+          "note": "Asia-focused business journalism. Also owns Financial Times.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Asahi Shimbun",
+          "rss": "https://www.asahi.com/rss/asahi/newsheadlines.rdf",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Asahi Shimbun Company",
+          "note": "Japan's most respected liberal newspaper. Critical of nationalism and remilitarization.",
+          "language": "ja",
+          "verified": true
+        },
+        {
+          "name": "Yomiuri Shimbun",
+          "rss": "https://www.yomiuri.co.jp/rss/",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "Yomiuri Shimbun Holdings",
+          "note": "World's highest circulation newspaper. Conservative.",
+          "language": "ja",
+          "verified": false
+        }
+      ]
+    },
+    "IN": {
+      "_meta": {
+        "name": "India",
+        "rsf_rank": 159,
+        "language_default": "en"
+      },
+      "sources": [
+        {
+          "name": "The Hindu",
+          "rss": "https://www.thehindu.com/feeder/default.rss",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Kasturi and Sons (family-owned)",
+          "note": "India's most internationally respected newspaper. Strong foreign policy coverage.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Times of India",
+          "rss": "https://timesofindia.indiatimes.com/rssfeeds/296589292.cms",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "Bennett Coleman and Company (Sahu Jain family)",
+          "note": "India's highest circulation English paper. Commercially oriented.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "NDTV",
+          "rss": "https://feeds.feedburner.com/ndtvnews-top-stories",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Adani Group (since 2022 acquisition)",
+          "note": "Adani Group acquisition by BJP-aligned billionaire is a significant editorial independence concern.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "The Wire",
+          "rss": "https://thewire.in/feed",
+          "tier": "community",
+          "bias": "left",
+          "ownership": "Non-profit Foundation for Independent Journalism",
+          "note": "Investigative. Frequently targeted by Modi government. Covers stories mainstream Indian press avoids.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Scroll.in",
+          "rss": "https://scroll.in/feed",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Scroll Media",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "The Print",
+          "rss": "https://theprint.in/feed/",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "Shekhar Gupta (former editor-in-chief of Indian Express)",
+          "note": "Strong on national security and defense.",
+          "language": "en",
+          "verified": true
+        }
+      ]
+    },
+    "KR": {
+      "_meta": {
+        "name": "South Korea",
+        "rsf_rank": 62,
+        "language_default": "ko"
+      },
+      "sources": [
+        {
+          "name": "Korea JoongAng Daily",
+          "rss": "https://koreajoongangdaily.joins.com/rss",
+          "tier": "independent",
+          "bias": "right-center",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Yonhap News Agency",
+          "rss": "https://en.yna.co.kr/RSS/news.xml",
+          "tier": "state-wire",
+          "bias": "center",
+          "ownership": "South Korean government-supported wire",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "The Korea Herald",
+          "rss": "http://www.koreaherald.com/rss_list.php",
+          "tier": "independent",
+          "bias": "center",
+          "language": "en",
+          "verified": false
+        },
+        {
+          "name": "Hankyoreh",
+          "rss": "https://www.hani.co.kr/rss/",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Employee and reader-owned cooperative",
+          "note": "Founded in 1988 by journalists who left state-controlled press. Staff co-ownership model.",
+          "language": "ko",
+          "verified": true
+        }
+      ]
+    },
+    "KP": {
+      "_meta": {
+        "name": "North Korea",
+        "rsf_rank": 179,
+        "language_default": "ko",
+        "press_freedom_note": "No independent press exists. KCNA is the only legal news source. All information from inside North Korea passes through state filter."
+      },
+      "sources": [
+        {
+          "name": "KCNA — English",
+          "rss": "http://www.kcna.kp/en/rss.rss",
+          "tier": "state",
+          "bias": "state-narrative",
+          "ownership": "Korean Central News Agency (DPRK state)",
+          "note": "Only official news source. Provides direct window into regime self-presentation. May be inaccessible from some networks.",
+          "language": "en",
+          "verified": false
+        },
+        {
+          "name": "NK News",
+          "rss": "https://www.nknews.org/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Independent subscription publication",
+          "note": "Most credible independent North Korea monitoring publication. Seoul-based.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Daily NK",
+          "rss": "https://www.dailynk.com/english/rss.xml",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Non-profit, Seoul-based",
+          "note": "Uses network of sources inside North Korea. Risk to sources is real.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Radio Free Asia — North Korea",
+          "rss": "https://www.rfa.org/english/news/korea/rss2.xml",
+          "tier": "foreign-funded",
+          "bias": "center",
+          "ownership": "US Agency for Global Media",
+          "language": "en",
+          "verified": true
+        }
+      ]
+    },
+    "SA": {
+      "_meta": {
+        "name": "Saudi Arabia",
+        "rsf_rank": 166,
+        "language_default": "ar"
+      },
+      "sources": [
+        {
+          "name": "Arab News",
+          "rss": "https://www.arabnews.com/rss.xml",
+          "tier": "state",
+          "bias": "state-narrative",
+          "ownership": "Saudi Research and Media Group (SRMG), state-adjacent",
+          "note": "English-language. Soft power outlet for Saudi government positions.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Saudi Gazette",
+          "rss": "https://saudigazette.com.sa/rss.xml",
+          "tier": "state",
+          "bias": "state-narrative",
+          "ownership": "Okaz Organization for Press (state-linked)",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Al-Arabiya",
+          "rss": "https://www.alarabiya.net/rss.xml",
+          "tier": "state",
+          "bias": "state-narrative",
+          "ownership": "MBC Group (Saudi state-aligned)",
+          "note": "Pan-Arab network often seen as Saudi counterweight to Al Jazeera.",
+          "language": "ar",
+          "verified": true
+        }
+      ]
+    },
+    "TR": {
+      "_meta": {
+        "name": "Turkey",
+        "rsf_rank": 158,
+        "language_default": "tr"
+      },
+      "sources": [
+        {
+          "name": "Hurriyet Daily News",
+          "rss": "https://www.hurriyetdailynews.com/rss",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Demirören Holding (pro-Erdogan)",
+          "note": "Largest English-language Turkish paper. Owner's alignment with AKP government creates editorial pressure.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Daily Sabah",
+          "rss": "https://www.dailysabah.com/rssfeed/home",
+          "tier": "independent",
+          "bias": "right",
+          "ownership": "Sabah Newspaper (Kalyon Group, AKP-aligned)",
+          "note": "Openly pro-government. Reflects AKP narrative.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Cumhuriyet",
+          "rss": "https://www.cumhuriyet.com.tr/rss/son_dakika.xml",
+          "tier": "independent",
+          "bias": "left-center",
+          "note": "Oldest Turkish newspaper. Secular, opposition-leaning. Journalists have been imprisoned.",
+          "language": "tr",
+          "verified": true
+        },
+        {
+          "name": "Bianet",
+          "rss": "https://bianet.org/rss/latest.rss",
+          "tier": "community",
+          "bias": "left",
+          "ownership": "Non-profit",
+          "note": "Independent civil society media. Human rights and press freedom focus.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "TRT World",
+          "rss": "https://www.trtworld.com/rss",
+          "tier": "state-wire",
+          "bias": "state-narrative",
+          "ownership": "Turkish Radio and Television Corporation (state)",
+          "note": "Turkey's international broadcaster. Pro-government editorial line.",
+          "language": "en",
+          "verified": true
+        }
+      ]
+    },
+    "EG": {
+      "_meta": {
+        "name": "Egypt",
+        "rsf_rank": 170,
+        "language_default": "ar"
+      },
+      "sources": [
+        {
+          "name": "Al-Ahram — English",
+          "rss": "https://english.ahram.org.eg/rss.aspx",
+          "tier": "state",
+          "bias": "state-narrative",
+          "ownership": "Egyptian government",
+          "note": "Oldest and most influential Arab newspaper. State-owned since 1960.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Egypt Independent",
+          "rss": "https://egyptindependent.com/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "note": "English-language. Limited independence under el-Sisi government.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Mada Masr",
+          "rss": "https://www.madamasr.com/en/feed/",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Independent",
+          "note": "Best independent journalism in Egypt. Repeatedly raided by authorities. Journalists arrested. Operates under extreme pressure.",
+          "language": "en",
+          "verified": true
+        }
+      ]
+    },
+    "ZA": {
+      "_meta": {
+        "name": "South Africa",
+        "rsf_rank": 33,
+        "language_default": "en"
+      },
+      "sources": [
+        {
+          "name": "Mail & Guardian",
+          "rss": "https://mg.co.za/feed/",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "M&G Media (Guardian Media Group holds stake)",
+          "note": "South Africa's premier investigative newspaper.",
+          "verified": true
+        },
+        {
+          "name": "Daily Maverick",
+          "rss": "https://www.dailymaverick.co.za/feed/",
+          "tier": "community",
+          "bias": "center",
+          "ownership": "Non-profit Maverick Insider model",
+          "note": "Reader-funded investigative. One of Africa's strongest investigative outlets.",
+          "verified": true
+        },
+        {
+          "name": "amaBhungane Centre for Investigative Journalism",
+          "rss": "https://amabhungane.org/feed/",
+          "tier": "community",
+          "bias": "center",
+          "ownership": "Non-profit",
+          "note": "South Africa's dedicated investigative journalism non-profit. Broke Gupta state capture story.",
+          "verified": true
+        }
+      ]
+    },
+    "NG": {
+      "_meta": {
+        "name": "Nigeria",
+        "rsf_rank": 112,
+        "language_default": "en"
+      },
+      "sources": [
+        {
+          "name": "Premium Times",
+          "rss": "https://www.premiumtimesng.com/feed",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Independent",
+          "note": "Best investigative journalism in Nigeria.",
+          "verified": true
+        },
+        {
+          "name": "The Punch",
+          "rss": "https://punchng.com/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Independent",
+          "note": "Nigeria's highest circulation newspaper.",
+          "verified": true
+        },
+        {
+          "name": "Vanguard Nigeria",
+          "rss": "https://www.vanguardngr.com/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "verified": true
+        }
+      ]
+    },
+    "KE": {
+      "_meta": {
+        "name": "Kenya",
+        "rsf_rank": 103,
+        "language_default": "en"
+      },
+      "sources": [
+        {
+          "name": "Nation Africa",
+          "rss": "https://nation.africa/kenya/rss.xml",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Nation Media Group",
+          "note": "Largest media group in East Africa.",
+          "verified": true
+        },
+        {
+          "name": "The Standard",
+          "rss": "https://www.standardmedia.co.ke/rss/",
+          "tier": "independent",
+          "bias": "center",
+          "verified": true
+        }
+      ]
+    },
+    "ET": {
+      "_meta": {
+        "name": "Ethiopia",
+        "rsf_rank": 141,
+        "language_default": "am"
+      },
+      "sources": [
+        {
+          "name": "Addis Standard",
+          "rss": "https://addisstandard.com/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "note": "Most credible independent Ethiopian journalism in English.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Ethiopia Insight",
+          "rss": "https://www.ethiopia-insight.com/feed/",
+          "tier": "community",
+          "bias": "center",
+          "ownership": "Non-profit",
+          "note": "Analysis focused. Strong on Tigray conflict and Horn of Africa geopolitics.",
+          "language": "en",
+          "verified": true
+        }
+      ]
+    },
+    "BR": {
+      "_meta": {
+        "name": "Brazil",
+        "rsf_rank": 103,
+        "language_default": "pt"
+      },
+      "sources": [
+        {
+          "name": "Folha de São Paulo",
+          "rss": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Grupo Folha (Frias family)",
+          "note": "Brazil's largest circulation newspaper.",
+          "language": "pt",
+          "verified": true
+        },
+        {
+          "name": "O Globo",
+          "rss": "https://oglobo.globo.com/rss.xml",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Grupo Globo (Marinho family)",
+          "note": "Most influential Brazilian media conglomerate.",
+          "language": "pt",
+          "verified": true
+        },
+        {
+          "name": "Agência Brasil",
+          "rss": "https://agenciabrasil.ebc.com.br/rss/ultimas-noticias/feed.xml",
+          "tier": "state-wire",
+          "bias": "center",
+          "ownership": "EBC (Brazilian public broadcasting)",
+          "language": "pt",
+          "verified": true
+        },
+        {
+          "name": "The Brazilian Report",
+          "rss": "https://brazilian.report/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "language": "en",
+          "note": "English-language Brazil coverage. Strong on politics and environment.",
+          "verified": true
+        },
+        {
+          "name": "Agência Pública",
+          "rss": "https://apublica.org/feed/",
+          "tier": "community",
+          "bias": "left",
+          "ownership": "Non-profit investigative",
+          "note": "Brazil's leading investigative non-profit. Strong Amazon and corruption coverage.",
+          "language": "pt",
+          "verified": true
+        },
+        {
+          "name": "UOL Notícias",
+          "rss": "https://rss.uol.com.br/feed/noticias.xml",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Grupo Folha",
+          "note": "Brazil's most visited web portal. Aggregates national news.",
+          "verified": true
+        },
+        {
+          "name": "G1 (Globo Digital)",
+          "rss": "https://g1.globo.com/rss/g1/index.xml",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Grupo Globo",
+          "note": "Brazil's most visited news site. Digital arm of dominant Globo network.",
+          "verified": true
+        },
+        {
+          "name": "Carta Capital",
+          "rss": "https://www.cartacapital.com.br/feed/",
+          "tier": "independent",
+          "bias": "left",
+          "ownership": "Independent",
+          "note": "Progressive political weekly. Critical of agribusiness and conservative coalitions.",
+          "verified": true
+        },
+        {
+          "name": "Nexo Jornal",
+          "rss": "https://www.nexojornal.com.br/feed/",
+          "tier": "community",
+          "bias": "left-center",
+          "ownership": "Non-profit",
+          "note": "Explainer journalism backed by São Paulo universities. High editorial standards.",
+          "verified": true
+        },
+        {
+          "name": "Valor Econômico",
+          "rss": "https://www.valor.com.br/rss/feed.xml",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "Grupo Globo / Grupo Folha (joint venture)",
+          "note": "Brazil's financial paper of record. Brazilian equivalent of Financial Times.",
+          "verified": false
+        },
+        {
+          "name": "The Intercept Brasil",
+          "rss": "https://theintercept.com/brasil/feed/?rss",
+          "tier": "independent",
+          "bias": "left",
+          "ownership": "First Look Media",
+          "note": "Broke the Lava Jato/Moro leaks (Vaza Jato) scandal in 2019.",
+          "verified": true
+        },
+        {
+          "name": "Brasil de Fato",
+          "rss": "https://www.brasildefato.com.br/feed.xml",
+          "tier": "independent",
+          "bias": "left",
+          "ownership": "MST-linked non-profit",
+          "note": "Movement journalism. Land reform, labor, indigenous rights.",
+          "verified": true
+        },
+        {
+          "name": "Estadão (Estado de São Paulo)",
+          "rss": "https://feeds.estadao.com.br/rss/ultimas",
+          "tier": "independent",
+          "bias": "right-center",
+          "region": "São Paulo",
+          "ownership": "Grupo Estado (Mesquita family)",
+          "note": "Historic independent São Paulo paper. Second most important nationally after Folha.",
+          "verified": true
+        },
+        {
+          "name": "Metrópoles (São Paulo/Brasília)",
+          "rss": "https://www.metropoles.com/feed",
+          "tier": "independent",
+          "bias": "center",
+          "region": "São Paulo / Brasília",
+          "ownership": "Independent digital",
+          "note": "Fast-growing digital news portal. One of Brazil's most read sites.",
+          "verified": true
+        },
+        {
+          "name": "Estado de Minas",
+          "rss": "https://www.em.com.br/rss/homepage.xml",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Minas Gerais",
+          "city": "Belo Horizonte",
+          "ownership": "Grupo Diários Associados",
+          "note": "Minas Gerais newspaper of record. Mining, Petrobras, politics.",
+          "verified": true
+        },
+        {
+          "name": "O Tempo (Minas Gerais)",
+          "rss": "https://www.otempo.com.br/rss",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Minas Gerais",
+          "city": "Belo Horizonte",
+          "ownership": "Grupo Record",
+          "verified": false
+        },
+        {
+          "name": "GaúchaZH / Zero Hora",
+          "rss": "https://gauchazh.clicrbs.com.br/feed.xml",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Rio Grande do Sul",
+          "city": "Porto Alegre",
+          "ownership": "Grupo RBS",
+          "note": "Southern Brazil's dominant news platform. Successor to Zero Hora. Agribusiness and gaucho culture.",
+          "verified": false
+        },
+        {
+          "name": "Correio do Povo (Porto Alegre)",
+          "rss": "https://www.correiodopovo.com.br/feeds/",
+          "tier": "independent",
+          "bias": "right-center",
+          "region": "Rio Grande do Sul",
+          "city": "Porto Alegre",
+          "ownership": "Grupo Caldas Júnior",
+          "note": "Oldest still-publishing daily in Brazil (1895).",
+          "verified": false
+        },
+        {
+          "name": "A Tarde (Salvador)",
+          "rss": "https://atarde.uol.com.br/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Bahia",
+          "city": "Salvador",
+          "ownership": "Independent",
+          "note": "Northeast's most influential paper. Afro-Brazilian culture, Carnival, oil industry.",
+          "verified": false
+        },
+        {
+          "name": "Correio da Bahia",
+          "rss": "https://www.correio24horas.com.br/rss/",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Bahia",
+          "city": "Salvador",
+          "ownership": "Grupo Correio",
+          "verified": false
+        },
+        {
+          "name": "Diário de Pernambuco",
+          "rss": "https://www.diariodepernambuco.com.br/rss.xml",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Pernambuco",
+          "city": "Recife",
+          "ownership": "Grupo Diários Associados",
+          "note": "Oldest newspaper in Latin America still publishing (1825).",
+          "verified": false
+        },
+        {
+          "name": "NE10 / Jornal do Commercio (Recife)",
+          "rss": "https://ne10.uol.com.br/rss/",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Pernambuco",
+          "city": "Recife",
+          "ownership": "SJCC Media Group",
+          "note": "Largest Northeast Brazilian web portal.",
+          "verified": false
+        },
+        {
+          "name": "Diário do Nordeste (Fortaleza)",
+          "rss": "https://diariodonordeste.verdesmares.com.br/rss/",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Ceará",
+          "city": "Fortaleza",
+          "ownership": "Grupo Edson Queiroz",
+          "note": "Fortaleza daily. Ceará's largest circulation paper.",
+          "verified": false
+        },
+        {
+          "name": "Correio Braziliense",
+          "rss": "https://www.correiobraziliense.com.br/rss/index.xml",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Distrito Federal",
+          "city": "Brasília",
+          "ownership": "Diários Associados",
+          "note": "Brasília daily. Capital politics, federal government, Supreme Court.",
+          "verified": false
+        },
+        {
+          "name": "Gazeta do Povo (Curitiba)",
+          "rss": "https://www.gazetadopovo.com.br/rss/",
+          "tier": "independent",
+          "bias": "right-center",
+          "region": "Paraná",
+          "city": "Curitiba",
+          "ownership": "Grupo Paranaense de Comunicação",
+          "note": "Paraná's flagship paper. Agribusiness, evangelical politics, conservative editorial line.",
+          "verified": true
+        },
+        {
+          "name": "Amazônia Real",
+          "rss": "https://amazoniareal.com.br/feed/",
+          "tier": "community",
+          "bias": "center",
+          "region": "Amazonas / Pará",
+          "city": "Manaus",
+          "ownership": "Non-profit",
+          "note": "Independent journalism on Amazon deforestation, indigenous rights, river communities.",
+          "verified": true
+        }
+      ]
+    },
+    "MX": {
+      "_meta": {
+        "name": "Mexico",
+        "rsf_rank": 128,
+        "language_default": "es"
+      },
+      "sources": [
+        {
+          "name": "El Universal",
+          "rss": "https://www.eluniversal.com.mx/rss.xml",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "Grupo El Universal",
+          "note": "Oldest and most-visited Mexican newspaper. Centrist-right historically.",
+          "verified": true
+        },
+        {
+          "name": "La Jornada",
+          "rss": "https://www.jornada.com.mx/rss/edicion.xml",
+          "tier": "independent",
+          "bias": "left",
+          "ownership": "Cooperativa La Jornada (worker-owned)",
+          "note": "Flagship left newspaper. Pro-AMLO / pro-Morena. State advertising is primary revenue.",
+          "verified": true
+        },
+        {
+          "name": "Reforma",
+          "rss": "https://www.reforma.com/rss/portada.xml",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "Grupo Reforma (Junco de la Vega family)",
+          "note": "Most credible independent national paper. Strong investigative. Paywalled.",
+          "verified": false
+        },
+        {
+          "name": "Milenio",
+          "rss": "https://www.milenio.com/rss",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Grupo Multimedios (Garza Medina family, Monterrey)",
+          "note": "National reach. Print, TV, radio. Nuevo León industrial ownership.",
+          "verified": true
+        },
+        {
+          "name": "Excélsior",
+          "rss": "https://www.excelsior.com.mx/rss/nacional.xml",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Imagen Media",
+          "verified": true
+        },
+        {
+          "name": "El Heraldo de México",
+          "rss": "https://heraldodemexico.com.mx/feed/",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "Grupo Heraldo",
+          "verified": true
+        },
+        {
+          "name": "Proceso",
+          "rss": "https://www.proceso.com.mx/feed/",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Independent",
+          "note": "Premier investigative weekly. Journalists face regular cartel and government threats.",
+          "verified": true
+        },
+        {
+          "name": "Animal Político",
+          "rss": "https://www.animalpolitico.com/feed",
+          "tier": "community",
+          "bias": "center",
+          "ownership": "Non-profit (partially)",
+          "note": "Best data and fact-checking journalism in Mexico. Electoral and corruption focus.",
+          "verified": true
+        },
+        {
+          "name": "Expansión",
+          "rss": "https://expansion.mx/feed",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "CNN en Español / WarnerMedia",
+          "note": "Mexico's leading business and economy magazine.",
+          "verified": true
+        },
+        {
+          "name": "Mexico News Daily",
+          "rss": "https://mexiconewsdaily.com/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "language": "en",
+          "ownership": "Independent",
+          "note": "English-language Mexico coverage for expats and international audience.",
+          "verified": true
+        },
+        {
+          "name": "Pie de Página",
+          "rss": "https://piedepagina.mx/feed/",
+          "tier": "community",
+          "bias": "left",
+          "ownership": "Non-profit cooperative",
+          "note": "Investigative journalism on human rights, migration, land conflict. High quality.",
+          "verified": true
+        },
+        {
+          "name": "Quinto Elemento Lab",
+          "rss": "https://quintoelab.mx/feed/",
+          "tier": "community",
+          "bias": "center",
+          "ownership": "Non-profit",
+          "note": "Data-driven investigative journalism. Corruption, environment, organized crime.",
+          "verified": false
+        },
+        {
+          "name": "InSight Crime — Mexico",
+          "rss": "https://insightcrime.org/category/investigations/mexico/feed/",
+          "tier": "community",
+          "bias": "center",
+          "ownership": "Non-profit Foundation for Peace",
+          "note": "Best English-language organized crime reporting in Latin America.",
+          "verified": true
+        },
+        {
+          "name": "ZETA — Semanario (Tijuana)",
+          "rss": "https://zetatijuana.com/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Baja California",
+          "city": "Tijuana",
+          "ownership": "Choix Editores (independent)",
+          "note": "Founded 1980. Co-founders murdered for cartel coverage. Mexico's most endangered investigative weekly. Tijuana Cartel, corruption, border politics.",
+          "verified": true
+        },
+        {
+          "name": "El Sol de Tijuana",
+          "rss": "https://oem.com.mx/elsoldetijuana/rss/",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Baja California",
+          "city": "Tijuana",
+          "ownership": "Organización Editorial Mexicana (OEM)",
+          "note": "Daily. Part of OEM chain (70 regional papers). General city news.",
+          "verified": false
+        },
+        {
+          "name": "Frontera Digital (Tijuana)",
+          "rss": "https://www.frontera.info/rss/",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Baja California",
+          "city": "Tijuana",
+          "ownership": "Independent",
+          "note": "Largest daily in Tijuana. Border crossings, maquiladoras, US-Mexico relations.",
+          "verified": false
+        },
+        {
+          "name": "Tijuana Press",
+          "rss": "https://tijuanapress.com/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Baja California",
+          "city": "Tijuana",
+          "ownership": "Independent digital",
+          "note": "Digital-native Tijuana news.",
+          "verified": false
+        },
+        {
+          "name": "La Voz de la Frontera (Mexicali)",
+          "rss": "https://www.lavozdelafrontera.com.mx/rss/",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Baja California",
+          "city": "Mexicali",
+          "ownership": "OEM",
+          "note": "Mexicali daily. BC state capital coverage.",
+          "verified": false
+        },
+        {
+          "name": "Noroeste (Sinaloa / Culiacán)",
+          "rss": "https://www.noroeste.com.mx/rss.xml",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Sinaloa",
+          "city": "Culiacán",
+          "ownership": "Independent",
+          "note": "Sinaloa's major newspaper. Essential for Sinaloa Cartel and drug trafficking coverage. Journalists have been murdered.",
+          "verified": false
+        },
+        {
+          "name": "El Informador (Guadalajara)",
+          "rss": "https://www.informador.mx/rss/noticias.xml",
+          "tier": "independent",
+          "bias": "right-center",
+          "region": "Jalisco",
+          "city": "Guadalajara",
+          "ownership": "Independent",
+          "note": "Jalisco's most respected newspaper. Founded 1917.",
+          "verified": true
+        },
+        {
+          "name": "Milenio Jalisco",
+          "rss": "https://www.milenio.com/rss/jalisco.xml",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Jalisco",
+          "city": "Guadalajara",
+          "verified": false
+        },
+        {
+          "name": "El Occidental (Guadalajara)",
+          "rss": "https://www.oem.com.mx/eloccidental/rss/",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Jalisco",
+          "city": "Guadalajara",
+          "ownership": "OEM",
+          "verified": false
+        },
+        {
+          "name": "El Norte (Monterrey)",
+          "rss": "https://www.elnorte.com/rss/portada.xml",
+          "tier": "independent",
+          "bias": "right-center",
+          "region": "Nuevo León",
+          "city": "Monterrey",
+          "ownership": "Grupo Reforma",
+          "note": "Monterrey's flagship paper. Mexico's industrial capital. Paywalled.",
+          "verified": false
+        },
+        {
+          "name": "Milenio Monterrey",
+          "rss": "https://www.milenio.com/rss/nuevo-leon.xml",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Nuevo León",
+          "city": "Monterrey",
+          "verified": false
+        },
+        {
+          "name": "El Porvenir (Monterrey)",
+          "rss": "https://www.elporvenir.mx/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Nuevo León",
+          "city": "Monterrey",
+          "ownership": "Independent",
+          "verified": false
+        },
+        {
+          "name": "El Diario de Juárez",
+          "rss": "https://diario.mx/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Chihuahua",
+          "city": "Ciudad Juárez",
+          "ownership": "Grupo Diario",
+          "note": "Largest paper on Mexican side of El Paso border. Cartel violence, maquiladoras, femicide coverage. Journalists murdered.",
+          "verified": false
+        },
+        {
+          "name": "El Heraldo de Chihuahua",
+          "rss": "https://oem.com.mx/elheraldodechihuahua/rss/",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Chihuahua",
+          "city": "Chihuahua",
+          "ownership": "OEM",
+          "verified": false
+        },
+        {
+          "name": "El Mañana (Nuevo Laredo)",
+          "rss": "https://www.elmanana.com/rss/",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Tamaulipas",
+          "city": "Nuevo Laredo",
+          "ownership": "Independent",
+          "note": "Border city paper. Northeast cartel territory. Self-censorship is extreme due to cartel threat.",
+          "verified": false
+        },
+        {
+          "name": "El Dictamen (Veracruz)",
+          "rss": "https://www.eldictamen.mx/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Veracruz",
+          "city": "Veracruz",
+          "ownership": "Independent",
+          "note": "Oldest newspaper in Mexico (1898). Port city. Gulf cartel territory.",
+          "verified": false
+        },
+        {
+          "name": "Noticias OAX (Oaxaca)",
+          "rss": "https://www.noticiasnet.mx/portal/rss.xml",
+          "tier": "independent",
+          "bias": "left-center",
+          "region": "Oaxaca",
+          "city": "Oaxaca",
+          "ownership": "Independent",
+          "note": "Primary Oaxaca paper. Indigenous rights, land conflict, SNTE teachers union coverage.",
+          "verified": false
+        },
+        {
+          "name": "Diario de Yucatán",
+          "rss": "https://www.yucatan.com.mx/rss/portada.xml",
+          "tier": "independent",
+          "bias": "right-center",
+          "region": "Yucatán",
+          "city": "Mérida",
+          "ownership": "Independent",
+          "note": "Peninsula's flagship paper. Maya culture, tourism, Tren Maya project.",
+          "verified": false
+        },
+        {
+          "name": "El Imparcial (Sonora)",
+          "rss": "https://www.elimparcial.com/rss/",
+          "tier": "independent",
+          "bias": "center",
+          "region": "Sonora",
+          "city": "Hermosillo",
+          "ownership": "Independent",
+          "note": "Sonora's primary paper. Maquiladoras, Arizona border, copper mining.",
+          "verified": false
+        }
+      ]
+    },
+    "AR": {
+      "_meta": {
+        "name": "Argentina",
+        "rsf_rank": 66,
+        "language_default": "es"
+      },
+      "sources": [
+        {
+          "name": "La Nación",
+          "rss": "https://www.lanacion.com.ar/rss/",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "Grupo La Nación",
+          "language": "es",
+          "verified": true
+        },
+        {
+          "name": "Infobae",
+          "rss": "https://www.infobae.com/feeds/rss/",
+          "tier": "independent",
+          "bias": "right-center",
+          "language": "es",
+          "verified": true
+        },
+        {
+          "name": "Clarín",
+          "rss": "https://www.clarin.com/rss/lo-ultimo/",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "Grupo Clarín",
+          "language": "es",
+          "verified": true
+        }
+      ]
+    },
+    "AU": {
+      "_meta": {
+        "name": "Australia",
+        "rsf_rank": 29,
+        "language_default": "en"
+      },
+      "sources": [
+        {
+          "name": "ABC Australia",
+          "rss": "https://www.abc.net.au/news/feed/51120/rss.xml",
+          "tier": "state-wire",
+          "bias": "left-center",
+          "ownership": "Australian Broadcasting Corporation (public)",
+          "note": "Australia's public broadcaster. Editorially independent. Frequently in tension with conservative governments.",
+          "verified": true
+        },
+        {
+          "name": "Sydney Morning Herald",
+          "rss": "https://www.smh.com.au/rss/feed.xml",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Nine Entertainment",
+          "verified": true
+        },
+        {
+          "name": "The Australian",
+          "rss": "https://www.theaustralian.com.au/feed/",
+          "tier": "independent",
+          "bias": "right",
+          "ownership": "News Corp Australia (Murdoch)",
+          "note": "Nationally influential. Strongly conservative editorial line.",
+          "verified": false
+        },
+        {
+          "name": "The Guardian Australia",
+          "rss": "https://www.theguardian.com/australia-news/rss",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Guardian Media Group",
+          "verified": true
+        },
+        {
+          "name": "Crikey",
+          "rss": "https://www.crikey.com.au/feed/",
+          "tier": "community",
+          "bias": "left-center",
+          "ownership": "Private Media (subscriber-funded)",
+          "note": "Subscriber-funded. Strong on media industry accountability.",
+          "verified": true
+        }
+      ]
+    },
+    "CA": {
+      "_meta": {
+        "name": "Canada",
+        "rsf_rank": 19,
+        "language_default": "en"
+      },
+      "sources": [
+        {
+          "name": "Globe and Mail",
+          "rss": "https://www.theglobeandmail.com/arc/outboundfeeds/rss/",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Woodbridge Company (Thomson family)",
+          "note": "Canada's national newspaper of record.",
+          "verified": false
+        },
+        {
+          "name": "Toronto Star",
+          "rss": "https://www.thestar.com/search/?f=rss&t=article&c=news&l=50&s=start_time&sd=desc",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "NordStar Capital",
+          "note": "Canada's largest circulation paper. Progressive.",
+          "verified": false
+        },
+        {
+          "name": "CBC News",
+          "rss": "https://www.cbc.ca/cmlink/rss-topstories",
+          "tier": "state-wire",
+          "bias": "left-center",
+          "ownership": "Canadian Broadcasting Corporation (federal)",
+          "note": "Canada's public broadcaster. Frequently targeted by conservatives as biased.",
+          "verified": true
+        },
+        {
+          "name": "National Post",
+          "rss": "https://nationalpost.com/feed/",
+          "tier": "independent",
+          "bias": "right-center",
+          "ownership": "Postmedia (US-backed)",
+          "verified": true
+        },
+        {
+          "name": "La Presse (Quebec)",
+          "rss": "https://www.lapresse.ca/actualites/national/rss",
+          "tier": "community",
+          "bias": "center",
+          "ownership": "Non-profit La Presse Inc.",
+          "language": "fr",
+          "note": "Canada's most read French-language newspaper. Converted to non-profit.",
+          "verified": false
+        },
+        {
+          "name": "The Tyee (British Columbia)",
+          "rss": "https://thetyee.ca/rss2.xml",
+          "tier": "community",
+          "bias": "left",
+          "ownership": "Non-profit",
+          "note": "BC-focused independent journalism. Strong on resource industry.",
+          "verified": true
+        }
+      ]
+    },
+    "NL": {
+      "_meta": {
+        "name": "Netherlands",
+        "rsf_rank": 5,
+        "language_default": "nl"
+      },
+      "sources": [
+        {
+          "name": "De Correspondent",
+          "rss": "https://decorrespondent.nl/feeds/latest",
+          "tier": "community",
+          "bias": "left-center",
+          "ownership": "Reader-funded non-profit",
+          "note": "Pioneering reader-funded model. Ad-free, no breaking news. Influential in journalism circles globally.",
+          "language": "nl",
+          "verified": true
+        },
+        {
+          "name": "NRC Handelsblad",
+          "rss": "https://www.nrc.nl/rss/",
+          "tier": "independent",
+          "bias": "center",
+          "language": "nl",
+          "verified": true
+        },
+        {
+          "name": "Follow the Money",
+          "rss": "https://www.ftm.nl/feed",
+          "tier": "community",
+          "bias": "center",
+          "ownership": "Non-profit investigative",
+          "note": "Financial and political corruption investigations.",
+          "language": "nl",
+          "verified": true
+        }
+      ]
+    },
+    "SE": {
+      "_meta": {
+        "name": "Sweden",
+        "rsf_rank": 4,
+        "language_default": "sv"
+      },
+      "sources": [
+        {
+          "name": "Aftonbladet",
+          "rss": "https://rss.aftonbladet.se/rss2/small/pages/sections/senastenytt/",
+          "tier": "independent",
+          "bias": "left",
+          "ownership": "Schibsted / LO (Swedish trade union federation)",
+          "language": "sv",
+          "verified": true
+        },
+        {
+          "name": "Svenska Dagbladet",
+          "rss": "https://www.svd.se/feed/articles.rss",
+          "tier": "independent",
+          "bias": "right-center",
+          "language": "sv",
+          "verified": true
+        },
+        {
+          "name": "SVT Nyheter",
+          "rss": "https://www.svt.se/nyheter/rss.xml",
+          "tier": "state-wire",
+          "bias": "center",
+          "ownership": "Sveriges Television (Swedish public broadcaster)",
+          "language": "sv",
+          "verified": true
+        }
+      ]
+    },
+    "PK": {
+      "_meta": {
+        "name": "Pakistan",
+        "rsf_rank": 152,
+        "language_default": "ur"
+      },
+      "sources": [
+        {
+          "name": "Dawn",
+          "rss": "https://www.dawn.com/feeds/home",
+          "tier": "independent",
+          "bias": "left-center",
+          "ownership": "Herald Publications",
+          "note": "Pakistan's most respected English newspaper. Frequently pressured by military intelligence.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "The News International",
+          "rss": "https://www.thenews.com.pk/rss/1/1",
+          "tier": "independent",
+          "bias": "center",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Geo News",
+          "rss": "https://www.geo.tv/rss",
+          "tier": "independent",
+          "bias": "center",
+          "ownership": "Jang Group",
+          "note": "Largest Urdu news network. Has been blocked multiple times by Pakistani authorities.",
+          "language": "en",
+          "verified": true
+        }
+      ]
+    },
+    "VE": {
+      "_meta": {
+        "name": "Venezuela",
+        "rsf_rank": 159,
+        "language_default": "es"
+      },
+      "sources": [
+        {
+          "name": "Efecto Cocuyo",
+          "rss": "https://efectococuyo.com/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "note": "Independent digital journalism under extreme government pressure.",
+          "language": "es",
+          "verified": true
+        },
+        {
+          "name": "El Pitazo",
+          "rss": "https://elpitazo.net/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "note": "Digital native. Operates under severe government restrictions.",
+          "language": "es",
+          "verified": true
+        }
+      ]
+    },
+    "MM": {
+      "_meta": {
+        "name": "Myanmar",
+        "rsf_rank": 169,
+        "language_default": "my"
+      },
+      "sources": [
+        {
+          "name": "Irrawaddy",
+          "rss": "https://www.irrawaddy.com/feed",
+          "tier": "exile",
+          "bias": "center",
+          "note": "Founded in 1993 by Burmese exiles. Thailand-based. Best English-language Myanmar coverage.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Myanmar Now",
+          "rss": "https://myanmar-now.org/en/feed",
+          "tier": "independent",
+          "bias": "center",
+          "note": "Operates underground since 2021 coup. Essential coup resistance coverage.",
+          "language": "en",
+          "verified": true
+        }
+      ]
+    },
+    "QA": {
+      "_meta": {
+        "name": "Qatar",
+        "rsf_rank": 99,
+        "language_default": "ar"
+      },
+      "sources": [
+        {
+          "name": "Al Jazeera — English",
+          "rss": "https://www.aljazeera.com/xml/rss/all.xml",
+          "tier": "state-wire",
+          "bias": "center",
+          "ownership": "Qatari government (Qatar Media Corporation)",
+          "note": "Qatar-funded. Genuinely strong international journalism and significant editorial independence in practice, especially on conflicts Saudi Arabia and UAE want suppressed. Coverage of Israeli-Palestinian conflict and Muslim Brotherhood politics reflects Qatari government interests.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Al Jazeera — Arabic",
+          "rss": "https://www.aljazeera.net/rss",
+          "tier": "state-wire",
+          "bias": "center",
+          "ownership": "Qatar Media Corporation",
+          "note": "Arabic edition covers Arab world more aggressively than English edition.",
+          "language": "ar",
+          "verified": true
+        }
+      ]
+    },
+    "AF": {
+      "_meta": {
+        "name": "Afghanistan",
+        "rsf_rank": 178,
+        "language_default": "ps"
+      },
+      "sources": [
+        {
+          "name": "TOLOnews",
+          "rss": "https://tolonews.com/rss.xml",
+          "tier": "independent",
+          "bias": "center",
+          "note": "Afghanistan's most watched TV channel. Continues operating under Taliban. Self-censorship significant.",
+          "language": "en",
+          "verified": true
+        },
+        {
+          "name": "Radio Azadi (RFE/RL Afghanistan)",
+          "rss": "https://da.azadiradio.com/api/zrqomytpiq",
+          "tier": "foreign-funded",
+          "bias": "center",
+          "ownership": "US government via RFE/RL",
+          "language": "ps",
+          "verified": false
+        }
+      ]
+    },
+    "ID": {
+      "_meta": {
+        "name": "Indonesia",
+        "rsf_rank": 62,
+        "language_default": "id",
+        "note": "World's fourth most populous country. Press freedom has improved but remains fragile."
+      },
+      "sources": [
+        {
+          "name": "The Jakarta Post",
+          "rss": "https://www.thejakartapost.com/rss/id/headlines.xml",
+          "tier": "independent",
+          "bias": "center",
+          "language": "en",
+          "ownership": "PT Bina Media Tenggara",
+          "note": "Indonesia's leading English-language newspaper. Standard reference for foreign readers.",
+          "verified": true
+        },
+        {
+          "name": "Jakarta Globe",
+          "rss": "https://jakartaglobe.id/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "language": "en",
+          "ownership": "Beritasatu Media Holdings",
+          "note": "English-language digital news. Business, politics, culture.",
+          "verified": true
+        },
+        {
+          "name": "Kompas",
+          "rss": "https://rss.kompas.com/nationalcompas.rss",
+          "tier": "independent",
+          "bias": "center",
+          "language": "id",
+          "ownership": "Kompas Gramedia Group",
+          "note": "Indonesia's most read and trusted national newspaper. Founded by Catholic intellectuals.",
+          "verified": false
+        },
+        {
+          "name": "Tempo (Indonesia)",
+          "rss": "https://www.tempo.co/rss/nasional",
+          "tier": "independent",
+          "bias": "left-center",
+          "language": "id",
+          "ownership": "PT Tempo Inti Media",
+          "note": "Indonesia's best investigative journalism. Has been suspended multiple times for critical coverage.",
+          "verified": true
+        },
+        {
+          "name": "Detik.com",
+          "rss": "https://rss.detik.com/index.php/detikcom",
+          "tier": "independent",
+          "bias": "center",
+          "language": "id",
+          "ownership": "Trans Media (Chairul Tanjung)",
+          "note": "Highest traffic Indonesian news site. Breaking news focus.",
+          "verified": true
+        },
+        {
+          "name": "Tirto.id",
+          "rss": "https://tirto.id/rss",
+          "tier": "independent",
+          "bias": "left-center",
+          "language": "id",
+          "ownership": "Independent digital",
+          "note": "Fact-checking and investigative journalism. Strong on politics and social issues.",
+          "verified": true
+        },
+        {
+          "name": "BenarNews — Indonesia",
+          "rss": "https://www.benarnews.org/rss/indonesian.xml",
+          "tier": "foreign-funded",
+          "bias": "center",
+          "language": "id",
+          "ownership": "Radio Free Asia (US-funded)",
+          "note": "Covers security, politics, and human rights in Southeast Asia.",
+          "verified": true
+        }
+      ]
+    },
+    "VN": {
+      "_meta": {
+        "name": "Vietnam",
+        "rsf_rank": 174,
+        "language_default": "vi",
+        "note": "One-party state. All media operates under CPV oversight. Independent journalism is impossible domestically."
+      },
+      "sources": [
+        {
+          "name": "VnExpress International",
+          "rss": "https://e.vnexpress.net/rss/news.rss",
+          "tier": "state",
+          "bias": "state-narrative",
+          "language": "en",
+          "ownership": "FPT Corporation (state-linked)",
+          "note": "Most read Vietnamese news site. English edition is most accessible internationally.",
+          "verified": true
+        },
+        {
+          "name": "Tuoi Tre News (Youth Newspaper)",
+          "rss": "https://tuoitrenews.vn/rss/Home",
+          "tier": "state",
+          "bias": "state-narrative",
+          "language": "en",
+          "ownership": "Ho Chi Minh City Communist Youth Union",
+          "note": "Second largest Vietnamese paper. Party youth organ. Less stiff than official outlets.",
+          "verified": false
+        },
+        {
+          "name": "Vietnam News",
+          "rss": "https://vietnamnews.vn/rss/",
+          "tier": "state",
+          "bias": "state-narrative",
+          "language": "en",
+          "ownership": "Vietnam News Agency (state wire)",
+          "note": "Official English-language state newspaper.",
+          "verified": true
+        },
+        {
+          "name": "The Vietnamese Magazine",
+          "rss": "https://www.thevietnamese.org/feed/",
+          "tier": "exile",
+          "bias": "center",
+          "language": "en",
+          "ownership": "Independent diaspora",
+          "note": "US-based. Covers human rights, democracy, and civil society stories suppressed inside Vietnam.",
+          "verified": false
+        }
+      ]
+    },
+    "TH": {
+      "_meta": {
+        "name": "Thailand",
+        "rsf_rank": 85,
+        "language_default": "th"
+      },
+      "sources": [
+        {
+          "name": "Bangkok Post",
+          "rss": "https://www.bangkokpost.com/rss/data/topstories.xml",
+          "tier": "independent",
+          "bias": "center",
+          "language": "en",
+          "ownership": "Post Publishing PCL",
+          "note": "Thailand's oldest English-language daily. Regional benchmark for SE Asia news.",
+          "verified": true
+        },
+        {
+          "name": "The Nation Thailand",
+          "rss": "https://www.nationthailand.com/rss.xml",
+          "tier": "independent",
+          "bias": "right-center",
+          "language": "en",
+          "ownership": "Nation Multimedia Group",
+          "verified": true
+        },
+        {
+          "name": "Prachatai",
+          "rss": "https://prachatai.com/english/rss",
+          "tier": "community",
+          "bias": "left-center",
+          "language": "en",
+          "ownership": "Non-profit Foundation for Community Educational Media",
+          "note": "Most important independent Thai journalism. Human rights, political dissent, lèse-majesté coverage. Has been repeatedly prosecuted.",
+          "verified": true
+        },
+        {
+          "name": "Khaosod English",
+          "rss": "https://www.khaosodenglish.com/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "language": "en",
+          "ownership": "Matichon Group",
+          "note": "English edition of major Thai language paper. Good for breaking news.",
+          "verified": true
+        }
+      ]
+    },
+    "PH": {
+      "_meta": {
+        "name": "Philippines",
+        "rsf_rank": 116,
+        "language_default": "en",
+        "note": "English is an official language; major papers publish primarily in English."
+      },
+      "sources": [
+        {
+          "name": "Rappler",
+          "rss": "https://www.rappler.com/feed/",
+          "tier": "independent",
+          "bias": "left-center",
+          "language": "en",
+          "ownership": "Rappler Inc.",
+          "note": "Led by Maria Ressa (Nobel Peace Prize 2021). Faced Duterte-era legal harassment. Best investigative Philippine journalism.",
+          "verified": true
+        },
+        {
+          "name": "Philippine Daily Inquirer",
+          "rss": "https://newsinfo.inquirer.net/feed",
+          "tier": "independent",
+          "bias": "center",
+          "language": "en",
+          "ownership": "Inquirer Group of Companies",
+          "note": "Philippines' most widely read broadsheet.",
+          "verified": true
+        },
+        {
+          "name": "Philippine Star",
+          "rss": "https://www.philstar.com/rss/headlines",
+          "tier": "independent",
+          "bias": "center",
+          "language": "en",
+          "ownership": "Philstar Daily Inc.",
+          "verified": true
+        },
+        {
+          "name": "Manila Bulletin",
+          "rss": "https://mb.com.ph/feed/",
+          "tier": "independent",
+          "bias": "right-center",
+          "language": "en",
+          "ownership": "Manila Bulletin Publishing",
+          "note": "Conservative. Oldest English-language daily in the Philippines.",
+          "verified": true
+        },
+        {
+          "name": "PCIJ (Philippine Center for Investigative Journalism)",
+          "rss": "https://pcij.org/feed/",
+          "tier": "community",
+          "bias": "center",
+          "language": "en",
+          "ownership": "Non-profit",
+          "note": "Pioneer of investigative journalism in Southeast Asia.",
+          "verified": true
+        }
+      ]
+    },
+    "MY": {
+      "_meta": {
+        "name": "Malaysia",
+        "rsf_rank": 107,
+        "language_default": "ms"
+      },
+      "sources": [
+        {
+          "name": "Malaysiakini",
+          "rss": "https://www.malaysiakini.com/rss.xml",
+          "tier": "independent",
+          "bias": "center",
+          "language": "en",
+          "ownership": "Mkini Dotcom Sdn Bhd (reader-funded)",
+          "note": "Most important independent Malaysian media. Has faced government lawsuits and sedition charges. Survived 1MDB era.",
+          "verified": true
+        },
+        {
+          "name": "Free Malaysia Today",
+          "rss": "https://www.freemalaysiatoday.com/category/nation/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "language": "en",
+          "ownership": "Independent",
+          "note": "Digital native. Strong on political news and investigative reporting.",
+          "verified": true
+        },
+        {
+          "name": "New Straits Times",
+          "rss": "https://www.nst.com.my/news/nation/rss",
+          "tier": "independent",
+          "bias": "right-center",
+          "language": "en",
+          "ownership": "Media Prima (UMNO-linked historically)",
+          "note": "Historic flagship English daily. UMNO political establishment ties.",
+          "verified": false
+        },
+        {
+          "name": "Malay Mail",
+          "rss": "https://www.malaymail.com/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "language": "en",
+          "ownership": "Media Prima",
+          "verified": true
+        }
+      ]
+    },
+    "SG": {
+      "_meta": {
+        "name": "Singapore",
+        "rsf_rank": 123,
+        "language_default": "en"
+      },
+      "sources": [
+        {
+          "name": "Channel NewsAsia (CNA)",
+          "rss": "https://www.channelnewsasia.com/rssfeeds/8395986",
+          "tier": "state-wire",
+          "bias": "center",
+          "language": "en",
+          "ownership": "Mediacorp (Singapore state-owned)",
+          "note": "Primary English news broadcaster. Regional reach across Southeast Asia.",
+          "verified": true
+        },
+        {
+          "name": "The Straits Times",
+          "rss": "https://www.straitstimes.com/RSS/breaking-news.xml",
+          "tier": "independent",
+          "bias": "right-center",
+          "language": "en",
+          "ownership": "Singapore Press Holdings",
+          "note": "Singapore's newspaper of record. SPH is restructured but historically state-adjacent.",
+          "verified": true
+        },
+        {
+          "name": "Today Online",
+          "rss": "https://www.todayonline.com/rss",
+          "tier": "independent",
+          "bias": "center",
+          "language": "en",
+          "ownership": "Mediacorp",
+          "verified": true
+        },
+        {
+          "name": "Rice Media",
+          "rss": "https://ricemedia.co/feed/",
+          "tier": "independent",
+          "bias": "left-center",
+          "language": "en",
+          "ownership": "Independent",
+          "note": "Independent Singaporean outlet covering social issues and youth culture.",
+          "verified": false
+        }
+      ]
+    },
+    "CO": {
+      "_meta": {
+        "name": "Colombia",
+        "rsf_rank": 134,
+        "language_default": "es",
+        "note": "High journalist murder rate. Many reporters operate under cartel and paramilitary threat."
+      },
+      "sources": [
+        {
+          "name": "El Tiempo",
+          "rss": "https://www.eltiempo.com/rss/noticias.xml",
+          "tier": "independent",
+          "bias": "right-center",
+          "language": "es",
+          "ownership": "Grupo Empresarial El Tiempo (Casa Editorial El Tiempo)",
+          "note": "Colombia's most widely read paper. Historically close to establishment. Luis Carlos Galán connection.",
+          "verified": true
+        },
+        {
+          "name": "El Espectador",
+          "rss": "https://www.elespectador.com/arc/outbound/rss/",
+          "tier": "independent",
+          "bias": "left-center",
+          "language": "es",
+          "ownership": "Grupo Gilinski",
+          "note": "Second major national daily. Critically covered Escobar. Offices bombed 1989.",
+          "verified": true
+        },
+        {
+          "name": "Semana",
+          "rss": "https://www.semana.com/rss",
+          "tier": "independent",
+          "bias": "right-center",
+          "language": "es",
+          "ownership": "Gilinski Group (banking family)",
+          "note": "Influential political magazine. Ownership change brought editorial concerns.",
+          "verified": true
+        },
+        {
+          "name": "La Silla Vacía",
+          "rss": "https://lasillavacia.com/feed/",
+          "tier": "community",
+          "bias": "center",
+          "language": "es",
+          "ownership": "Non-profit",
+          "note": "Colombia's best political journalism. Power mapping and congress tracking.",
+          "verified": true
+        },
+        {
+          "name": "InSight Crime — Colombia",
+          "rss": "https://insightcrime.org/category/investigations/colombia/feed/",
+          "tier": "community",
+          "bias": "center",
+          "language": "en",
+          "ownership": "Non-profit Foundation for Peace",
+          "note": "Essential for FARC, ELN, drug trafficking, and cartel coverage in Colombia.",
+          "verified": true
+        },
+        {
+          "name": "El Colombiano (Medellín)",
+          "rss": "https://www.elcolombiano.com/rss",
+          "tier": "independent",
+          "bias": "right-center",
+          "language": "es",
+          "ownership": "Comunidad Claretiana",
+          "note": "Antioquia's flagship paper. Medellín narco history, peace process coverage.",
+          "verified": false
+        }
+      ]
+    },
+    "CL": {
+      "_meta": {
+        "name": "Chile",
+        "rsf_rank": 55,
+        "language_default": "es"
+      },
+      "sources": [
+        {
+          "name": "La Tercera",
+          "rss": "https://www.latercera.com/feed/",
+          "tier": "independent",
+          "bias": "right-center",
+          "language": "es",
+          "ownership": "Grupo Copesa (Alvaro Saieh)",
+          "note": "Chile's second most-read newspaper. Center-right.",
+          "verified": true
+        },
+        {
+          "name": "El Mercurio",
+          "rss": "https://www.emol.com/rss/nacional.xml",
+          "tier": "independent",
+          "bias": "right",
+          "language": "es",
+          "ownership": "Empresa El Mercurio (Edwards family)",
+          "note": "Chile's oldest major paper. Conservative. Edwards family connection to Pinochet-era is historical fact.",
+          "verified": true
+        },
+        {
+          "name": "CIPER Chile",
+          "rss": "https://www.ciperchile.cl/feed/",
+          "tier": "community",
+          "bias": "center",
+          "language": "es",
+          "ownership": "Non-profit",
+          "note": "Chile's premier investigative journalism outlet. Corruption, business, political accountability.",
+          "verified": true
+        },
+        {
+          "name": "El Mostrador",
+          "rss": "https://www.elmostrador.cl/rss/feed.xml",
+          "tier": "independent",
+          "bias": "left-center",
+          "language": "es",
+          "ownership": "Independent",
+          "note": "Digital-only. Chile's oldest online news outlet.",
+          "verified": true
+        },
+        {
+          "name": "Interferencia",
+          "rss": "https://interferencia.cl/feed/",
+          "tier": "independent",
+          "bias": "left",
+          "language": "es",
+          "ownership": "Independent",
+          "note": "Independent investigative outlet. Human rights and memory from dictatorship era.",
+          "verified": false
+        }
+      ]
+    },
+    "PE": {
+      "_meta": {
+        "name": "Peru",
+        "rsf_rank": 128,
+        "language_default": "es",
+        "note": "High political instability. Press freedom threatened by successive governments."
+      },
+      "sources": [
+        {
+          "name": "El Comercio",
+          "rss": "https://elcomercio.pe/rss/",
+          "tier": "independent",
+          "bias": "right-center",
+          "language": "es",
+          "ownership": "Grupo El Comercio",
+          "note": "Peru's oldest and most-read newspaper. Dominant media conglomerate.",
+          "verified": true
+        },
+        {
+          "name": "La República",
+          "rss": "https://larepublica.pe/feed/",
+          "tier": "independent",
+          "bias": "left-center",
+          "language": "es",
+          "ownership": "La República Publications",
+          "note": "Second major daily. Left-leaning, critical of political right.",
+          "verified": true
+        },
+        {
+          "name": "OjoPúblico (Peru)",
+          "rss": "https://ojo-publico.com/feed/",
+          "tier": "community",
+          "bias": "center",
+          "language": "es",
+          "ownership": "Non-profit",
+          "note": "Peru's best investigative journalism. Corruption, narco-politics, environment. ICIJ member.",
+          "verified": true
+        },
+        {
+          "name": "IDL-Reporteros",
+          "rss": "https://idl-reporteros.pe/feed/",
+          "tier": "community",
+          "bias": "center",
+          "language": "es",
+          "ownership": "Non-profit (Instituto de Defensa Legal)",
+          "note": "Investigative outlet. Broke Vladivideos scandal. Justice and corruption focus.",
+          "verified": false
+        }
+      ]
+    },
+    "ES": {
+      "_meta": {
+        "name": "Spain",
+        "rsf_rank": 30,
+        "language_default": "es"
+      },
+      "sources": [
+        {
+          "name": "El País",
+          "rss": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada",
+          "tier": "independent",
+          "bias": "left-center",
+          "language": "es",
+          "ownership": "Prisa Group",
+          "note": "Spain's newspaper of record. Strong Latin America coverage.",
+          "verified": true
+        },
+        {
+          "name": "El Mundo",
+          "rss": "https://www.elmundo.es/rss/portada.xml",
+          "tier": "independent",
+          "bias": "right-center",
+          "language": "es",
+          "ownership": "Unidad Editorial (Italian RCS MediaGroup)",
+          "verified": true
+        },
+        {
+          "name": "La Vanguardia",
+          "rss": "https://www.lavanguardia.com/rss/home.xml",
+          "tier": "independent",
+          "bias": "center",
+          "language": "es",
+          "ownership": "Godó Group",
+          "note": "Barcelona-based. Catalonia focus. Key for understanding Spanish regional politics.",
+          "verified": true
+        },
+        {
+          "name": "El Confidencial",
+          "rss": "https://www.elconfidencial.com/rss/",
+          "tier": "independent",
+          "bias": "center",
+          "language": "es",
+          "ownership": "Titania Compañía Editorial",
+          "note": "Digital-native. Best investigative journalism in Spain. Broke Panama Papers angle.",
+          "verified": true
+        },
+        {
+          "name": "elDiario.es",
+          "rss": "https://www.eldiario.es/rss/",
+          "tier": "community",
+          "bias": "left",
+          "language": "es",
+          "ownership": "Reader co-owned (Diario de Prensa Digital)",
+          "note": "Reader-funded progressive outlet. Strong investigative capacity.",
+          "verified": true
+        }
+      ]
+    },
+    "IT": {
+      "_meta": {
+        "name": "Italy",
+        "rsf_rank": 46,
+        "language_default": "it"
+      },
+      "sources": [
+        {
+          "name": "La Repubblica",
+          "rss": "https://www.repubblica.it/rss/homepage/rss2.0.xml",
+          "tier": "independent",
+          "bias": "left-center",
+          "language": "it",
+          "ownership": "GEDI Gruppo Editoriale (Agnelli/Exor family)",
+          "note": "Italy's most read newspaper. Center-left flagship. Fiat/Agnelli ownership is noted.",
+          "verified": true
+        },
+        {
+          "name": "Corriere della Sera",
+          "rss": "https://xml2.corriereobjects.it/rss/homepage.xml",
+          "tier": "independent",
+          "bias": "right-center",
+          "language": "it",
+          "ownership": "RCS MediaGroup (industrial consortium)",
+          "note": "Italy's historic newspaper of record. Milan-based.",
+          "verified": true
+        },
+        {
+          "name": "Il Sole 24 Ore",
+          "rss": "https://www.ilsole24ore.com/rss/",
+          "tier": "independent",
+          "bias": "right-center",
+          "language": "it",
+          "ownership": "Confindustria (Italian industry federation)",
+          "note": "Italy's financial and business paper. Owner is Italy's main employer federation.",
+          "verified": true
+        },
+        {
+          "name": "Il Fatto Quotidiano",
+          "rss": "https://www.ilfattoquotidiano.it/feed/",
+          "tier": "independent",
+          "bias": "left",
+          "language": "it",
+          "ownership": "Independent",
+          "note": "Anti-corruption investigative journalism. Populist but editorial independence strong.",
+          "verified": true
+        }
+      ]
+    },
+    "PL": {
+      "_meta": {
+        "name": "Poland",
+        "rsf_rank": 49,
+        "language_default": "pl"
+      },
+      "sources": [
+        {
+          "name": "Gazeta Wyborcza",
+          "rss": "https://rss.gazeta.pl/pub/rss/wyborcza_kraj.xml",
+          "tier": "independent",
+          "bias": "left-center",
+          "language": "pl",
+          "ownership": "Agora SA",
+          "note": "Poland's most influential newspaper. Founded during 1989 Solidarity transition. Under sustained attack from PiS government 2015-2023.",
+          "verified": true
+        },
+        {
+          "name": "TVN24 / Fakty",
+          "rss": "https://tvn24.pl/najnowsze.xml",
+          "tier": "independent",
+          "bias": "center",
+          "language": "pl",
+          "ownership": "Warner Bros. Discovery",
+          "note": "Poland's most watched private news channel. US ownership protected it from PiS media law.",
+          "verified": true
+        },
+        {
+          "name": "OKO.press",
+          "rss": "https://oko.press/feed/",
+          "tier": "community",
+          "bias": "left-center",
+          "language": "pl",
+          "ownership": "Non-profit",
+          "note": "Fact-checking and accountability journalism. Founded in response to PiS rule.",
+          "verified": true
+        },
+        {
+          "name": "Polityka",
+          "rss": "https://www.polityka.pl/rss/polityka.xml",
+          "tier": "independent",
+          "bias": "left-center",
+          "language": "pl",
+          "ownership": "Worker co-owned",
+          "note": "Poland's most respected weekly. Staff majority-owned.",
+          "verified": true
+        }
+      ]
+    },
+    "MA": {
+      "_meta": {
+        "name": "Morocco",
+        "rsf_rank": 126,
+        "language_default": "ar"
+      },
+      "sources": [
+        {
+          "name": "Le Desk (Morocco)",
+          "rss": "https://ledesk.ma/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "language": "fr",
+          "ownership": "Independent",
+          "note": "Morocco's most credible independent digital outlet. Business and political accountability.",
+          "verified": true
+        },
+        {
+          "name": "Tel Quel",
+          "rss": "https://telquel.ma/feed/",
+          "tier": "independent",
+          "bias": "left-center",
+          "language": "fr",
+          "ownership": "Independent",
+          "note": "French-language weekly. Covers stories Moroccan Arabic press avoids. Has faced legal pressure.",
+          "verified": true
+        },
+        {
+          "name": "Hespress",
+          "rss": "https://www.hespress.com/feed",
+          "tier": "independent",
+          "bias": "right-center",
+          "language": "ar",
+          "ownership": "Independent",
+          "note": "Most read Arabic-language Moroccan news site.",
+          "verified": true
+        },
+        {
+          "name": "Goud.ma",
+          "rss": "https://goud.ma/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "language": "ar",
+          "ownership": "Independent",
+          "verified": false
+        }
+      ]
+    },
+    "GH": {
+      "_meta": {
+        "name": "Ghana",
+        "rsf_rank": 26,
+        "language_default": "en",
+        "note": "One of Africa's freest press environments."
+      },
+      "sources": [
+        {
+          "name": "Graphic Online (Ghana)",
+          "rss": "https://www.graphic.com.gh/feed",
+          "tier": "state-wire",
+          "bias": "center",
+          "language": "en",
+          "ownership": "Graphic Communications Group (state)",
+          "note": "Ghana's oldest and most-read paper. State-owned but broadly professional.",
+          "verified": false
+        },
+        {
+          "name": "Joy Online (Multimedia)",
+          "rss": "https://www.myjoyonline.com/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "language": "en",
+          "ownership": "Multimedia Group",
+          "note": "West Africa's most respected private broadcaster.",
+          "verified": true
+        },
+        {
+          "name": "The Chronicle (Ghana)",
+          "rss": "https://thechronicle.com.gh/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "language": "en",
+          "ownership": "Independent",
+          "verified": false
+        }
+      ]
+    },
+    "SN": {
+      "_meta": {
+        "name": "Senegal",
+        "rsf_rank": 81,
+        "language_default": "fr"
+      },
+      "sources": [
+        {
+          "name": "Dakar Actu",
+          "rss": "https://www.dakaractu.com/feed/rss2/",
+          "tier": "independent",
+          "bias": "center",
+          "language": "fr",
+          "ownership": "Independent",
+          "note": "One of Senegal's most read digital news sites.",
+          "verified": false
+        },
+        {
+          "name": "Enquête Plus (Senegal)",
+          "rss": "https://www.enqueteplus.com/feed/",
+          "tier": "independent",
+          "bias": "center",
+          "language": "fr",
+          "ownership": "Independent",
+          "note": "Investigative-leaning Senegalese journalism.",
+          "verified": false
+        }
+      ]
+    }
+  },
+  "international": {
+    "_meta": {
+      "description": "Outlets that purport to cover the entire world with no single national focus. Includes global wire services, international broadcasters, and worldwide industry publications."
+    },
+    "general": [
+      {
+        "name": "Reuters — World",
+        "rss": "https://feeds.reuters.com/reuters/worldNews",
+        "tier": "wire",
+        "bias": "center",
+        "ownership": "Thomson Reuters (Woodbridge family)",
+        "note": "The global wire of record. Feeds most newspapers worldwide.",
+        "language": "en",
+        "verified": true
+      },
+      {
+        "name": "Associated Press — World",
+        "rss": "https://feeds.apnews.com/rss/apf-intlnews",
+        "tier": "wire",
+        "bias": "center",
+        "ownership": "Non-profit cooperative",
+        "language": "en",
+        "verified": true
+      },
+      {
+        "name": "AFP (Agence France-Presse)",
+        "rss": "https://www.afp.com/en/agency/press-releases-newsletter",
+        "tier": "wire",
+        "bias": "center",
+        "ownership": "French quasi-public (AFP statute)",
+        "note": "Third largest global wire. Strong Africa and Francophone world coverage. Nominally independent under AFP Act.",
+        "language": "en",
+        "verified": false
+      },
+      {
+        "name": "Al Jazeera English",
+        "rss": "https://www.aljazeera.com/xml/rss/all.xml",
+        "tier": "state-wire",
+        "bias": "center",
+        "ownership": "Qatari government",
+        "language": "en",
+        "verified": true
+      },
+      {
+        "name": "BBC World Service",
+        "rss": "http://feeds.bbci.co.uk/news/world/rss.xml",
+        "tier": "state-wire",
+        "bias": "center",
+        "ownership": "BBC (UK public, Foreign Office-funded World Service historically)",
+        "language": "en",
+        "verified": true
+      },
+      {
+        "name": "DW — World",
+        "rss": "https://rss.dw.com/rdf/rss-en-world",
+        "tier": "state-wire",
+        "bias": "center",
+        "ownership": "German federal government",
+        "language": "en",
+        "verified": true
+      },
+      {
+        "name": "France 24",
+        "rss": "https://www.france24.com/en/rss",
+        "tier": "state-wire",
+        "bias": "center",
+        "ownership": "French government",
+        "language": "en",
+        "verified": true
+      },
+      {
+        "name": "The Economist — World",
+        "rss": "https://www.economist.com/the-world-this-week/rss.xml",
+        "tier": "independent",
+        "bias": "right-center",
+        "ownership": "Economist Group",
+        "language": "en",
+        "verified": true
+      },
+      {
+        "name": "Foreign Policy",
+        "rss": "https://foreignpolicy.com/feed/",
+        "tier": "independent",
+        "bias": "center",
+        "ownership": "Graham Holdings",
+        "note": "US foreign policy and international relations focus. Elite policy audience.",
+        "language": "en",
+        "verified": true
+      },
+      {
+        "name": "Foreign Affairs",
+        "rss": "https://www.foreignaffairs.com/rss.xml",
+        "tier": "independent",
+        "bias": "center",
+        "ownership": "Council on Foreign Relations",
+        "note": "US foreign policy establishment publication. Reflects CFR member perspectives.",
+        "language": "en",
+        "verified": true
+      },
+      {
+        "name": "Voice of America",
+        "rss": "https://www.voanews.com/api/zmgqepqpek",
+        "tier": "foreign-funded",
+        "bias": "center",
+        "ownership": "US Agency for Global Media",
+        "note": "US government funded. Editorially separated by USAGM firewall. Critics question independence.",
+        "language": "en",
+        "verified": false
+      },
+      {
+        "name": "The Conversation — World",
+        "rss": "https://theconversation.com/global/articles.atom",
+        "tier": "community",
+        "bias": "left-center",
+        "ownership": "Non-profit academic",
+        "note": "Articles written by academics and researchers. High expertise, readable format.",
+        "language": "en",
+        "verified": true
+      },
+      {
+        "name": "Quartz",
+        "rss": "https://qz.com/feed",
+        "tier": "independent",
+        "bias": "left-center",
+        "note": "Global business and economics. Emerging markets focus.",
+        "language": "en",
+        "verified": true
+      },
+      {
+        "name": "Rest of World",
+        "rss": "https://restofworld.org/feed/latest",
+        "tier": "community",
+        "bias": "center",
+        "ownership": "Non-profit",
+        "note": "Technology's impact in the Global South. Fills a major gap in Western tech journalism.",
+        "language": "en",
+        "verified": true
+      },
+      {
+        "name": "Global Voices",
+        "rss": "https://globalvoices.org/feed/",
+        "tier": "community",
+        "bias": "left-center",
+        "ownership": "Non-profit citizen media",
+        "note": "Aggregates and translates citizen journalism from underreported regions worldwide.",
+        "language": "en",
+        "verified": true
+      },
+      {
+        "name": "OCCRP (Organized Crime and Corruption Reporting Project)",
+        "rss": "https://www.occrp.org/en/rss",
+        "tier": "community",
+        "bias": "center",
+        "ownership": "Non-profit investigative network",
+        "note": "Pan-European investigative consortium. Broke Panama Papers, Pandora Papers. Essential for transnational corruption.",
+        "language": "en",
+        "verified": true
+      },
+      {
+        "name": "Bellingcat",
+        "rss": "https://www.bellingcat.com/feed/",
+        "tier": "community",
+        "bias": "center",
+        "ownership": "Non-profit",
+        "note": "Open-source intelligence and geolocation investigations. Critical on Russian military and disinformation.",
+        "language": "en",
+        "verified": true
+      }
+    ],
+    "industries": {
+      "energy_and_fuel": [
+        {
+          "name": "OilPrice.com",
+          "rss": "https://oilprice.com/rss/main",
+          "topic": "energy",
+          "note": "Daily oil, gas, and energy market news.",
+          "verified": true
+        },
+        {
+          "name": "Reuters — Energy",
+          "rss": "https://feeds.reuters.com/reuters/energy",
+          "topic": "energy",
+          "verified": true
+        },
+        {
+          "name": "S&P Global Platts",
+          "rss": "https://www.spglobal.com/commodityinsights/en/rss-feed/oil",
+          "topic": "energy",
+          "note": "Commodity pricing and energy markets. Industry standard.",
+          "verified": false
+        },
+        {
+          "name": "Energy Monitor",
+          "rss": "https://www.energymonitor.ai/feed/",
+          "topic": "energy",
+          "note": "Energy transition and renewables focus.",
+          "verified": true
+        },
+        {
+          "name": "Upstream Online",
+          "rss": "https://www.upstreamonline.com/rss",
+          "topic": "energy",
+          "note": "Upstream oil and gas industry.",
+          "verified": false
+        },
+        {
+          "name": "Downstream Today",
+          "rss": "https://www.downstreamtoday.com/rss/rss.aspx",
+          "topic": "energy",
+          "verified": false
+        },
+        {
+          "name": "Rigzone",
+          "rss": "https://www.rigzone.com/news/rss/rigzone_latest.aspx",
+          "topic": "energy",
+          "note": "Offshore and onshore drilling industry.",
+          "verified": true
+        },
+        {
+          "name": "Natural Gas World",
+          "rss": "https://www.naturalgasworld.com/feed/",
+          "topic": "energy",
+          "verified": false
+        },
+        {
+          "name": "Carbon Brief",
+          "rss": "https://www.carbonbrief.org/feed/",
+          "topic": "energy",
+          "note": "Climate science and energy policy. Exceptional data journalism.",
+          "verified": true
+        },
+        {
+          "name": "Renewables Now",
+          "rss": "https://renewablesnow.com/rss/",
+          "topic": "energy",
+          "note": "Renewable energy project news globally.",
+          "verified": true
+        }
+      ],
+      "shipping_and_trade": [
+        {
+          "name": "Splash 247",
+          "rss": "https://splash247.com/feed/",
+          "topic": "shipping",
+          "note": "Daily maritime industry news. Independent.",
+          "verified": true
+        },
+        {
+          "name": "Lloyd's List",
+          "rss": "https://lloydslist.maritimeintelligence.informa.com/rss-feeds",
+          "topic": "shipping",
+          "note": "World's oldest continuously published journal. Maritime industry bible since 1734.",
+          "verified": false
+        },
+        {
+          "name": "TradeWinds",
+          "rss": "https://www.tradewindsnews.com/rss",
+          "topic": "shipping",
+          "note": "Shipping and offshore markets.",
+          "verified": false
+        },
+        {
+          "name": "FreightWaves",
+          "rss": "https://www.freightwaves.com/news/feed",
+          "topic": "shipping",
+          "note": "Freight, logistics, and supply chain. Strong US focus but global scope.",
+          "verified": true
+        },
+        {
+          "name": "The Loadstar",
+          "rss": "https://theloadstar.com/feed/",
+          "topic": "shipping",
+          "note": "Container shipping and logistics.",
+          "verified": true
+        },
+        {
+          "name": "Container News",
+          "rss": "https://container-news.com/feed/",
+          "topic": "shipping",
+          "verified": true
+        },
+        {
+          "name": "World Trade Organization News",
+          "rss": "https://www.wto.org/english/news_e/news_e.xml",
+          "topic": "trade",
+          "note": "Official WTO press releases and trade dispute updates.",
+          "verified": true
+        },
+        {
+          "name": "Reuters — Trade",
+          "rss": "https://feeds.reuters.com/reuters/businessNews",
+          "topic": "trade",
+          "verified": true
+        },
+        {
+          "name": "UNCTAD News",
+          "rss": "https://unctad.org/rss.xml",
+          "topic": "trade",
+          "note": "UN trade and development. Strong Global South trade statistics.",
+          "verified": false
+        }
+      ],
+      "finance_and_markets": [
+        {
+          "name": "Bloomberg Markets",
+          "rss": "https://feeds.bloomberg.com/markets/news.rss",
+          "topic": "finance",
+          "note": "Financial markets of record. Requires Bloomberg terminal for full access but RSS has headlines.",
+          "verified": true
+        },
+        {
+          "name": "Financial Times",
+          "rss": "https://www.ft.com/rss/home",
+          "topic": "finance",
+          "verified": true
+        },
+        {
+          "name": "Naked Capitalism",
+          "rss": "https://www.nakedcapitalism.com/feed",
+          "topic": "finance",
+          "note": "Heterodox economics and finance. Skeptical of Wall Street and mainstream economic consensus.",
+          "verified": true
+        },
+        {
+          "name": "Zero Hedge",
+          "rss": "https://feeds.feedburner.com/zerohedge/feed",
+          "topic": "finance",
+          "note": "Contrarian financial commentary. Often first on market stress stories. Significant misinformation and conspiracy content mixed in. Use with caution.",
+          "verified": true
+        },
+        {
+          "name": "IMF News",
+          "rss": "https://www.imf.org/en/News/rss",
+          "topic": "finance",
+          "note": "IMF press releases, country reports, and economic outlooks.",
+          "verified": true
+        },
+        {
+          "name": "World Bank Blogs",
+          "rss": "https://blogs.worldbank.org/rss.xml",
+          "topic": "finance",
+          "verified": true
+        },
+        {
+          "name": "BIS (Bank for International Settlements)",
+          "rss": "https://www.bis.org/doclist/all_speeches.rss",
+          "topic": "finance",
+          "note": "Central bank coordination and monetary policy research.",
+          "verified": true
+        }
+      ],
+      "technology": [
+        {
+          "name": "TechCrunch",
+          "rss": "https://techcrunch.com/feed/",
+          "topic": "technology",
+          "bias": "left-center",
+          "ownership": "Yahoo",
+          "verified": true
+        },
+        {
+          "name": "Wired",
+          "rss": "https://www.wired.com/feed/rss",
+          "topic": "technology",
+          "bias": "left-center",
+          "ownership": "Condé Nast",
+          "note": "Stronger on societal impact and policy than pure product coverage.",
+          "verified": true
+        },
+        {
+          "name": "Ars Technica",
+          "rss": "https://feeds.arstechnica.com/arstechnica/index",
+          "topic": "technology",
+          "bias": "left-center",
+          "ownership": "Condé Nast",
+          "note": "Best technical depth of major tech publications.",
+          "verified": true
+        },
+        {
+          "name": "The Verge",
+          "rss": "https://www.theverge.com/rss/index.xml",
+          "topic": "technology",
+          "bias": "left-center",
+          "ownership": "Vox Media",
+          "verified": true
+        },
+        {
+          "name": "MIT Technology Review",
+          "rss": "https://www.technologyreview.com/feed/",
+          "topic": "technology",
+          "ownership": "MIT (non-profit)",
+          "note": "Research-grade technology journalism. AI, biotech, energy tech.",
+          "verified": true
+        },
+        {
+          "name": "Rest of World — Tech in the Global South",
+          "rss": "https://restofworld.org/feed/latest",
+          "topic": "technology",
+          "note": "Technology's impact outside the US/Europe bubble.",
+          "verified": true
+        },
+        {
+          "name": "Protocol (archived via 404 Media successor)",
+          "rss": "https://www.404media.co/rss/",
+          "topic": "technology",
+          "note": "404 Media: journalist-owned, strong on platform accountability and tech industry labor.",
+          "verified": true
+        }
+      ],
+      "defense_and_military": [
+        {
+          "name": "Defense News",
+          "rss": "https://www.defensenews.com/arc/outboundfeeds/rss/",
+          "topic": "defense",
+          "note": "Defense industry trade publication.",
+          "verified": false
+        },
+        {
+          "name": "War on the Rocks",
+          "rss": "https://warontherocks.com/feed/",
+          "topic": "defense",
+          "note": "Military strategy and national security analysis by practitioners. No advertising. Donations-funded.",
+          "verified": true
+        },
+        {
+          "name": "Breaking Defense",
+          "rss": "https://breakingdefense.com/feed/",
+          "topic": "defense",
+          "note": "Defense procurement and technology. Industry-facing.",
+          "verified": true
+        },
+        {
+          "name": "Jane's by S&P Global",
+          "rss": "https://www.janes.com/feeds/news",
+          "topic": "defense",
+          "note": "Defense intelligence bible. Subscription but RSS has headlines.",
+          "verified": false
+        },
+        {
+          "name": "IISS (International Institute for Strategic Studies)",
+          "rss": "https://www.iiss.org/rss",
+          "topic": "defense",
+          "note": "London think tank. Strategic and military analysis.",
+          "verified": false
+        },
+        {
+          "name": "Stimson Center",
+          "rss": "https://www.stimson.org/feed/",
+          "topic": "defense",
+          "note": "Non-partisan security and arms control think tank.",
+          "verified": false
+        },
+        {
+          "name": "Arms Control Association",
+          "rss": "https://www.armscontrol.org/rss.xml",
+          "topic": "defense",
+          "note": "Nuclear and conventional arms control monitoring.",
+          "verified": true
+        }
+      ],
+      "food_and_agriculture": [
+        {
+          "name": "Food Navigator",
+          "rss": "https://www.foodnavigator.com/info/rss-feeds/",
+          "topic": "food",
+          "note": "Global food industry trade news.",
+          "verified": false
+        },
+        {
+          "name": "Food Dive",
+          "rss": "https://www.fooddive.com/feeds/news/",
+          "topic": "food",
+          "verified": true
+        },
+        {
+          "name": "Agri-Pulse",
+          "rss": "https://www.agri-pulse.com/feed/",
+          "topic": "agriculture",
+          "note": "US agriculture policy focus but global commodity coverage.",
+          "verified": false
+        },
+        {
+          "name": "Reuters — Agriculture",
+          "rss": "https://feeds.reuters.com/reuters/commodities",
+          "topic": "agriculture",
+          "verified": true
+        },
+        {
+          "name": "FAO News",
+          "rss": "https://www.fao.org/news/rss-feeds/en/",
+          "topic": "food",
+          "note": "UN Food and Agriculture Organization. Food security and humanitarian data.",
+          "verified": true
+        },
+        {
+          "name": "WFP News",
+          "rss": "https://www.wfp.org/rss.xml",
+          "topic": "food",
+          "note": "World Food Programme. Famine and food crisis front lines.",
+          "verified": true
+        },
+        {
+          "name": "GRAIN",
+          "rss": "https://grain.org/feed.xml",
+          "topic": "food",
+          "note": "Non-profit advocacy. Land rights, biodiversity, industrial agriculture critique.",
+          "verified": false
+        }
+      ],
+      "travel_and_aviation": [
+        {
+          "name": "Skift",
+          "rss": "https://skift.com/feed/",
+          "topic": "travel",
+          "note": "Travel industry trade publication. Airlines, hotels, OTAs.",
+          "verified": true
+        },
+        {
+          "name": "The Points Guy",
+          "rss": "https://thepointsguy.com/feed/",
+          "topic": "travel",
+          "ownership": "Red Ventures",
+          "note": "Consumer travel and loyalty programs. Affiliate revenue model.",
+          "verified": true
+        },
+        {
+          "name": "Aviation Week",
+          "rss": "https://aviationweek.com/rss.xml",
+          "topic": "aviation",
+          "note": "Aviation and aerospace industry bible.",
+          "verified": false
+        },
+        {
+          "name": "Simple Flying",
+          "rss": "https://simpleflying.com/feed/",
+          "topic": "aviation",
+          "note": "Commercial aviation news. Rapidly grown to major aviation trade outlet.",
+          "verified": true
+        },
+        {
+          "name": "PhocusWire",
+          "rss": "https://www.phocuswire.com/rss/all",
+          "topic": "travel",
+          "note": "Travel technology and online distribution.",
+          "verified": true
+        },
+        {
+          "name": "TTG Media",
+          "rss": "https://www.ttgmedia.com/rss",
+          "topic": "travel",
+          "note": "UK-based travel trade.",
+          "verified": false
+        }
+      ],
+      "health_and_medicine": [
+        {
+          "name": "STAT News",
+          "rss": "https://www.statnews.com/feed/",
+          "topic": "health",
+          "ownership": "Boston Globe Media",
+          "note": "Best US health and biomedical journalism. Strong on pharma and FDA.",
+          "verified": true
+        },
+        {
+          "name": "Health Affairs",
+          "rss": "https://www.healthaffairs.org/feed/",
+          "topic": "health",
+          "note": "Health policy research journal.",
+          "verified": true
+        },
+        {
+          "name": "The BMJ",
+          "rss": "https://www.bmj.com/rss/thebmj.xml",
+          "topic": "health",
+          "note": "British Medical Journal. Peer-reviewed. Strong health policy positions.",
+          "verified": true
+        },
+        {
+          "name": "WHO News",
+          "rss": "https://www.who.int/rss-feeds/news-english.xml",
+          "topic": "health",
+          "note": "UN World Health Organization official releases.",
+          "verified": true
+        },
+        {
+          "name": "Devex — Global Health",
+          "rss": "https://www.devex.com/feeds/news.rss",
+          "topic": "health",
+          "note": "Global development and aid. Strong on health system funding.",
+          "verified": true
+        },
+        {
+          "name": "MSF (Médecins Sans Frontières) Press Releases",
+          "rss": "https://www.msf.org/news/rss.xml",
+          "topic": "health",
+          "note": "Field dispatches from conflict and disaster zones. Unfiltered.",
+          "verified": true
+        }
+      ],
+      "environment_and_climate": [
+        {
+          "name": "Carbon Brief",
+          "rss": "https://www.carbonbrief.org/feed/",
+          "topic": "climate",
+          "note": "Best data-driven climate science journalism.",
+          "verified": true
+        },
+        {
+          "name": "Inside Climate News",
+          "rss": "https://insideclimatenews.org/feed/",
+          "topic": "climate",
+          "ownership": "Non-profit Pulitzer winner",
+          "verified": true
+        },
+        {
+          "name": "Climate Home News",
+          "rss": "https://www.climatechangenews.com/feed/",
+          "topic": "climate",
+          "note": "Climate diplomacy and international negotiations.",
+          "verified": true
+        },
+        {
+          "name": "DeSmog",
+          "rss": "https://www.desmog.com/feed/",
+          "topic": "climate",
+          "note": "Climate disinformation and fossil fuel industry investigations.",
+          "verified": true
+        },
+        {
+          "name": "Mongabay",
+          "rss": "https://news.mongabay.com/feed/",
+          "topic": "environment",
+          "ownership": "Non-profit",
+          "note": "Tropical forests, biodiversity, and wildlife. Exceptional field reporting in Global South.",
+          "verified": true
+        },
+        {
+          "name": "The Guardian — Environment",
+          "rss": "https://www.theguardian.com/environment/rss",
+          "topic": "environment",
+          "verified": true
+        },
+        {
+          "name": "Yale Environment 360",
+          "rss": "https://e360.yale.edu/feed.xml",
+          "topic": "environment",
+          "ownership": "Yale School of the Environment",
+          "note": "Academic quality long-form environmental journalism.",
+          "verified": true
+        }
+      ],
+      "human_rights_and_justice": [
+        {
+          "name": "Human Rights Watch",
+          "rss": "https://www.hrw.org/feeds/en/news",
+          "topic": "human_rights",
+          "note": "Major international human rights NGO. New York-based. Reports are primary sources on abuses worldwide.",
+          "verified": true
+        },
+        {
+          "name": "Amnesty International",
+          "rss": "https://www.amnesty.org/en/latest/feed.xml",
+          "topic": "human_rights",
+          "verified": true
+        },
+        {
+          "name": "ICJ (International Court of Justice) Press",
+          "rss": "https://www.icj-cij.org/en/press-releases/rss",
+          "topic": "human_rights",
+          "note": "Official ICJ press releases. Primary source on international legal proceedings.",
+          "verified": true
+        },
+        {
+          "name": "ICC (International Criminal Court) News",
+          "rss": "https://www.icc-cpi.int/pages/rss.aspx",
+          "topic": "human_rights",
+          "verified": true
+        },
+        {
+          "name": "Justice in Conflict",
+          "rss": "https://justiceinconflict.org/feed/",
+          "topic": "human_rights",
+          "note": "International criminal justice and transitional justice.",
+          "verified": true
+        }
+      ],
+      "space_and_science": [
+        {
+          "name": "NASA News",
+          "rss": "https://www.nasa.gov/news-release/feed/",
+          "topic": "space",
+          "tier": "state",
+          "note": "Official NASA press releases.",
+          "verified": true
+        },
+        {
+          "name": "SpaceNews",
+          "rss": "https://spacenews.com/feed/",
+          "topic": "space",
+          "note": "Space industry trade publication. Commercial and government launches.",
+          "verified": true
+        },
+        {
+          "name": "Ars Technica — Science",
+          "rss": "https://feeds.arstechnica.com/arstechnica/science",
+          "topic": "science",
+          "verified": true
+        },
+        {
+          "name": "Nature News",
+          "rss": "https://www.nature.com/nature.rss",
+          "topic": "science",
+          "note": "World's most cited scientific journal. News section covers major research.",
+          "verified": true
+        },
+        {
+          "name": "Science Magazine",
+          "rss": "https://www.science.org/rss/news_current.xml",
+          "topic": "science",
+          "ownership": "American Association for the Advancement of Science",
+          "verified": true
+        }
+      ]
+    }
+  },
+  "single_topic": {
+    "_meta": {
+      "description": "Outlets that cover one specific issue domain or ideological lens across all geographies. These are not country-stamped. They should be displayed in a dedicated filter layer."
+    },
+    "antiwar_and_peace": [
+      {
+        "name": "Antiwar.com",
+        "rss": "https://feeds.feedburner.com/antiwar/all",
+        "bias": "right-libertarian",
+        "ownership": "Non-profit Randolph Bourne Institute",
+        "note": "Founded 1995. Aggregates news skeptical of US military intervention. Libertarian-right politically but functionally anti-interventionist across the spectrum. Essential counterweight to defense establishment sources.",
+        "verified": true
+      },
+      {
+        "name": "Common Dreams",
+        "rss": "https://www.commondreams.org/rss.xml",
+        "bias": "left",
+        "ownership": "Non-profit",
+        "note": "Progressive peace and justice coverage. Strong anti-war tradition.",
+        "verified": true
+      },
+      {
+        "name": "Responsible Statecraft",
+        "rss": "https://responsiblestatecraft.org/feed/",
+        "bias": "center",
+        "ownership": "Quincy Institute for Responsible Statecraft (non-profit)",
+        "note": "Restraint-focused foreign policy. Backed by both Koch and Soros. Explicitly anti-empire from a realist perspective.",
+        "verified": true
+      },
+      {
+        "name": "The American Conservative — Foreign Policy",
+        "rss": "https://www.theamericanconservative.com/category/foreign-affairs/feed/",
+        "bias": "right",
+        "note": "Paleoconservative anti-interventionism.",
+        "verified": false
+      },
+      {
+        "name": "TomDispatch",
+        "rss": "https://www.tomdispatch.com/feed/",
+        "bias": "left",
+        "ownership": "Non-profit Nation Institute",
+        "note": "Long-form anti-empire commentary. Founded post-9/11.",
+        "verified": true
+      },
+      {
+        "name": "Peace News",
+        "rss": "https://peacenews.info/feed",
+        "bias": "left",
+        "ownership": "Non-profit UK pacifist publication",
+        "note": "Oldest pacifist publication in the English language.",
+        "verified": false
+      }
+    ],
+    "investigative_and_accountability": [
+      {
+        "name": "ICIJ (International Consortium of Investigative Journalists)",
+        "rss": "https://www.icij.org/feed/",
+        "bias": "center",
+        "ownership": "Non-profit",
+        "note": "Coordinated global investigations. Panama Papers, Pandora Papers, FinCEN Files.",
+        "verified": true
+      },
+      {
+        "name": "OCCRP",
+        "rss": "https://www.occrp.org/en/rss",
+        "bias": "center",
+        "ownership": "Non-profit network",
+        "note": "Organized crime and corruption across Europe, Central Asia, Africa.",
+        "verified": true
+      },
+      {
+        "name": "ProPublica",
+        "rss": "https://feeds.propublica.org/propublica/main",
+        "bias": "left-center",
+        "ownership": "Non-profit",
+        "verified": true
+      },
+      {
+        "name": "The Intercept",
+        "rss": "https://theintercept.com/feed/?rss",
+        "bias": "left",
+        "ownership": "First Look Media (non-profit)",
+        "verified": true
+      },
+      {
+        "name": "Source Material",
+        "rss": "https://www.source-material.org/feed/",
+        "bias": "center",
+        "ownership": "Non-profit UK investigative",
+        "note": "Environment, finance, and power. UK-based global scope.",
+        "verified": false
+      },
+      {
+        "name": "Forbidden Stories",
+        "rss": "https://forbiddenstories.org/feed/",
+        "bias": "center",
+        "ownership": "Non-profit",
+        "note": "Continues the work of murdered or imprisoned journalists. Pegasus Project.",
+        "verified": true
+      }
+    ],
+    "media_criticism": [
+      {
+        "name": "FAIR (Fairness and Accuracy in Reporting)",
+        "rss": "https://fair.org/feed/",
+        "bias": "left",
+        "ownership": "Non-profit",
+        "note": "Media criticism from the left. Identifies omissions and framing in mainstream US press.",
+        "verified": true
+      },
+      {
+        "name": "Press Gazette",
+        "rss": "https://pressgazette.co.uk/feed/",
+        "bias": "center",
+        "ownership": "Wilderness Group",
+        "note": "UK journalism industry coverage. Media business, press freedom.",
+        "verified": true
+      },
+      {
+        "name": "Columbia Journalism Review",
+        "rss": "https://www.cjr.org/feed",
+        "bias": "left-center",
+        "ownership": "Columbia University Graduate School of Journalism",
+        "note": "Premier journalism review. Media criticism and industry trends.",
+        "verified": true
+      }
+    ],
+    "indigenous_and_frontline": [
+      {
+        "name": "Indian Country Today",
+        "rss": "https://ictnews.org/feed",
+        "bias": "center",
+        "ownership": "Non-profit (First Nations Development Institute)",
+        "note": "Indigenous peoples of the Americas.",
+        "verified": true
+      },
+      {
+        "name": "Intercontinental Cry",
+        "rss": "https://intercontinentalcry.org/feed/",
+        "bias": "left",
+        "ownership": "Non-profit",
+        "note": "Indigenous rights worldwide.",
+        "verified": false
+      },
+      {
+        "name": "Mongabay",
+        "rss": "https://news.mongabay.com/feed/",
+        "bias": "center",
+        "note": "Indigenous land rights often intersect with conservation coverage here.",
+        "verified": true
+      }
+    ],
+    "diaspora_and_minority_press": [
+      {
+        "name": "Ethnic Media Services",
+        "rss": "https://ethnicmediaservices.org/feed/",
+        "bias": "center",
+        "note": "Aggregates US ethnic minority press. Covers communities invisible to mainstream press.",
+        "verified": false
+      },
+      {
+        "name": "New American Media",
+        "rss": "https://newamericamedia.org/feed/",
+        "bias": "left-center",
+        "note": "Immigrant and ethnic community media in the US.",
+        "verified": false
+      }
+    ],
+    "labor_and_workers": [
+      {
+        "name": "Labor Notes",
+        "rss": "https://labornotes.org/feed",
+        "bias": "left",
+        "ownership": "Non-profit",
+        "note": "Grassroots labor organizing. Essential for understanding worker movements mainstream press ignores.",
+        "verified": true
+      },
+      {
+        "name": "In These Times",
+        "rss": "https://inthesetimes.com/feed",
+        "bias": "left",
+        "ownership": "Non-profit",
+        "note": "Labor and progressive politics.",
+        "verified": true
+      },
+      {
+        "name": "Work in Progress (ILO)",
+        "rss": "https://iloblog.org/feed/",
+        "bias": "center",
+        "ownership": "International Labour Organization (UN)",
+        "note": "UN labor organization. Global employment and labor standards.",
+        "verified": false
+      }
+    ],
+    "religious_and_faith": [
+      {
+        "name": "Religion News Service",
+        "rss": "https://religionnews.com/feed/",
+        "bias": "center",
+        "ownership": "Non-profit",
+        "note": "Neutral coverage of faith and religion globally.",
+        "verified": true
+      },
+      {
+        "name": "Crux (Catholic)",
+        "rss": "https://cruxnow.com/feed/",
+        "bias": "right-center",
+        "ownership": "Independent",
+        "note": "Catholic church global coverage.",
+        "verified": true
+      },
+      {
+        "name": "Christianity Today",
+        "rss": "https://www.christianitytoday.com/rss/ctmag.xml",
+        "bias": "right-center",
+        "ownership": "Non-profit",
+        "note": "Evangelical Christianity. Global church coverage.",
+        "verified": true
+      }
+    ],
+    "data_and_statistics": [
+      {
+        "name": "Our World in Data",
+        "rss": "https://ourworldindata.org/atom.xml",
+        "bias": "center",
+        "ownership": "University of Oxford / non-profit",
+        "note": "Global development data visualized. Not breaking news but essential context layer.",
+        "verified": true
+      },
+      {
+        "name": "Statista News",
+        "rss": "https://www.statista.com/topics/feeds/statistics-infographics/",
+        "bias": "center",
+        "note": "Data and statistics across all topics.",
+        "verified": false
+      },
+      {
+        "name": "ACLED (Armed Conflict Location & Event Data)",
+        "rss": "https://acleddata.com/feed/",
+        "bias": "center",
+        "ownership": "Non-profit",
+        "note": "Real-time conflict data globally. Academic standard for tracking armed conflict.",
+        "verified": false
+      }
+    ],
+    "cryptocurrency_and_digital_assets": [
+      {
+        "name": "CoinDesk",
+        "rss": "https://www.coindesk.com/arc/outbound/rss/",
+        "bias": "center",
+        "ownership": "Bullish (crypto exchange — independence concerns)",
+        "note": "Industry standard crypto news. Sold by DCG to Bullish in 2023. Ownership creates editorial tension.",
+        "verified": true
+      },
+      {
+        "name": "Cointelegraph",
+        "rss": "https://cointelegraph.com/rss",
+        "bias": "center",
+        "ownership": "Cointelegraph Media (private)",
+        "note": "High volume. Second largest crypto news site globally. Some sensationalist tendencies.",
+        "verified": true
+      },
+      {
+        "name": "Decrypt",
+        "rss": "https://decrypt.co/feed",
+        "bias": "center",
+        "ownership": "Independent",
+        "note": "More editorial restraint than Cointelegraph. Good on regulatory news and DeFi.",
+        "verified": true
+      },
+      {
+        "name": "The Block",
+        "rss": "https://www.theblock.co/rss.xml",
+        "bias": "center",
+        "ownership": "The Block Research Inc.",
+        "note": "Best institutional and regulatory coverage. Paywalled deep dives but free headlines.",
+        "verified": true
+      },
+      {
+        "name": "Blockworks",
+        "rss": "https://blockworks.co/feed/",
+        "bias": "center",
+        "ownership": "Blockworks Group (independent)",
+        "note": "Institutional crypto and DeFi focus. Strong on stablecoins, policy, macro.",
+        "verified": true
+      },
+      {
+        "name": "Bitcoin Magazine",
+        "rss": "https://bitcoinmagazine.com/feed",
+        "bias": "right",
+        "ownership": "BTC Inc.",
+        "note": "Bitcoin-maximalist perspective. Important voice in the Bitcoin-specific community.",
+        "verified": true
+      },
+      {
+        "name": "CryptoSlate",
+        "rss": "https://cryptoslate.com/feed/",
+        "bias": "center",
+        "ownership": "Independent",
+        "note": "Market data and news. More sober than Cointelegraph.",
+        "verified": true
+      }
+    ],
+    "nuclear_energy_and_industry": [
+      {
+        "name": "World Nuclear News",
+        "rss": "https://world-nuclear-news.org/rss",
+        "bias": "right-center",
+        "ownership": "World Nuclear Association (industry lobby)",
+        "note": "Daily nuclear power industry news. WNA is a pro-nuclear industry group, so coverage is pro-industry by orientation.",
+        "verified": true
+      },
+      {
+        "name": "NucNet",
+        "rss": "https://www.nucnet.org/feed.rss",
+        "bias": "center",
+        "ownership": "Independent news agency",
+        "note": "Independent nuclear industry wire service. More neutral than WNA publications.",
+        "verified": true
+      },
+      {
+        "name": "Nuclear Engineering International",
+        "rss": "https://www.neimagazine.com/rss",
+        "bias": "center",
+        "ownership": "Progressive Media Group",
+        "note": "Technical trade journal. Reactor technology, fuel cycle, small modular reactors.",
+        "verified": false
+      },
+      {
+        "name": "IAEA Newscenter",
+        "rss": "https://www.iaea.org/feeds/topstories.xml",
+        "bias": "center",
+        "ownership": "International Atomic Energy Agency (UN)",
+        "note": "Official IAEA news. Safeguards, safety standards, nuclear applications.",
+        "verified": true
+      },
+      {
+        "name": "American Nuclear Society News",
+        "rss": "https://www.ans.org/news/feed/",
+        "bias": "right-center",
+        "ownership": "Non-profit professional society",
+        "note": "US nuclear professional society. Research, policy, and industry news.",
+        "verified": true
+      },
+      {
+        "name": "NRC (US Nuclear Regulatory Commission) News",
+        "rss": "https://www.nrc.gov/reading-rm/doc-collections/news/rss/nrc-news.rss",
+        "bias": "center",
+        "ownership": "US government agency",
+        "note": "Official US nuclear regulator press releases. Licenses, safety events, hearings.",
+        "verified": true
+      }
+    ],
+    "nuclear_weapons_and_nonproliferation": [
+      {
+        "name": "Bulletin of the Atomic Scientists",
+        "rss": "https://thebulletin.org/feed/",
+        "bias": "left-center",
+        "ownership": "Non-profit (founded by Manhattan Project physicists)",
+        "note": "Publishes the Doomsday Clock. Authoritative on nuclear risk, arms control, disruptive technologies.",
+        "verified": true
+      },
+      {
+        "name": "NTI (Nuclear Threat Initiative)",
+        "rss": "https://www.nti.org/feed/",
+        "bias": "center",
+        "ownership": "Non-profit",
+        "note": "Bipartisan global security. Sam Nunn / Ted Turner founders. Nuclear, biological, radiological threat reduction.",
+        "verified": true
+      },
+      {
+        "name": "Arms Control Association",
+        "rss": "https://www.armscontrol.org/rss.xml",
+        "bias": "center",
+        "ownership": "Non-profit",
+        "note": "Monthly Arms Control Today journal + breaking analysis. Definitive treaty tracker.",
+        "verified": true
+      },
+      {
+        "name": "Federation of American Scientists (FAS)",
+        "rss": "https://fas.org/feed/",
+        "bias": "left-center",
+        "ownership": "Non-profit",
+        "note": "Nuclear stockpile estimates, secrecy news, arms race analysis. Hans Kristensen nuclear notebook is essential.",
+        "verified": true
+      },
+      {
+        "name": "Restricted Data (Alex Wellerstein Blog)",
+        "rss": "https://blog.nuclearsecrecy.com/feed/",
+        "bias": "center",
+        "ownership": "Independent academic",
+        "note": "Historian of nuclear secrecy. Best single source on nuclear weapons history and policy.",
+        "verified": true
+      },
+      {
+        "name": "SIPRI (Stockholm International Peace Research Institute)",
+        "rss": "https://www.sipri.org/rss.xml",
+        "bias": "center",
+        "ownership": "Non-profit research institute",
+        "note": "Authoritative arms data. Annual yearbook on nuclear arsenals and military spending is the global reference.",
+        "verified": true
+      }
+    ],
+    "narco_trafficking_and_organized_crime": [
+      {
+        "name": "InSight Crime",
+        "rss": "https://insightcrime.org/feed/",
+        "bias": "center",
+        "ownership": "Non-profit Foundation for Peace",
+        "note": "Premier English-language organized crime journalism in Latin America. Cartels, FARC, MS-13.",
+        "verified": true
+      },
+      {
+        "name": "BorderReport",
+        "rss": "https://www.borderreport.com/feed/",
+        "bias": "center",
+        "ownership": "Nexstar Media Group",
+        "note": "US-Mexico border specific. Nexstar owned but essential for border crossing, cartel, and migration news.",
+        "verified": true
+      },
+      {
+        "name": "El Blog del Narco",
+        "rss": "https://elblogdelnarco.com/feed/",
+        "bias": "center",
+        "ownership": "Anonymous (operates under risk)",
+        "note": "Raw cartel violence documentation. Extreme content. Anonymous operators face lethal risk. Journalism of last resort for cartel-controlled areas.",
+        "verified": false
+      },
+      {
+        "name": "Narco News Bulletin",
+        "rss": "https://narconews.com/feed/",
+        "bias": "left",
+        "ownership": "Independent",
+        "note": "Drug war journalism from below. Focus on civil society and human cost.",
+        "verified": false
+      },
+      {
+        "name": "OCCRP — Latin America",
+        "rss": "https://www.occrp.org/en/regions/latin-america/rss",
+        "bias": "center",
+        "ownership": "Non-profit network",
+        "note": "Corruption and crime investigations across Latin America.",
+        "verified": false
+      }
+    ],
+    "immigration_and_migration": [
+      {
+        "name": "Documented NY",
+        "rss": "https://documentedny.com/feed/",
+        "bias": "center",
+        "ownership": "Non-profit",
+        "note": "New York-based immigration journalism. ICE enforcement, policy, immigrant communities.",
+        "verified": true
+      },
+      {
+        "name": "Univision Noticias — Inmigración",
+        "rss": "https://www.univision.com/noticias/inmigracion/rss",
+        "bias": "center",
+        "ownership": "Televisa Univision",
+        "note": "Spanish-language immigration coverage for US Hispanic community.",
+        "verified": false
+      },
+      {
+        "name": "UNHCR News",
+        "rss": "https://www.unhcr.org/rss/news.xml",
+        "bias": "center",
+        "ownership": "UN High Commissioner for Refugees",
+        "note": "Official UN refugee agency. Global displacement data, humanitarian operations.",
+        "verified": true
+      },
+      {
+        "name": "IOM (International Organization for Migration)",
+        "rss": "https://www.iom.int/rss/news.xml",
+        "bias": "center",
+        "ownership": "UN agency",
+        "note": "Migration statistics and field operations. Missing migrant data.",
+        "verified": false
+      },
+      {
+        "name": "Refugees Deeply / New Humanitarian",
+        "rss": "https://www.thenewhumanitarian.org/rss.xml",
+        "bias": "center",
+        "ownership": "Non-profit",
+        "note": "Essential for refugee crises. Formerly IRIN/OCHA. Field journalism from displacement zones.",
+        "verified": true
+      }
+    ]
+  }
+}

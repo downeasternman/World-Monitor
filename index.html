@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>World Headlines Dashboard</title>
+
+  <!-- Fonts & Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:           #0a0e1a;
+      --surface:      #111827;
+      --surface-2:    #1a2235;
+      --border:       #1f2d45;
+      --text:         #e2e8f0;
+      --text-muted:   #64748b;
+      --accent:       #3b82f6;
+      --accent-glow:  rgba(59,130,246,0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    body {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .app-root {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      height: 100vh;
+      background: radial-gradient(circle at top, #111827 0, #020617 55%);
+      color: var(--text);
+    }
+
+    .panel {
+      border-right: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(15,23,42,0.95), rgba(15,23,42,0.98));
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .panel:last-child {
+      border-right: none;
+      border-left: 1px solid var(--border);
+    }
+
+    .panel-left {
+      width: 220px;
+    }
+
+    .panel-center {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      background: radial-gradient(circle at top, #020617 0, #020617 45%, #000 100%);
+    }
+
+    .panel-right {
+      width: 360px;
+    }
+
+    .left-header-title {
+      font-family: 'Syne', system-ui, sans-serif;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+
+    .left-header-subtitle {
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .left-section-label {
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .left-reset-btn {
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      font-size: 11px;
+      color: var(--text);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+    }
+
+    .left-reset-btn:hover {
+      background: #0b1220;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(148,163,184,0.25);
+      transform: translateY(-0.5px);
+    }
+
+    .left-reset-icon {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      box-shadow: 0 0 0 1px var(--accent-glow);
+    }
+
+    .topic-chips {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 10px;
+      max-height: calc(100vh - 220px);
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .topic-chip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 8px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(30,64,175,0.2);
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    }
+
+    .topic-chip:hover {
+      background: #020617;
+      border-color: rgba(59,130,246,0.7);
+      transform: translateY(-0.5px);
+      box-shadow: 0 0 0 1px var(--accent-glow);
+    }
+
+    .topic-chip.active {
+      background: rgba(15,23,42,1);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent-glow);
+    }
+
+    .topic-chip-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .topic-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      box-shadow: 0 0 0 1px rgba(15,23,42,0.8);
+    }
+
+    .topic-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .topic-count {
+      min-width: 26px;
+      text-align: right;
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .left-divider {
+      height: 1px;
+      border: none;
+      margin: 12px 0 8px;
+      background: radial-gradient(circle, rgba(148,163,184,0.8) 0, rgba(148,163,184,0.25) 40%, transparent 70%);
+      opacity: 0.4;
+    }
+
+    .left-status {
+      padding-top: 6px;
+      border-top: 1px dashed rgba(51,65,85,0.8);
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .left-status-pill {
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(148,163,184,0.35);
+      font-size: 9px;
+    }
+
+    .inline-console {
+      margin-top: 8px;
+      padding: 6px 6px 4px;
+      border-radius: 8px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(30,64,175,0.5);
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      max-height: 120px;
+      overflow-y: auto;
+      line-height: 1.3;
+    }
+
+    .inline-console-line {
+      white-space: nowrap;
+    }
+
+    /* Center panel */
+    .map-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 4px;
+      border-bottom: 1px solid rgba(30,64,175,0.4);
+      margin-bottom: 6px;
+    }
+
+    .map-title {
+      font-family: 'Syne', system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .map-subtitle {
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .map-main {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+      border-radius: 12px;
+      background: radial-gradient(circle at top, #020617 0, #020617 40%, #020617 60%, #000 100%);
+      border: 1px solid rgba(30,64,175,0.6);
+      box-shadow:
+        0 0 0 1px rgba(15,23,42,0.9),
+        0 18px 45px rgba(15,23,42,0.9),
+        0 0 120px rgba(56,189,248,0.08);
+      overflow: hidden;
+    }
+
+    #map-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .map-tooltip {
+      position: absolute;
+      pointer-events: none;
+      background: rgba(15,23,42,0.98);
+      border-radius: 8px;
+      border: 1px solid rgba(30,64,175,0.8);
+      padding: 6px 8px;
+      font-size: 11px;
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      color: var(--text);
+      box-shadow: 0 10px 30px rgba(15,23,42,0.9);
+      opacity: 0;
+      transform: translate(-50%, -120%);
+      transition: opacity 0.1s ease;
+      z-index: 10;
+      max-width: 220px;
+      white-space: normal;
+    }
+
+    .map-tooltip-title {
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .map-tooltip-line {
+      color: var(--text-muted);
+    }
+
+    /* Right panel */
+    .right-header {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .right-header-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .right-title {
+      font-family: 'Syne', system-ui, sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .right-rsf-pill {
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.5);
+      background: rgba(15,23,42,0.9);
+    }
+
+    .right-note-banner {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(251,191,36,0.12);
+      border: 1px solid rgba(245,158,11,0.6);
+      color: #facc15;
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    }
+
+    .right-tier-summary {
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .articles-scroll {
+      margin-top: 10px;
+      overflow-y: auto;
+      padding-right: 4px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .article-card {
+      padding: 8px 9px;
+      border-radius: 10px;
+      background: radial-gradient(circle at top left, rgba(15,23,42,0.9), rgba(15,23,42,0.98));
+      border: 1px solid rgba(30,64,175,0.4);
+      box-shadow: 0 10px 25px rgba(15,23,42,0.8);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .article-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .article-meta-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tier-badge {
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: 1px solid rgba(148,163,184,0.6);
+    }
+
+    .tier-wire { background: rgba(37,99,235,0.15); border-color: rgba(59,130,246,0.8); color: #bfdbfe; }
+    .tier-independent { background: rgba(148,163,184,0.18); border-color: rgba(148,163,184,0.8); color: #e5e7eb; }
+    .tier-state { background: rgba(239,68,68,0.18); border-color: rgba(239,68,68,0.85); color: #fecaca; }
+    .tier-community { background: rgba(34,197,94,0.18); border-color: rgba(22,163,74,0.85); color: #bbf7d0; }
+    .tier-exile { background: rgba(249,115,22,0.18); border-color: rgba(249,115,22,0.85); color: #fed7aa; }
+    .tier-foreign-funded { background: rgba(234,179,8,0.16); border-color: rgba(234,179,8,0.85); color: #fef3c7; }
+
+    .topic-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.5);
+    }
+
+    .topic-pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+    }
+
+    .article-time {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      white-space: nowrap;
+    }
+
+    .article-source {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    }
+
+    .article-title {
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.35;
+    }
+
+    .article-title a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .article-title a:hover {
+      text-decoration: underline;
+      text-decoration-color: var(--accent);
+      text-underline-offset: 3px;
+    }
+
+    .article-translation-badge {
+      font-size: 9px;
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      padding: 1px 4px;
+      border-radius: 3px;
+      border: 1px solid rgba(96,165,250,0.9);
+      background: rgba(37,99,235,0.18);
+      color: #bfdbfe;
+      display: inline-block;
+      margin-top: 2px;
+    }
+
+    .article-description {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .right-button-row {
+      margin-top: 6px;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .right-button {
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 11px;
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      border: 1px solid rgba(148,163,184,0.5);
+      background: rgba(15,23,42,0.9);
+      color: var(--text);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .right-button:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent-glow);
+    }
+
+    .right-empty {
+      margin-top: 30px;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: left;
+    }
+
+    /* Scrollbars */
+    .topic-chips::-webkit-scrollbar,
+    .articles-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    .topic-chips::-webkit-scrollbar-track,
+    .articles-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .topic-chips::-webkit-scrollbar-thumb,
+    .articles-scroll::-webkit-scrollbar-thumb {
+      background: rgba(15,23,42,0.9);
+      border-radius: 999px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-root">
+    <!-- Left Panel -->
+    <aside class="panel panel-left">
+      <div>
+        <div class="left-header-title">WORLD HEADLINES</div>
+        <div class="left-header-subtitle" id="left-subtitle">live rss · loading…</div>
+      </div>
+
+      <div style="margin-top:12px;">
+        <button class="left-reset-btn" id="btn-reset-topics">
+          <span class="left-reset-icon"></span>
+          <span>All topics</span>
+        </button>
+      </div>
+
+      <div style="margin-top:14px;">
+        <div class="left-section-label">Topics</div>
+        <div class="topic-chips" id="topic-chips"></div>
+      </div>
+
+      <hr class="left-divider" />
+
+      <div>
+        <div class="left-section-label">Single topics</div>
+        <div class="topic-chips" id="single-topic-chips"></div>
+      </div>
+
+      <div class="left-status" id="left-status">
+        <span id="left-status-text">Booting topology engine…</span>
+        <span class="left-status-pill" id="left-status-pill">0 feeds</span>
+      </div>
+
+      <div class="inline-console" id="inline-console"></div>
+    </aside>
+
+    <!-- Center Panel -->
+    <main class="panel panel-center">
+      <div class="map-header">
+        <div>
+          <div class="map-title">World Activity Map</div>
+          <div class="map-subtitle" id="map-subtitle">Waiting for sources.json…</div>
+        </div>
+      </div>
+      <div class="map-main" id="map-container">
+        <svg id="map-svg"></svg>
+        <div class="map-tooltip" id="map-tooltip">
+          <div class="map-tooltip-title" id="tooltip-title"></div>
+          <div class="map-tooltip-line" id="tooltip-line-1"></div>
+          <div class="map-tooltip-line" id="tooltip-line-2"></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Right Panel -->
+    <aside class="panel panel-right">
+      <div class="right-header">
+        <div class="right-header-top">
+          <div class="right-title" id="right-title">Global Feed</div>
+          <div class="right-rsf-pill" id="right-rsf-pill">Press freedom: —</div>
+        </div>
+        <div class="right-note-banner" id="right-note-banner" style="display:none;"></div>
+        <div class="right-tier-summary" id="right-tier-summary">Waiting for first articles…</div>
+        <div class="right-button-row">
+          <button class="right-button" id="btn-load-regional" disabled>Load regional sources</button>
+        </div>
+      </div>
+      <div class="articles-scroll" id="articles-scroll">
+        <div class="right-empty" id="right-empty">
+          Map is live. As feeds resolve, the 30 most recent headlines across all countries will appear here.
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    // Topic colors
+    const TOPIC_COLORS = {
+      military:   '#ef4444',
+      politics:   '#8b5cf6',
+      economy:    '#f59e0b',
+      crime:      '#f97316',
+      climate:    '#10b981',
+      technology: '#06b6d4',
+      crypto:     '#a78bfa',
+      health:     '#ec4899',
+      business:   '#6366f1',
+      society:    '#84cc16',
+      other:      '#475569',
+      'no-data':  '#1a2235',
+      'has-data': '#1e3a5f',
+    };
+
+    const TOPIC_MAP = {
+      military:   ['war','troops','missile','drone','airstrike','military','navy','army','defense','nato','combat','invasion','weapons','tank','strike','soldier','bomb','nuclear warhead','sanctions','ceasefire','conflict','artillery','offensive','siege'],
+      politics:   ['election','parliament','president','minister','senate','vote','government','treaty','congress','coup','protest','rally','legislation','bill','summit','diplomatic','ambassador','politician','party','campaign','ballot'],
+      economy:    ['gdp','inflation','market','stock','trade','bank','economy','tariff','export','import','recession','interest rate','debt','budget','fiscal','currency','oil price','supply chain','unemployment','wage','spending'],
+      crime:      ['arrested','murder','cartel','trafficking','corruption','bribery','fraud','sentenced','convicted','indicted','shooting','violence','gang','narco','homicide','kidnap','robbery','smuggling','prison'],
+      climate:    ['climate','flood','wildfire','hurricane','earthquake','drought','emissions','carbon','deforestation','storm','tsunami','temperature','glacier','fossil fuel','renewable','solar','wind energy','pollution','species'],
+      technology: ['ai','artificial intelligence','tech','software','chip','semiconductor','cyber','hack','startup','satellite','robot','quantum','algorithm','data breach','surveillance','automation','5g','spacecraft'],
+      crypto:     ['bitcoin','crypto','blockchain','ethereum','defi','stablecoin','nft','token','binance','coinbase','web3','wallet','mining','ledger','altcoin'],
+      health:     ['vaccine','outbreak','pandemic','hospital','drug','fda','who','disease','cancer','mental health','epidemic','virus','pathogen','clinical','infection','mortality','surgery','pharmaceutical'],
+      business:   ['acquisition','merger','ceo','revenue','profit','loss','earnings','deal','investment','fund','ipo','billion','million','company','shares','quarterly','valuation'],
+      society:    ['rights','protest','lgbtq','immigration','refugee','poverty','hunger','education','housing','race','religion','culture','court','justice','inequality','discrimination','activism'],
+    };
+
+    const TOPIC_PRIORITY = ['military','crime','politics','economy','society','business','health','climate','technology','crypto','other'];
+
+    const CORS_PROXY = 'https://api.allorigins.win/get?url='; // primary; we fall back to corsproxy.io if this fails
+    const CACHE_TTL = 15 * 60 * 1000;
+    const PRIORITY_COUNTRIES = ['US','GB','FR','DE','RU','CN','UA','IL','IR','JP','IN','BR','MX'];
+
+    const ALPHA2_TO_NUMERIC = {
+      AF:4, AL:8, DZ:12, AO:24, AR:32, AU:36, AT:40, AZ:31,
+      BD:50, BE:56, BJ:204, BO:68, BR:76, BF:854, MM:104,
+      KH:116, CM:120, CA:124, CL:152, CN:156, CO:170, CD:180,
+      CG:178, CR:188, CI:384, HR:191, CZ:203, DK:208,
+      DO:214, EC:218, EG:818, ET:231, FI:246, FR:250, GA:266,
+      DE:276, GH:288, GT:320, GN:324, GW:624, HT:332, HN:340,
+      HU:348, IN:356, ID:360, IR:364, IQ:368, IE:372, IL:376,
+      IT:380, JP:392, JO:400, KZ:398, KE:404, KP:408, KR:410,
+      KW:414, LA:418, LB:422, LY:434, MG:450, MY:458, ML:466,
+      MX:484, MA:504, MZ:508, NA:516, NP:524, NL:528, NZ:554,
+      NI:558, NG:566, NO:578, PK:586, PS:275, PA:591, PG:598,
+      PE:604, PH:608, PL:616, PT:620, QA:634, RO:642, RU:643,
+      SA:682, SN:686, SL:694, SO:706, ZA:710, SS:728, ES:724,
+      LK:144, SD:736, SE:752, CH:756, SY:760, TW:158, TZ:834,
+      TH:764, TN:788, TR:792, TM:795, UG:800, UA:804, AE:784,
+      GB:826, US:840, UY:858, UZ:860, VE:862, VN:704, YE:887,
+      ZM:894, ZW:716, SG:702, GR:300,
+    };
+
+    const NUMERIC_TO_ALPHA2 = Object.fromEntries(
+      Object.entries(ALPHA2_TO_NUMERIC).map(([a2, num]) => [num, a2])
+    );
+
+    // Global state
+    let sources = null;
+    const countryMeta = {};
+    const countryFeedsIndex = {};
+    const countryRegionalFeedsIndex = {};
+    const articlesByCountry = {};
+    const failedFeeds = new Set();
+    const allArticles = [];
+    let singleTopicSources = {};
+
+    let activeCountry = null;
+    let activeTopic = null;
+    let singleTopicMode = null; // key from sources.single_topic
+
+    // DOM refs
+    const topicChipsEl = document.getElementById('topic-chips');
+    const singleTopicChipsEl = document.getElementById('single-topic-chips');
+    const leftSubtitleEl = document.getElementById('left-subtitle');
+    const leftStatusEl = document.getElementById('left-status-text');
+    const leftStatusPillEl = document.getElementById('left-status-pill');
+    const inlineConsoleEl = document.getElementById('inline-console');
+    const mapSubtitleEl = document.getElementById('map-subtitle');
+    const rightTitleEl = document.getElementById('right-title');
+    const rightRsfPillEl = document.getElementById('right-rsf-pill');
+    const rightNoteBannerEl = document.getElementById('right-note-banner');
+    const rightTierSummaryEl = document.getElementById('right-tier-summary');
+    const rightEmptyEl = document.getElementById('right-empty');
+    const articlesScrollEl = document.getElementById('articles-scroll');
+    const btnResetTopics = document.getElementById('btn-reset-topics');
+    const btnLoadRegional = document.getElementById('btn-load-regional');
+
+    const mapSvg = d3.select('#map-svg');
+    const mapContainer = document.getElementById('map-container');
+    const mapTooltip = document.getElementById('map-tooltip');
+    const tooltipTitleEl = document.getElementById('tooltip-title');
+    const tooltipLine1El = document.getElementById('tooltip-line-1');
+    const tooltipLine2El = document.getElementById('tooltip-line-2');
+
+    // Utilities
+    function uiLog(message) {
+      const ts = new Date().toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      const line = document.createElement('div');
+      line.className = 'inline-console-line';
+      line.textContent = `[${ts}] ${message}`;
+      if (inlineConsoleEl) {
+        inlineConsoleEl.prepend(line);
+        while (inlineConsoleEl.children.length > 80) {
+          inlineConsoleEl.removeChild(inlineConsoleEl.lastChild);
+        }
+      }
+      console.log(message);
+    }
+    function cacheSet(key, data) {
+      try {
+        sessionStorage.setItem(key, JSON.stringify({ ts: Date.now(), data }));
+      } catch (e) {
+        // ignore
+      }
+    }
+
+    function cacheGet(key) {
+      try {
+        const raw = sessionStorage.getItem(key);
+        if (!raw) return null;
+        const { ts, data } = JSON.parse(raw);
+        if (Date.now() - ts > CACHE_TTL) {
+          sessionStorage.removeItem(key);
+          return null;
+        }
+        return data;
+      } catch {
+        return null;
+      }
+    }
+
+    function timeAgo(date) {
+      if (!date) return '';
+      const now = new Date();
+      const diff = Math.max(0, now - date);
+      const sec = Math.floor(diff / 1000);
+      const min = Math.floor(sec / 60);
+      const hr = Math.floor(min / 60);
+      const day = Math.floor(hr / 24);
+      if (day > 0) return `${day}d ago`;
+      if (hr > 0) return `${hr}h ago`;
+      if (min > 0) return `${min}m ago`;
+      return 'just now';
+    }
+
+    function classifyTopic(title, description) {
+      const text = (title + ' ' + (description || '')).toLowerCase();
+      for (const topic of TOPIC_PRIORITY) {
+        if (!TOPIC_MAP[topic]) continue;
+        if (TOPIC_MAP[topic].some(kw => text.includes(kw))) return topic;
+      }
+      return 'other';
+    }
+
+    function getFeedLanguage(feed, countryCode) {
+      if (feed.language) return feed.language;
+      const meta = sources?.countries?.[countryCode]?._meta;
+      if (meta?.language_default) return meta.language_default;
+      return 'en';
+    }
+
+    function getCountryFeeds(code) {
+      const c = sources?.countries?.[code];
+      if (!c) return [];
+      const feeds = [];
+      if (Array.isArray(c.national)) feeds.push(...c.national);
+      if (Array.isArray(c.sources)) feeds.push(...c.sources);
+      return feeds;
+    }
+
+    function getCountryRegionalFeeds(code) {
+      const c = sources?.countries?.[code];
+      if (!c) return [];
+      const feeds = [];
+      if (c.regions) Object.values(c.regions).forEach(r => { if (Array.isArray(r)) feeds.push(...r); });
+      if (c.metros) Object.values(c.metros).forEach(m => { if (Array.isArray(m)) feeds.push(...m); });
+      return feeds;
+    }
+
+    function parseXml(xmlString) {
+      const xml = new DOMParser().parseFromString(xmlString, 'text/xml');
+      let items = [...xml.querySelectorAll('item')];
+      if (items.length === 0) items = [...xml.querySelectorAll('entry')];
+      return items.map(item => {
+        const title = item.querySelector('title')?.textContent?.trim() || '';
+        const linkEl = item.querySelector('link');
+        const link = linkEl?.getAttribute('href') || linkEl?.textContent?.trim() || '';
+        const dateStr =
+          item.querySelector('pubDate')?.textContent ||
+          item.querySelector('updated')?.textContent ||
+          item.querySelector('published')?.textContent || '';
+        const rawDesc =
+          item.querySelector('description')?.textContent ||
+          item.querySelector('summary')?.textContent ||
+          item.querySelector('content')?.textContent || '';
+        const description = rawDesc.replace(/<[^>]+>/g, '').trim().slice(0, 200);
+        return { title, link, dateStr, description };
+      }).filter(i => i.title && i.link);
+    }
+
+    function normalizeArticles(items, countryCode, sourceMeta) {
+      const { name: sourceName, rss: sourceRss, tier, bias } = sourceMeta;
+      return items.map(item => {
+        let pubDate = null;
+        if (item.dateStr) {
+          const d = new Date(item.dateStr);
+          if (!isNaN(d.getTime())) pubDate = d;
+        }
+        const idBase = item.link || (item.title + (item.dateStr || ''));
+        const id = btoa(unescape(encodeURIComponent(idBase))).slice(0, 16);
+        const topic = classifyTopic(item.title || '', item.description || '');
+        return {
+          id,
+          countryCode,
+          sourceName: sourceName || '',
+          sourceRss: sourceRss || '',
+          tier: tier || 'independent',
+          bias: bias || 'center',
+          topic,
+          title: item.title || '',
+          translatedTitle: null,
+          link: item.link || '',
+          pubDate,
+          timeAgo: timeAgo(pubDate),
+          description: item.description || '',
+          language: getFeedLanguage(sourceMeta, countryCode),
+          translated: false,
+        };
+      });
+    }
+
+    async function translateHeadline(text, sourceLang) {
+      if (!sourceLang || sourceLang === 'en') return { text, translated: false };
+      const keyRaw = sourceLang + '|' + text.slice(0,50);
+      const cacheKey = 'trans:' + btoa(unescape(encodeURIComponent(keyRaw)));
+      const cached = cacheGet(cacheKey);
+      if (cached) return { text: cached, translated: true };
+      try {
+        const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.slice(0,100))}&langpair=${sourceLang}|en`;
+        const res = await fetch(url);
+        const json = await res.json();
+        const result = json.responseData?.translatedText;
+        if (result && result !== text) {
+          cacheSet(cacheKey, result);
+          return { text: result, translated: true };
+        }
+      } catch (e) {
+        // ignore
+      }
+      return { text, translated: false };
+    }
+
+    async function fetchFeed(rssUrl) {
+      const cacheKey = 'feed:' + encodeURIComponent(rssUrl);
+      const cached = cacheGet(cacheKey);
+      if (cached) return cached;
+
+      // Try AllOrigins JSON API first
+      try {
+        uiLog(`fetching via allorigins: ${rssUrl}`);
+        const res = await fetch(CORS_PROXY + encodeURIComponent(rssUrl));
+        if (res.ok) {
+          const json = await res.json();
+          if (json && typeof json.contents === 'string') {
+            const items = parseXml(json.contents);
+            cacheSet(cacheKey, items);
+            return items;
+          }
+        }
+        throw new Error('AllOrigins returned bad status or no contents');
+      } catch (primaryError) {
+        uiLog(`allorigins failed, falling back to corsproxy.io: ${rssUrl}`);
+        // Fallback: corsproxy.io returns raw body, not JSON
+        try {
+          const res2 = await fetch('https://corsproxy.io/?' + encodeURIComponent(rssUrl));
+          if (!res2.ok) throw new Error('corsproxy.io status ' + res2.status);
+          const text = await res2.text();
+          const items = parseXml(text);
+          cacheSet(cacheKey, items);
+          return items;
+        } catch (fallbackError) {
+          uiLog(`feed failed after fallback: ${rssUrl}`);
+          failedFeeds.add(rssUrl);
+          return [];
+        }
+      }
+    }
+
+    function updateLeftStatus(totalCountries, totalFeedsLoaded) {
+      leftSubtitleEl.textContent = `live rss · ${totalCountries} countries`;
+      leftStatusEl.textContent = `Feeds observed: ${totalFeedsLoaded}`;
+      leftStatusPillEl.textContent = `${allArticles.length} articles`;
+    }
+
+    function summarizeTiers(countryCode) {
+      const list = articlesByCountry[countryCode] || [];
+      if (!list.length) return 'No articles yet.';
+      const counts = {};
+      for (const a of list) {
+        const tier = a.tier || 'independent';
+        counts[tier] = (counts[tier] || 0) + 1;
+      }
+      return Object.entries(counts)
+        .map(([tier, count]) => `${tier}: ${count}`)
+        .join(' · ');
+    }
+
+    function dominantTopicForCountry(code) {
+      const arr = articlesByCountry[code] || [];
+      if (!arr.length) return null;
+      const counts = {};
+      for (const a of arr) {
+        const t = a.topic || 'other';
+        counts[t] = (counts[t] || 0) + 1;
+      }
+      if (!Object.keys(counts).length) return null;
+      let best = 'other';
+      let max = -1;
+      for (const topic of TOPIC_PRIORITY) {
+        const c = counts[topic] || 0;
+        if (c > max) {
+          max = c;
+          best = topic;
+        }
+      }
+      return best;
+    }
+
+    function rsfColor(rank) {
+      if (!rank && rank !== 0) return '#4b5563';
+      if (rank <= 30) return '#22c55e';
+      if (rank <= 80) return '#facc15';
+      if (rank <= 130) return '#fb923c';
+      return '#ef4444';
+    }
+
+    function renderTopicChips() {
+      topicChipsEl.innerHTML = '';
+      const topics = Object.keys(TOPIC_COLORS).filter(t => t !== 'no-data' && t !== 'has-data');
+      topics.forEach(topic => {
+        const chip = document.createElement('button');
+        chip.className = 'topic-chip';
+        chip.dataset.topic = topic;
+
+        const left = document.createElement('div');
+        left.className = 'topic-chip-left';
+
+        const dot = document.createElement('div');
+        dot.className = 'topic-dot';
+        dot.style.background = TOPIC_COLORS[topic];
+
+        const label = document.createElement('span');
+        label.className = 'topic-label';
+        label.textContent = topic.charAt(0).toUpperCase() + topic.slice(1);
+
+        left.appendChild(dot);
+        left.appendChild(label);
+
+        const countEl = document.createElement('span');
+        countEl.className = 'topic-count';
+        countEl.textContent = '—';
+        countEl.id = `topic-count-${topic}`;
+
+        chip.appendChild(left);
+        chip.appendChild(countEl);
+
+        chip.addEventListener('click', () => {
+          if (activeTopic === topic) {
+            activeTopic = null;
+          } else {
+            activeTopic = topic;
+          }
+          [...topicChipsEl.querySelectorAll('.topic-chip')].forEach(c => {
+            c.classList.toggle('active', c.dataset.topic === activeTopic);
+          });
+          applyFiltersAndRender();
+        });
+
+        topicChipsEl.appendChild(chip);
+      });
+    }
+
+    function updateTopicCounts() {
+      const counts = {};
+      for (const a of allArticles) {
+        const t = a.topic || 'other';
+        counts[t] = (counts[t] || 0) + 1;
+      }
+      for (const topic of Object.keys(TOPIC_COLORS)) {
+        if (topic === 'no-data' || topic === 'has-data') continue;
+        const num = counts[topic] || 0;
+        const el = document.getElementById(`topic-count-${topic}`);
+        if (el) el.textContent = num ? String(num) : '—';
+      }
+    }
+
+    function renderSingleTopicChips() {
+      singleTopicChipsEl.innerHTML = '';
+      if (!singleTopicSources || !sources?.single_topic) return;
+      Object.keys(sources.single_topic).forEach(key => {
+        const chip = document.createElement('button');
+        chip.className = 'topic-chip';
+        chip.dataset.singleTopic = key;
+
+        const left = document.createElement('div');
+        left.className = 'topic-chip-left';
+
+        const dot = document.createElement('div');
+        dot.className = 'topic-dot';
+        dot.style.background = TOPIC_COLORS.crypto;
+
+        const label = document.createElement('span');
+        label.className = 'topic-label';
+        label.textContent = key.replace(/_/g,' ');
+
+        left.appendChild(dot);
+        left.appendChild(label);
+
+        const countEl = document.createElement('span');
+        countEl.className = 'topic-count';
+        countEl.textContent = '—';
+        countEl.id = `single-topic-count-${key}`;
+
+        chip.appendChild(left);
+        chip.appendChild(countEl);
+
+        chip.addEventListener('click', async () => {
+          if (singleTopicMode === key) {
+            singleTopicMode = null;
+            mapContainer.style.opacity = '1';
+            applyFiltersAndRender();
+            return;
+          }
+          singleTopicMode = key;
+          mapContainer.style.opacity = '0.5';
+          await loadSingleTopicFeed(key);
+        });
+
+        singleTopicChipsEl.appendChild(chip);
+      });
+    }
+
+    function applyFiltersAndRender() {
+      renderArticlesPanel();
+      updateMapFills();
+    }
+
+    function renderArticlesPanel() {
+      const container = articlesScrollEl;
+      container.innerHTML = '';
+
+      let list = [];
+      if (singleTopicMode) {
+        const key = singleTopicMode;
+        list = (articlesByCountry['GLOBAL_'+key] || []).slice();
+        rightTitleEl.textContent = key.replace(/_/g,' ').toUpperCase();
+        rightRsfPillEl.textContent = 'Global beat';
+        rightRsfPillEl.style.borderColor = 'rgba(148,163,184,0.5)';
+        rightTierSummaryEl.textContent = summarizeTiers('GLOBAL_'+key);
+        rightNoteBannerEl.style.display = 'none';
+        btnLoadRegional.disabled = true;
+      } else if (activeCountry && articlesByCountry[activeCountry]?.length) {
+        list = articlesByCountry[activeCountry].slice();
+        const meta = countryMeta[activeCountry];
+        const rsf = meta?.rsf_rank;
+        const name = meta?.name || activeCountry;
+        rightTitleEl.textContent = name.toUpperCase();
+        rightRsfPillEl.textContent = rsf ? `RSF #${rsf}` : 'Press freedom: —';
+        rightRsfPillEl.style.borderColor = rsfColor(rsf);
+        rightRsfPillEl.style.color = rsfColor(rsf);
+        rightTierSummaryEl.textContent = summarizeTiers(activeCountry);
+        if (meta?.note) {
+          rightNoteBannerEl.textContent = meta.note;
+          rightNoteBannerEl.style.display = 'block';
+        } else {
+          rightNoteBannerEl.style.display = 'none';
+        }
+        btnLoadRegional.disabled = false;
+      } else {
+        list = allArticles.slice();
+        rightTitleEl.textContent = 'Global Feed';
+        rightRsfPillEl.textContent = 'Press freedom: —';
+        rightRsfPillEl.style.borderColor = 'rgba(148,163,184,0.5)';
+        rightRsfPillEl.style.color = '#e5e7eb';
+        rightTierSummaryEl.textContent = list.length ? `${list.length} articles across ${Object.keys(articlesByCountry).length} regions` : 'Waiting for first articles…';
+        rightNoteBannerEl.style.display = 'none';
+        btnLoadRegional.disabled = true;
+      }
+
+      if (activeTopic) {
+        list = list.filter(a => a.topic === activeTopic);
+      }
+
+      list.sort((a, b) => (b.pubDate || 0) - (a.pubDate || 0));
+      if (!activeCountry && !singleTopicMode) {
+        list = list.slice(0, 30);
+      }
+
+      if (!list.length) {
+        const empty = document.createElement('div');
+        empty.className = 'right-empty';
+        empty.textContent = 'No articles yet for this selection.';
+        container.appendChild(empty);
+        return;
+      }
+
+      list.forEach(a => {
+        const card = document.createElement('div');
+        card.className = 'article-card';
+
+        const metaRow = document.createElement('div');
+        metaRow.className = 'article-meta-row';
+
+        const metaLeft = document.createElement('div');
+        metaLeft.className = 'article-meta-left';
+
+        const tier = document.createElement('span');
+        const tierKey = (a.tier || 'independent').toLowerCase();
+        tier.className = 'tier-badge tier-' + tierKey.replace('_','-');
+        tier.textContent = tierKey;
+
+        const topicPill = document.createElement('span');
+        topicPill.className = 'topic-pill';
+        const tpDot = document.createElement('span');
+        tpDot.className = 'topic-pill-dot';
+        tpDot.style.background = TOPIC_COLORS[a.topic] || TOPIC_COLORS.other;
+        const tpLabel = document.createElement('span');
+        tpLabel.textContent = a.topic;
+        topicPill.appendChild(tpDot);
+        topicPill.appendChild(tpLabel);
+
+        metaLeft.appendChild(tier);
+        metaLeft.appendChild(topicPill);
+
+        const timeEl = document.createElement('span');
+        timeEl.className = 'article-time';
+        timeEl.textContent = a.timeAgo || '';
+
+        metaRow.appendChild(metaLeft);
+        metaRow.appendChild(timeEl);
+
+        const sourceEl = document.createElement('div');
+        sourceEl.className = 'article-source';
+        sourceEl.textContent = a.sourceName || '';
+
+        const titleEl = document.createElement('div');
+        titleEl.className = 'article-title';
+        const link = document.createElement('a');
+        link.href = a.link || '#';
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = a.translatedTitle || a.title || '(no title)';
+        titleEl.appendChild(link);
+
+        if (a.translated) {
+          const badge = document.createElement('div');
+          badge.className = 'article-translation-badge';
+          badge.textContent = 'EN↑';
+          titleEl.appendChild(document.createElement('br'));
+          titleEl.appendChild(badge);
+        }
+
+        const descEl = document.createElement('div');
+        descEl.className = 'article-description';
+        descEl.textContent = a.description || '';
+
+        card.appendChild(metaRow);
+        card.appendChild(sourceEl);
+        card.appendChild(titleEl);
+        if (a.description) card.appendChild(descEl);
+
+        container.appendChild(card);
+      });
+    }
+
+    function updateMapFills() {
+      if (!sources) return;
+      const countriesWithFeeds = Object.keys(countryFeedsIndex);
+      const selection = mapSvg.selectAll('path.country');
+      selection
+        .attr('fill', function(d) {
+          const id = d.id;
+          const alpha2 = NUMERIC_TO_ALPHA2[id];
+          if (!alpha2) return TOPIC_COLORS['no-data'];
+          const hasFeeds = countriesWithFeeds.includes(alpha2);
+          if (!hasFeeds) return TOPIC_COLORS['no-data'];
+          const domTopic = dominantTopicForCountry(alpha2);
+          if (domTopic && (!activeTopic || domTopic === activeTopic)) {
+            return TOPIC_COLORS[domTopic] || TOPIC_COLORS.other;
+          }
+          if (domTopic && activeTopic && domTopic !== activeTopic) {
+            return d3.color(TOPIC_COLORS[domTopic] || TOPIC_COLORS.other).darker(1.2);
+          }
+          return TOPIC_COLORS['has-data'];
+        })
+        .attr('stroke', function(d) {
+          const alpha2 = NUMERIC_TO_ALPHA2[d.id];
+          if (alpha2 && alpha2 === activeCountry) return '#3b82f6';
+          return '#020617';
+        })
+        .attr('stroke-width', function(d) {
+          const alpha2 = NUMERIC_TO_ALPHA2[d.id];
+          if (alpha2 && alpha2 === activeCountry) return 1.4;
+          return 0.5;
+        })
+        .attr('opacity', function(d) {
+          const alpha2 = NUMERIC_TO_ALPHA2[d.id];
+          if (!alpha2) return 0.55;
+          const hasFeeds = countriesWithFeeds.includes(alpha2);
+          if (!hasFeeds) return 0.5;
+          if (singleTopicMode) return 0.5;
+          return 0.9;
+        });
+    }
+
+    async function loadSingleTopicFeed(key) {
+      if (!sources?.single_topic?.[key]) return;
+      const feeds = sources.single_topic[key];
+      const all = [];
+      let fetchedFeeds = 0;
+      for (const feed of feeds) {
+        uiLog(`single-topic ${key}: fetching ${feed.name || feed.rss}`);
+        const items = await fetchFeed(feed.rss);
+        const normalized = normalizeArticles(items, 'GLOBAL_'+key, {
+          name: feed.name || key,
+          rss: feed.rss,
+          tier: feed.tier || 'single-topic',
+          bias: feed.bias || 'center',
+        });
+        for (const art of normalized) {
+          if (art.language && art.language !== 'en') {
+            try {
+              const res = await translateHeadline(art.title, art.language);
+              art.translatedTitle = res.text;
+              art.translated = res.translated;
+            } catch (e) {
+              // ignore
+            }
+          }
+        }
+        all.push(...normalized);
+        fetchedFeeds++;
+        leftStatusEl.textContent = `Single-topic ${key}: ${fetchedFeeds}/${feeds.length} feeds`;
+      }
+      articlesByCountry['GLOBAL_'+key] = all;
+      const countEl = document.getElementById(`single-topic-count-${key}`);
+      if (countEl) countEl.textContent = all.length || '—';
+      applyFiltersAndRender();
+    }
+
+    async function loadCountryFeeds(code, includeRegional = false) {
+      if (!sources) return;
+      const baseFeeds = countryFeedsIndex[code] || [];
+      const feeds = includeRegional
+        ? baseFeeds.concat(countryRegionalFeedsIndex[code] || [])
+        : baseFeeds;
+      if (!feeds.length) return;
+      const results = [];
+      let completed = 0;
+      for (const feed of feeds) {
+        uiLog(`country ${code}: fetching ${feed.name || feed.rss}`);
+        const items = await fetchFeed(feed.rss);
+        const normalized = normalizeArticles(items, code, feed);
+        for (const art of normalized) {
+          if (art.language && art.language !== 'en') {
+            try {
+              const res = await translateHeadline(art.title, art.language);
+              art.translatedTitle = res.text;
+              art.translated = res.translated;
+            } catch (e) {
+              // ignore
+            }
+          }
+        }
+        results.push(...normalized);
+        completed++;
+        leftStatusEl.textContent = `Loading ${code}: ${completed}/${feeds.length} feeds`;
+      }
+
+      articlesByCountry[code] = (articlesByCountry[code] || []).concat(results);
+      allArticles.push(...results);
+      updateTopicCounts();
+      updateLeftStatus(Object.keys(countryFeedsIndex).length, completed);
+      updateMapFills();
+      applyFiltersAndRender();
+    }
+
+    async function loadPriorityCountries() {
+      if (!sources) return;
+      const queue = [];
+      const concurrency = 4;
+      for (const code of PRIORITY_COUNTRIES) {
+        const feeds = (countryFeedsIndex[code] || []).filter(f => {
+          const tier = (f.tier || '').toLowerCase();
+          return tier === 'wire' || tier === 'state-wire';
+        }).slice(0, 2);
+        feeds.forEach(feed => {
+          queue.push({ code, feed });
+        });
+      }
+      let active = 0;
+      let index = 0;
+      let completedFeeds = 0;
+
+      return new Promise(resolve => {
+        const next = () => {
+          while (active < concurrency && index < queue.length) {
+            const { code, feed } = queue[index++];
+            active++;
+            (async () => {
+              const items = await fetchFeed(feed.rss);
+              const normalized = normalizeArticles(items, code, feed);
+              for (const art of normalized) {
+                if (art.language && art.language !== 'en') {
+                  try {
+                    const res = await translateHeadline(art.title, art.language);
+                    art.translatedTitle = res.text;
+                    art.translated = res.translated;
+                  } catch (e) {}
+                }
+              }
+              articlesByCountry[code] = (articlesByCountry[code] || []).concat(normalized);
+              allArticles.push(...normalized);
+              completedFeeds++;
+              updateTopicCounts();
+              updateLeftStatus(Object.keys(countryFeedsIndex).length, completedFeeds);
+              updateMapFills();
+              applyFiltersAndRender();
+            })().finally(() => {
+              active--;
+              if (index >= queue.length && active === 0) {
+                resolve();
+              } else {
+                next();
+              }
+            });
+          }
+        };
+        next();
+      });
+    }
+
+    async function initSources() {
+      mapSubtitleEl.textContent = 'Loading sources_v2.json…';
+      const res = await fetch('./sources_v2.json');
+      sources = await res.json();
+      const countries = sources.countries || {};
+      let totalFeeds = 0;
+      Object.entries(countries).forEach(([code, data]) => {
+        const meta = data._meta || {};
+        countryMeta[code] = meta;
+        const feeds = getCountryFeeds(code);
+        const regionalFeeds = getCountryRegionalFeeds(code);
+        countryFeedsIndex[code] = feeds;
+        countryRegionalFeedsIndex[code] = regionalFeeds;
+        totalFeeds += feeds.length;
+      });
+      singleTopicSources = sources.single_topic || {};
+      uiLog(`loaded sources_v2.json: ${Object.keys(countries).length} countries · ${totalFeeds} national feeds`);
+      leftSubtitleEl.textContent = `live rss · ${Object.keys(countries).length} countries`;
+      leftStatusEl.textContent = `Indexed ${totalFeeds} national feeds`;
+      leftStatusPillEl.textContent = '0 articles';
+      mapSubtitleEl.textContent = 'Map live · hover for RSF + counts';
+      renderTopicChips();
+      renderSingleTopicChips();
+      updateMapFills();
+      loadPriorityCountries();
+    }
+
+    function initMap() {
+      uiLog('initializing world map…');
+      const width = mapContainer.clientWidth || 800;
+      const height = mapContainer.clientHeight || 500;
+      mapSvg.attr('viewBox', `0 0 ${width} ${height}`);
+
+      const mapLayer = mapSvg.append('g').attr('class', 'map-layer');
+
+      const projection = d3.geoMercator()
+        .scale((width / 2 / Math.PI) * 1.1)
+        .translate([width / 2, height / 1.55]);
+
+      const path = d3.geoPath(projection);
+
+      const zoom = d3.zoom()
+        .scaleExtent([1, 8])
+        .on('zoom', (event) => {
+          mapLayer.attr('transform', event.transform);
+        });
+
+      mapSvg.call(zoom);
+
+      d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(world => {
+        uiLog('world topojson loaded');
+        const countries = topojson.feature(world, world.objects.countries);
+        mapLayer.selectAll('path.country')
+          .data(countries.features)
+          .join('path')
+          .attr('class', 'country')
+          .attr('d', path)
+          .attr('fill', TOPIC_COLORS['no-data'])
+          .attr('stroke', '#020617')
+          .attr('stroke-width', 0.5)
+          .style('cursor', d => {
+            const alpha2 = NUMERIC_TO_ALPHA2[d.id];
+            if (!alpha2) return 'default';
+            return 'pointer';
+          })
+          .on('mousemove', function(event, d) {
+            const alpha2 = NUMERIC_TO_ALPHA2[d.id];
+            const meta = alpha2 ? countryMeta[alpha2] : null;
+            const arr = alpha2 ? (articlesByCountry[alpha2] || []) : [];
+            const domTopic = alpha2 ? dominantTopicForCountry(alpha2) : null;
+            const name = meta?.name || alpha2 || 'Unknown';
+            tooltipTitleEl.textContent = name;
+            const rsf = meta?.rsf_rank;
+            tooltipLine1El.textContent = rsf ? `RSF rank #${rsf}` : 'RSF rank: —';
+            tooltipLine2El.textContent = arr.length ? `${arr.length} articles · ${domTopic || 'no dominant topic'}` : 'No articles yet';
+            mapTooltip.style.opacity = '1';
+            const rect = mapContainer.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            mapTooltip.style.left = x + 'px';
+            mapTooltip.style.top = y + 'px';
+          })
+          .on('mouseleave', function() {
+            mapTooltip.style.opacity = '0';
+          })
+          .on('click', async function(event, d) {
+            const alpha2 = NUMERIC_TO_ALPHA2[d.id];
+            if (!alpha2 || !countryFeedsIndex[alpha2]?.length) return;
+            activeCountry = alpha2;
+            singleTopicMode = null;
+            applyFiltersAndRender();
+            await loadCountryFeeds(alpha2, false);
+          });
+
+        // Add higher-resolution US state boundaries so they become visible on zoom
+        d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(us => {
+          uiLog('us states topojson loaded');
+          const states = topojson.feature(us, us.objects.states);
+          mapLayer.append('g')
+            .attr('class', 'subregions-us')
+            .selectAll('path.state')
+            .data(states.features)
+            .join('path')
+            .attr('class', 'state')
+            .attr('d', path)
+            .attr('fill', 'none')
+            .attr('stroke', '#1f2937')
+            .attr('stroke-width', 0.4)
+            .attr('pointer-events', 'none');
+        }).catch(() => {
+          // if US states fail to load, keep base map only
+        });
+
+        updateMapFills();
+        initSources();
+      }).catch(err => {
+        uiLog('failed to load world topojson');
+        mapSubtitleEl.textContent = 'Failed to load world map. Check console.';
+      });
+    }
+
+    btnResetTopics.addEventListener('click', () => {
+      activeTopic = null;
+      [...topicChipsEl.querySelectorAll('.topic-chip')].forEach(c => c.classList.remove('active'));
+      applyFiltersAndRender();
+    });
+
+    btnLoadRegional.addEventListener('click', async () => {
+      if (!activeCountry) return;
+      btnLoadRegional.disabled = true;
+      btnLoadRegional.textContent = 'Loading regional…';
+      await loadCountryFeeds(activeCountry, true);
+      btnLoadRegional.textContent = 'Regional sources loaded';
+    });
+
+    window.addEventListener('load', () => {
+      initMap();
+    });
+  </script>
+</body>
+</html>
+
