@@ -839,7 +839,8 @@
           if (!isNaN(d.getTime())) pubDate = d;
         }
         const idBase = item.link || (item.title + (item.dateStr || ''));
-        const id = btoa(unescape(encodeURIComponent(idBase))).slice(0, 16);
+        const encoded = new TextEncoder().encode(idBase);
+        const id = btoa(String.fromCharCode(...encoded)).slice(0, 16);
         const topic = classifyTopic(item.title || '', item.description || '');
         return {
           id,
@@ -853,7 +854,6 @@
           translatedTitle: null,
           link: item.link || '',
           pubDate,
-          timeAgo: timeAgo(pubDate),
           description: item.description || '',
           language: getFeedLanguage(sourceMeta, countryCode),
           translated: false,
@@ -1046,11 +1046,13 @@
         chip.addEventListener('click', async () => {
           if (singleTopicMode === key) {
             singleTopicMode = null;
+            activeCountry = null;
             mapContainer.style.opacity = '1';
             applyFiltersAndRender();
             return;
           }
           singleTopicMode = key;
+          activeCountry = null;
           mapContainer.style.opacity = '0.5';
           await loadSingleTopicFeed(key);
         });
@@ -1153,7 +1155,7 @@
 
         const timeEl = document.createElement('span');
         timeEl.className = 'article-time';
-        timeEl.textContent = a.timeAgo || '';
+        timeEl.textContent = timeAgo(a.pubDate);
 
         metaRow.appendChild(metaLeft);
         metaRow.appendChild(timeEl);
@@ -1393,7 +1395,7 @@
               if (pendingLoadsByCountry[code] <= 0) {
                 delete pendingLoadsByCountry[code];
                 loadingCountries.delete(code);
-                if (!articlesByCountry[code]?.length) {
+                if (!(articlesByCountry[code] || []).length) {
                   failedCountries.add(code);
                 }
               }
@@ -1417,8 +1419,20 @@
 
     async function initSources() {
       mapSubtitleEl.textContent = 'Loading sources_v2.json…';
-      const res = await fetch('./sources_v2.json');
-      sources = await res.json();
+      try {
+        const res = await fetch('./sources_v2.json');
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        sources = await res.json();
+      } catch (e) {
+        const msg = `ERROR: could not load sources_v2.json (${e.message || e})`;
+        uiLog(msg);
+        mapSubtitleEl.textContent = 'ERROR loading sources_v2.json. Check server and reload.';
+        leftStatusEl.textContent = 'Failed to load sources configuration.';
+        return;
+      }
+
       const countries = sources.countries || {};
       let totalFeeds = 0;
       Object.entries(countries).forEach(([code, data]) => {
@@ -1430,10 +1444,28 @@
         countryRegionalFeedsIndex[code] = regionalFeeds;
         totalFeeds += feeds.length;
       });
+
+      // Fold international feeds into a pseudo-country for global coverage
+      if (sources.international) {
+        const intlFeeds = [];
+        if (Array.isArray(sources.international.general)) {
+          intlFeeds.push(...sources.international.general);
+        }
+        const industries = sources.international.industries || {};
+        Object.values(industries).forEach(arr => {
+          if (Array.isArray(arr)) intlFeeds.push(...arr);
+        });
+        if (intlFeeds.length) {
+          countryMeta.INT = { name: 'International', rsf_rank: null };
+          countryFeedsIndex.INT = (countryFeedsIndex.INT || []).concat(intlFeeds);
+          totalFeeds += intlFeeds.length;
+        }
+      }
+
       singleTopicSources = sources.single_topic || {};
-      uiLog(`loaded sources_v2.json: ${Object.keys(countries).length} countries · ${totalFeeds} national feeds`);
+      uiLog(`loaded sources_v2.json: ${Object.keys(countries).length} countries · ${totalFeeds} feeds (including international)`);
       leftSubtitleEl.textContent = `live rss · ${Object.keys(countries).length} countries`;
-      leftStatusEl.textContent = `Indexed ${totalFeeds} national feeds`;
+      leftStatusEl.textContent = `Indexed ${totalFeeds} feeds`;
       leftStatusPillEl.textContent = '0 articles';
       mapSubtitleEl.textContent = 'Map live · hover for RSF + counts';
       renderTopicChips();
