@@ -283,6 +283,21 @@
       overflow: hidden;
     }
 
+    @keyframes country-shimmer {
+      0% { opacity: 0.5; }
+      50% { opacity: 0.9; }
+      100% { opacity: 0.5; }
+    }
+
+    .country-loading {
+      animation: country-shimmer 1.2s ease-in-out infinite;
+    }
+
+    .country-failed {
+      stroke: #ef4444 !important;
+      stroke-width: 1.4 !important;
+    }
+
     #map-svg {
       width: 100%;
       height: 100%;
@@ -413,6 +428,7 @@
     .tier-wire { background: rgba(37,99,235,0.15); border-color: rgba(59,130,246,0.8); color: #bfdbfe; }
     .tier-independent { background: rgba(148,163,184,0.18); border-color: rgba(148,163,184,0.8); color: #e5e7eb; }
     .tier-state { background: rgba(239,68,68,0.18); border-color: rgba(239,68,68,0.85); color: #fecaca; }
+    .tier-state-wire { background: rgba(239,68,68,0.10); border-color: rgba(239,68,68,0.6); color: #fca5a5; }
     .tier-community { background: rgba(34,197,94,0.18); border-color: rgba(22,163,74,0.85); color: #bbf7d0; }
     .tier-exile { background: rgba(249,115,22,0.18); border-color: rgba(249,115,22,0.85); color: #fed7aa; }
     .tier-foreign-funded { background: rgba(234,179,8,0.16); border-color: rgba(234,179,8,0.85); color: #fef3c7; }
@@ -638,7 +654,8 @@
 
     const TOPIC_PRIORITY = ['military','crime','politics','economy','society','business','health','climate','technology','crypto','other'];
 
-    const CORS_PROXY = 'https://api.allorigins.win/get?url='; // primary; we fall back to corsproxy.io if this fails
+    // Backend proxy base URL (Node/Express server)
+    const BACKEND_PROXY_BASE = 'http://localhost:4000/proxy?url=';
     const CACHE_TTL = 15 * 60 * 1000;
     const PRIORITY_COUNTRIES = ['US','GB','FR','DE','RU','CN','UA','IL','IR','JP','IN','BR','MX'];
 
@@ -674,6 +691,9 @@
     const articlesByCountry = {};
     const failedFeeds = new Set();
     const allArticles = [];
+    const loadingCountries = new Set();
+    const failedCountries = new Set();
+    const pendingLoadsByCountry = {};
     let singleTopicSources = {};
 
     let activeCountry = null;
@@ -841,24 +861,8 @@
       });
     }
 
+    // Translation temporarily disabled: always return original text without calling external APIs.
     async function translateHeadline(text, sourceLang) {
-      if (!sourceLang || sourceLang === 'en') return { text, translated: false };
-      const keyRaw = sourceLang + '|' + text.slice(0,50);
-      const cacheKey = 'trans:' + btoa(unescape(encodeURIComponent(keyRaw)));
-      const cached = cacheGet(cacheKey);
-      if (cached) return { text: cached, translated: true };
-      try {
-        const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.slice(0,100))}&langpair=${sourceLang}|en`;
-        const res = await fetch(url);
-        const json = await res.json();
-        const result = json.responseData?.translatedText;
-        if (result && result !== text) {
-          cacheSet(cacheKey, result);
-          return { text: result, translated: true };
-        }
-      } catch (e) {
-        // ignore
-      }
       return { text, translated: false };
     }
 
@@ -867,34 +871,22 @@
       const cached = cacheGet(cacheKey);
       if (cached) return cached;
 
-      // Try AllOrigins JSON API first
       try {
-        uiLog(`fetching via allorigins: ${rssUrl}`);
-        const res = await fetch(CORS_PROXY + encodeURIComponent(rssUrl));
-        if (res.ok) {
-          const json = await res.json();
-          if (json && typeof json.contents === 'string') {
-            const items = parseXml(json.contents);
-            cacheSet(cacheKey, items);
-            return items;
-          }
-        }
-        throw new Error('AllOrigins returned bad status or no contents');
-      } catch (primaryError) {
-        uiLog(`allorigins failed, falling back to corsproxy.io: ${rssUrl}`);
-        // Fallback: corsproxy.io returns raw body, not JSON
-        try {
-          const res2 = await fetch('https://corsproxy.io/?' + encodeURIComponent(rssUrl));
-          if (!res2.ok) throw new Error('corsproxy.io status ' + res2.status);
-          const text = await res2.text();
-          const items = parseXml(text);
-          cacheSet(cacheKey, items);
-          return items;
-        } catch (fallbackError) {
-          uiLog(`feed failed after fallback: ${rssUrl}`);
+        uiLog(`fetching via backend proxy: ${rssUrl}`);
+        const res = await fetch(BACKEND_PROXY_BASE + encodeURIComponent(rssUrl));
+        if (!res.ok) {
+          uiLog(`backend proxy status ${res.status} for ${rssUrl}`);
           failedFeeds.add(rssUrl);
           return [];
         }
+        const text = await res.text();
+        const items = parseXml(text);
+        cacheSet(cacheKey, items);
+        return items;
+      } catch (err) {
+        uiLog(`backend proxy error for ${rssUrl}`);
+        failedFeeds.add(rssUrl);
+        return [];
       }
     }
 
@@ -944,6 +936,19 @@
       if (rank <= 80) return '#facc15';
       if (rank <= 130) return '#fb923c';
       return '#ef4444';
+    }
+
+    function dedupeAllArticles() {
+      const seen = new Set();
+      for (let i = allArticles.length - 1; i >= 0; i--) {
+        const id = allArticles[i].id;
+        if (!id) continue;
+        if (seen.has(id)) {
+          allArticles.splice(i, 1);
+        } else {
+          seen.add(id);
+        }
+      }
     }
 
     function renderTopicChips() {
@@ -1009,7 +1014,9 @@
     function renderSingleTopicChips() {
       singleTopicChipsEl.innerHTML = '';
       if (!singleTopicSources || !sources?.single_topic) return;
-      Object.keys(sources.single_topic).forEach(key => {
+      Object.keys(sources.single_topic)
+        .filter(key => key !== '_meta')
+        .forEach(key => {
         const chip = document.createElement('button');
         chip.className = 'topic-chip';
         chip.dataset.singleTopic = key;
@@ -1128,7 +1135,7 @@
 
         const tier = document.createElement('span');
         const tierKey = (a.tier || 'independent').toLowerCase();
-        tier.className = 'tier-badge tier-' + tierKey.replace('_','-');
+        tier.className = 'tier-badge tier-' + tierKey.replace(/_/g,'-');
         tier.textContent = tierKey;
 
         const topicPill = document.createElement('span');
@@ -1189,6 +1196,7 @@
       if (!sources) return;
       const countriesWithFeeds = Object.keys(countryFeedsIndex);
       const selection = mapSvg.selectAll('path.country');
+      if (selection.empty()) return;
       selection
         .attr('fill', function(d) {
           const id = d.id;
@@ -1222,6 +1230,22 @@
           if (!hasFeeds) return 0.5;
           if (singleTopicMode) return 0.5;
           return 0.9;
+        })
+        .classed('country-loading', function(d) {
+          const alpha2 = NUMERIC_TO_ALPHA2[d.id];
+          if (!alpha2) return false;
+          return loadingCountries.has(alpha2);
+        })
+        .classed('country-failed', function(d) {
+          const alpha2 = NUMERIC_TO_ALPHA2[d.id];
+          if (!alpha2) return false;
+          return failedCountries.has(alpha2);
+        })
+        .style('cursor', function(d) {
+          const alpha2 = NUMERIC_TO_ALPHA2[d.id];
+          if (!alpha2 || !(countryFeedsIndex[alpha2] || []).length) return 'default';
+          if (loadingCountries.has(alpha2)) return 'progress';
+          return 'pointer';
         });
     }
 
@@ -1262,13 +1286,20 @@
 
     async function loadCountryFeeds(code, includeRegional = false) {
       if (!sources) return;
-      const baseFeeds = countryFeedsIndex[code] || [];
+      // Avoid re-loading national feeds if we already have articles for this country
+      if (!includeRegional && articlesByCountry[code]?.length) {
+        applyFiltersAndRender();
+        return;
+      }
       const feeds = includeRegional
-        ? baseFeeds.concat(countryRegionalFeedsIndex[code] || [])
-        : baseFeeds;
+        ? (countryRegionalFeedsIndex[code] || [])
+        : (countryFeedsIndex[code] || []);
       if (!feeds.length) return;
       const results = [];
       let completed = 0;
+      pendingLoadsByCountry[code] = (pendingLoadsByCountry[code] || 0) + feeds.length;
+      loadingCountries.add(code);
+      failedCountries.delete(code);
       for (const feed of feeds) {
         uiLog(`country ${code}: fetching ${feed.name || feed.rss}`);
         const items = await fetchFeed(feed.rss);
@@ -1287,10 +1318,19 @@
         results.push(...normalized);
         completed++;
         leftStatusEl.textContent = `Loading ${code}: ${completed}/${feeds.length} feeds`;
+        pendingLoadsByCountry[code] -= 1;
+        if (pendingLoadsByCountry[code] <= 0) {
+          delete pendingLoadsByCountry[code];
+          loadingCountries.delete(code);
+          if (!articlesByCountry[code]?.length && !results.length) {
+            failedCountries.add(code);
+          }
+        }
       }
 
       articlesByCountry[code] = (articlesByCountry[code] || []).concat(results);
       allArticles.push(...results);
+      dedupeAllArticles();
       updateTopicCounts();
       updateLeftStatus(Object.keys(countryFeedsIndex).length, completed);
       updateMapFills();
@@ -1302,10 +1342,14 @@
       const queue = [];
       const concurrency = 4;
       for (const code of PRIORITY_COUNTRIES) {
-        const feeds = (countryFeedsIndex[code] || []).filter(f => {
+        let feeds = (countryFeedsIndex[code] || []).filter(f => {
           const tier = (f.tier || '').toLowerCase();
           return tier === 'wire' || tier === 'state-wire';
         }).slice(0, 2);
+        // Fallback: if no wire/state-wire feeds, take first 2 of any tier
+        if (feeds.length === 0) {
+          feeds = (countryFeedsIndex[code] || []).slice(0, 2);
+        }
         feeds.forEach(feed => {
           queue.push({ code, feed });
         });
@@ -1315,6 +1359,16 @@
       let completedFeeds = 0;
 
       return new Promise(resolve => {
+        if (queue.length === 0) {
+          resolve();
+          return;
+        }
+        // Initialize loading state counts for queued countries
+        queue.forEach(({ code }) => {
+          pendingLoadsByCountry[code] = (pendingLoadsByCountry[code] || 0) + 1;
+          loadingCountries.add(code);
+          failedCountries.delete(code);
+        });
         const next = () => {
           while (active < concurrency && index < queue.length) {
             const { code, feed } = queue[index++];
@@ -1333,7 +1387,16 @@
               }
               articlesByCountry[code] = (articlesByCountry[code] || []).concat(normalized);
               allArticles.push(...normalized);
+              dedupeAllArticles();
               completedFeeds++;
+              pendingLoadsByCountry[code] -= 1;
+              if (pendingLoadsByCountry[code] <= 0) {
+                delete pendingLoadsByCountry[code];
+                loadingCountries.delete(code);
+                if (!articlesByCountry[code]?.length) {
+                  failedCountries.add(code);
+                }
+              }
               updateTopicCounts();
               updateLeftStatus(Object.keys(countryFeedsIndex).length, completedFeeds);
               updateMapFills();

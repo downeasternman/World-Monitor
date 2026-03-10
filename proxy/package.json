@@ -1,0 +1,13 @@
+{
+  "name": "world-monitor-proxy",
+  "version": "1.0.0",
+  "description": "Small Express-based proxy for World Monitor RSS and translation requests.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
+
